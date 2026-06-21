@@ -1916,7 +1916,8 @@ function App() {
 
   React.useEffect(() => {
     const updateScale = () => {
-      const scale = Math.min(1, window.innerWidth / 1280, window.innerHeight / 720);
+      const isPhone = window.innerWidth <= 760;
+      const scale = isPhone ? 1 : Math.min(1, window.innerWidth / 1280, window.innerHeight / 720);
       document.documentElement.style.setProperty("--app-scale", scale.toFixed(3));
       window.scrollTo(0, 0);
     };

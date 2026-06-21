@@ -2242,7 +2242,8 @@ function App() {
     setScreen = _React$useState18[1];
   React.useEffect(function () {
     var updateScale = function updateScale() {
-      var scale = Math.min(1, window.innerWidth / 1280, window.innerHeight / 720);
+      var isPhone = window.innerWidth <= 760;
+      var scale = isPhone ? 1 : Math.min(1, window.innerWidth / 1280, window.innerHeight / 720);
       document.documentElement.style.setProperty("--app-scale", scale.toFixed(3));
       window.scrollTo(0, 0);
     };
