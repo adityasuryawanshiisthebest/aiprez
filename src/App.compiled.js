@@ -698,6 +698,83 @@ function DashboardHeader() {
     className: "dashboard-header"
   }, /*#__PURE__*/React.createElement(LogoBlock, null));
 }
+function NeonWave() {
+  return /*#__PURE__*/React.createElement("svg", {
+    className: "dashboard-neon-wave",
+    viewBox: "0 0 720 140",
+    "aria-hidden": "true",
+    preserveAspectRatio: "none"
+  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
+    id: "waveBluePurple",
+    x1: "0",
+    x2: "1",
+    y1: "0",
+    y2: "0"
+  }, /*#__PURE__*/React.createElement("stop", {
+    offset: "0%",
+    stopColor: "#005bff",
+    stopOpacity: "0"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "20%",
+    stopColor: "#008cff",
+    stopOpacity: "0.9"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "52%",
+    stopColor: "#00d8ff",
+    stopOpacity: "1"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "78%",
+    stopColor: "#7e35ff",
+    stopOpacity: "1"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "100%",
+    stopColor: "#b42cff",
+    stopOpacity: "0"
+  })), /*#__PURE__*/React.createElement("filter", {
+    id: "waveGlow",
+    x: "-20%",
+    y: "-80%",
+    width: "140%",
+    height: "260%"
+  }, /*#__PURE__*/React.createElement("feGaussianBlur", {
+    stdDeviation: "3.2",
+    result: "blur"
+  }), /*#__PURE__*/React.createElement("feMerge", null, /*#__PURE__*/React.createElement("feMergeNode", {
+    "in": "blur"
+  }), /*#__PURE__*/React.createElement("feMergeNode", {
+    "in": "SourceGraphic"
+  })))), /*#__PURE__*/React.createElement("g", {
+    fill: "none",
+    strokeLinecap: "round",
+    filter: "url(#waveGlow)"
+  }, /*#__PURE__*/React.createElement("path", {
+    className: "wave-main",
+    d: "M0 72 C95 18 178 18 270 70 S455 124 560 66 S680 18 720 34"
+  }), /*#__PURE__*/React.createElement("path", {
+    className: "wave-cyan",
+    d: "M18 86 C118 30 190 34 288 78 S456 110 548 57 S668 26 720 44"
+  }), /*#__PURE__*/React.createElement("path", {
+    className: "wave-purple",
+    d: "M8 58 C112 84 188 78 286 50 S452 24 552 73 S674 104 720 82"
+  }), /*#__PURE__*/React.createElement("path", {
+    className: "wave-faint",
+    d: "M36 44 C128 58 220 62 310 42 S476 22 586 52 S684 83 720 76"
+  })), /*#__PURE__*/React.createElement("g", {
+    className: "wave-sparks"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "475",
+    cy: "42",
+    r: "2"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "538",
+    cy: "77",
+    r: "1.4"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "618",
+    cy: "36",
+    r: "1.2"
+  })));
+}
 function DashboardInputOption(_ref12) {
   var icon = _ref12.icon,
     title = _ref12.title,
@@ -1042,10 +1119,7 @@ function DashboardScreen(_ref17) {
     className: "ambient ambient-purple"
   }), /*#__PURE__*/React.createElement("div", {
     className: "ambient ambient-cyan"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "dashboard-neon-wave",
-    "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("span", null)), /*#__PURE__*/React.createElement(DashboardHeader, null), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement(NeonWave, null), /*#__PURE__*/React.createElement(DashboardHeader, null), /*#__PURE__*/React.createElement("div", {
     className: "dashboard-shell"
   }, /*#__PURE__*/React.createElement(DashboardHero, null), /*#__PURE__*/React.createElement(DashboardTools, {
     onCreatePresentation: onCreatePresentation,

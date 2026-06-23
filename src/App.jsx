@@ -592,6 +592,40 @@ function DashboardHeader() {
   );
 }
 
+function NeonWave() {
+  return (
+    <svg className="dashboard-neon-wave" viewBox="0 0 720 140" aria-hidden="true" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="waveBluePurple" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0%" stopColor="#005bff" stopOpacity="0" />
+          <stop offset="20%" stopColor="#008cff" stopOpacity="0.9" />
+          <stop offset="52%" stopColor="#00d8ff" stopOpacity="1" />
+          <stop offset="78%" stopColor="#7e35ff" stopOpacity="1" />
+          <stop offset="100%" stopColor="#b42cff" stopOpacity="0" />
+        </linearGradient>
+        <filter id="waveGlow" x="-20%" y="-80%" width="140%" height="260%">
+          <feGaussianBlur stdDeviation="3.2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g fill="none" strokeLinecap="round" filter="url(#waveGlow)">
+        <path className="wave-main" d="M0 72 C95 18 178 18 270 70 S455 124 560 66 S680 18 720 34" />
+        <path className="wave-cyan" d="M18 86 C118 30 190 34 288 78 S456 110 548 57 S668 26 720 44" />
+        <path className="wave-purple" d="M8 58 C112 84 188 78 286 50 S452 24 552 73 S674 104 720 82" />
+        <path className="wave-faint" d="M36 44 C128 58 220 62 310 42 S476 22 586 52 S684 83 720 76" />
+      </g>
+      <g className="wave-sparks">
+        <circle cx="475" cy="42" r="2" />
+        <circle cx="538" cy="77" r="1.4" />
+        <circle cx="618" cy="36" r="1.2" />
+      </g>
+    </svg>
+  );
+}
+
 function DashboardInputOption({ icon, title, copy, tone }) {
   return (
     <button className={`dash-input-option ${tone}`} type="button">
@@ -901,11 +935,7 @@ function DashboardScreen({
       <div className="ambient ambient-blue"></div>
       <div className="ambient ambient-purple"></div>
       <div className="ambient ambient-cyan"></div>
-      <div className="dashboard-neon-wave" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <NeonWave />
       <DashboardHeader />
       <div className="dashboard-shell">
         <DashboardHero />

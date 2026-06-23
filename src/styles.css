@@ -1915,40 +1915,41 @@ button {
 .dashboard-neon-wave {
   position: absolute;
   z-index: 3;
-  top: 38px;
-  right: -10px;
-  width: min(740px, 62vw);
-  height: 118px;
+  top: 48px;
+  right: -18px;
+  width: min(760px, 63vw);
+  height: 124px;
   pointer-events: none;
   opacity: 0.92;
-  overflow: hidden;
-  filter: drop-shadow(0 0 12px rgba(0, 148, 255, 0.58));
 }
 
-.dashboard-neon-wave span {
-  position: absolute;
-  left: 0;
-  right: -12%;
-  height: 104px;
-  border-top: 2px solid rgba(0, 174, 255, 0.82);
-  border-radius: 50%;
-  transform: rotate(-5deg);
+.dashboard-neon-wave path {
+  stroke: url(#waveBluePurple);
 }
 
-.dashboard-neon-wave span:nth-child(1) {
-  top: 6px;
+.dashboard-neon-wave .wave-main {
+  stroke-width: 2.4;
 }
 
-.dashboard-neon-wave span:nth-child(2) {
-  top: 20px;
-  border-color: rgba(0, 232, 255, 0.68);
-  transform: rotate(-2deg);
+.dashboard-neon-wave .wave-cyan {
+  stroke-width: 1.8;
+  opacity: 0.75;
 }
 
-.dashboard-neon-wave span:nth-child(3) {
-  top: 34px;
-  border-color: rgba(159, 44, 255, 0.68);
-  transform: rotate(3deg);
+.dashboard-neon-wave .wave-purple {
+  stroke-width: 1.5;
+  opacity: 0.62;
+}
+
+.dashboard-neon-wave .wave-faint {
+  stroke-width: 1;
+  opacity: 0.28;
+}
+
+.dashboard-neon-wave .wave-sparks {
+  fill: #78dfff;
+  filter: drop-shadow(0 0 5px rgba(0, 216, 255, 0.9));
+  opacity: 0.9;
 }
 
 .dashboard-screen .bottom-utility {
