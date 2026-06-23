@@ -1915,12 +1915,12 @@ button {
 .dashboard-neon-wave {
   position: absolute;
   z-index: 3;
-  top: 48px;
-  right: -18px;
-  width: min(760px, 63vw);
-  height: 124px;
+  top: 54px;
+  right: -48px;
+  width: min(700px, 56vw);
+  height: 104px;
   pointer-events: none;
-  opacity: 0.92;
+  opacity: 0.48;
 }
 
 .dashboard-neon-wave path {
@@ -1928,28 +1928,28 @@ button {
 }
 
 .dashboard-neon-wave .wave-main {
-  stroke-width: 2.4;
+  stroke-width: 1.35;
 }
 
 .dashboard-neon-wave .wave-cyan {
-  stroke-width: 1.8;
-  opacity: 0.75;
+  stroke-width: 1;
+  opacity: 0.48;
 }
 
 .dashboard-neon-wave .wave-purple {
-  stroke-width: 1.5;
-  opacity: 0.62;
+  stroke-width: 0.9;
+  opacity: 0.36;
 }
 
 .dashboard-neon-wave .wave-faint {
-  stroke-width: 1;
-  opacity: 0.28;
+  stroke-width: 0.65;
+  opacity: 0.16;
 }
 
 .dashboard-neon-wave .wave-sparks {
   fill: #78dfff;
-  filter: drop-shadow(0 0 5px rgba(0, 216, 255, 0.9));
-  opacity: 0.9;
+  filter: drop-shadow(0 0 4px rgba(0, 216, 255, 0.55));
+  opacity: 0.42;
 }
 
 .dashboard-screen .bottom-utility {
