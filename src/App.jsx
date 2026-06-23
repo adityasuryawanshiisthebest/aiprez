@@ -901,6 +901,11 @@ function DashboardScreen({
       <div className="ambient ambient-blue"></div>
       <div className="ambient ambient-purple"></div>
       <div className="ambient ambient-cyan"></div>
+      <div className="dashboard-neon-wave" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <DashboardHeader />
       <div className="dashboard-shell">
         <DashboardHero />

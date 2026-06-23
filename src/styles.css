@@ -1912,6 +1912,45 @@ button {
   mask-image: radial-gradient(circle at center, black, transparent 72%);
 }
 
+.dashboard-neon-wave {
+  position: absolute;
+  z-index: 3;
+  top: 38px;
+  right: -10px;
+  width: min(740px, 62vw);
+  height: 118px;
+  pointer-events: none;
+  opacity: 0.92;
+  overflow: hidden;
+  filter: drop-shadow(0 0 12px rgba(0, 148, 255, 0.58));
+}
+
+.dashboard-neon-wave span {
+  position: absolute;
+  left: 0;
+  right: -12%;
+  height: 104px;
+  border-top: 2px solid rgba(0, 174, 255, 0.82);
+  border-radius: 50%;
+  transform: rotate(-5deg);
+}
+
+.dashboard-neon-wave span:nth-child(1) {
+  top: 6px;
+}
+
+.dashboard-neon-wave span:nth-child(2) {
+  top: 20px;
+  border-color: rgba(0, 232, 255, 0.68);
+  transform: rotate(-2deg);
+}
+
+.dashboard-neon-wave span:nth-child(3) {
+  top: 34px;
+  border-color: rgba(159, 44, 255, 0.68);
+  transform: rotate(3deg);
+}
+
 .dashboard-screen .bottom-utility {
   position: fixed;
   z-index: 5;
@@ -4535,6 +4574,10 @@ button {
     max-width: calc(100vw - 62px);
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .dashboard-neon-wave {
+    display: none;
   }
 
   .dashboard-header .logo-block {

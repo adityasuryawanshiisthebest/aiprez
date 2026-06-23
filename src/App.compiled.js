@@ -1042,7 +1042,10 @@ function DashboardScreen(_ref17) {
     className: "ambient ambient-purple"
   }), /*#__PURE__*/React.createElement("div", {
     className: "ambient ambient-cyan"
-  }), /*#__PURE__*/React.createElement(DashboardHeader, null), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "dashboard-neon-wave",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("span", null)), /*#__PURE__*/React.createElement(DashboardHeader, null), /*#__PURE__*/React.createElement("div", {
     className: "dashboard-shell"
   }, /*#__PURE__*/React.createElement(DashboardHero, null), /*#__PURE__*/React.createElement(DashboardTools, {
     onCreatePresentation: onCreatePresentation,
