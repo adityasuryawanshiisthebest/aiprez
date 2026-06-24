@@ -1,11 +1,15 @@
 "use strict";
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -131,6 +135,60 @@ var PRESENTATION_SLIDES = [{
   subtitle: "The causes that sparked a new nation",
   thumb: "Conclusion"
 }];
+var BACKEND_MODEL_ID = "gpt-5.4-mini";
+var BACKEND_MODEL_LABEL = "GPT-5.4 Mini";
+function getAiprezApiUrl() {
+  var configuredBase = localStorage.getItem("aiprez_api_base") || window.AIPREZ_API_BASE || "";
+  if (configuredBase) {
+    return "".concat(configuredBase.replace(/\/$/, ""), "/api/ai");
+  }
+  return "/api/ai";
+}
+function callAiprezAI(_x, _x2) {
+  return _callAiprezAI.apply(this, arguments);
+}
+function _callAiprezAI() {
+  _callAiprezAI = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(tool, input) {
+    var context,
+      response,
+      payload,
+      _args2 = arguments;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          context = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : {};
+          _context2.n = 1;
+          return fetch(getAiprezApiUrl(), {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              tool: tool,
+              input: input,
+              context: context
+            })
+          });
+        case 1:
+          response = _context2.v;
+          _context2.n = 2;
+          return response.json()["catch"](function () {
+            return {};
+          });
+        case 2:
+          payload = _context2.v;
+          if (response.ok) {
+            _context2.n = 3;
+            break;
+          }
+          throw new Error(payload.error || "AIPREZ AI backend is not available yet.");
+        case 3:
+          return _context2.a(2, payload);
+      }
+    }, _callee2);
+  }));
+  return _callAiprezAI.apply(this, arguments);
+}
 function getNextSlide(index) {
   return (index + 1) % PRESENTATION_SLIDES.length;
 }
@@ -306,7 +364,7 @@ function TopBar(_ref7) {
     icon: WandSparkles,
     size: 17,
     strokeWidth: 1.75
-  }), /*#__PURE__*/React.createElement("span", null, "AI Model:"), /*#__PURE__*/React.createElement("strong", null, "OPUS 4.5"), /*#__PURE__*/React.createElement(Icon, {
+  }), /*#__PURE__*/React.createElement("span", null, "AI Model:"), /*#__PURE__*/React.createElement("strong", null, BACKEND_MODEL_LABEL), /*#__PURE__*/React.createElement(Icon, {
     icon: ChevronDown,
     size: 16,
     strokeWidth: 1.6
@@ -341,7 +399,7 @@ function AIAvatar() {
 function ProgressBar() {
   return /*#__PURE__*/React.createElement("div", {
     className: "progress-wrap",
-    "aria-label": "Generating your slides with OPUS 4.5, 72 percent complete"
+    "aria-label": "Generating your slides with ".concat(BACKEND_MODEL_LABEL, ", 72 percent complete")
   }, /*#__PURE__*/React.createElement("div", {
     className: "progress-track"
   }, /*#__PURE__*/React.createElement("span", {
@@ -362,7 +420,7 @@ function OutlineCard() {
     }, item);
   })), /*#__PURE__*/React.createElement("div", {
     className: "generation-status"
-  }, /*#__PURE__*/React.createElement("p", null, "Generating your slides with OPUS 4.5..."), /*#__PURE__*/React.createElement(ProgressBar, null)));
+  }, /*#__PURE__*/React.createElement("p", null, "Generating your slides with ", BACKEND_MODEL_LABEL, "..."), /*#__PURE__*/React.createElement(ProgressBar, null)));
 }
 function ChatMessageAI(_ref8) {
   var _ref8$complete = _ref8.complete,
@@ -375,7 +433,7 @@ function ChatMessageAI(_ref8) {
     className: "ai-message-header"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "AIPREZ AI"), /*#__PURE__*/React.createElement("time", null, complete ? "2:36 PM" : "2:35 PM")), !complete && /*#__PURE__*/React.createElement("span", {
     className: "opus-badge"
-  }, "OPUS 4.5")), complete ? /*#__PURE__*/React.createElement("div", {
+  }, BACKEND_MODEL_LABEL)), complete ? /*#__PURE__*/React.createElement("div", {
     className: "completion-line"
   }, /*#__PURE__*/React.createElement("p", null, "Your 10-slide presentation is ready! You can preview it, edit slides, or ask me to make changes."), /*#__PURE__*/React.createElement("button", {
     className: "preview-button",
@@ -433,7 +491,7 @@ function ChatComposer() {
   }, /*#__PURE__*/React.createElement("button", {
     className: "composer-model",
     type: "button"
-  }, "OPUS 4.5 ", /*#__PURE__*/React.createElement(Icon, {
+  }, BACKEND_MODEL_LABEL, " ", /*#__PURE__*/React.createElement(Icon, {
     icon: ChevronDown,
     size: 16,
     strokeWidth: 1.6
@@ -686,7 +744,7 @@ function ChatWorkspace(_ref11) {
     onBack: onBack
   }), /*#__PURE__*/React.createElement("section", {
     className: "chat-thread",
-    "aria-label": "Create Presentation chat with OPUS 4.5"
+    "aria-label": "Create Presentation chat with ".concat(BACKEND_MODEL_LABEL)
   }, /*#__PURE__*/React.createElement(ChatMessageUser, null), /*#__PURE__*/React.createElement(ChatMessageAI, null), /*#__PURE__*/React.createElement(ChatMessageAI, {
     complete: true
   })), /*#__PURE__*/React.createElement(ChatComposer, null), /*#__PURE__*/React.createElement("p", {
@@ -1170,7 +1228,7 @@ function CreatePresentationScreen(_ref18) {
     onBack: onBack,
     mode: "create",
     title: "Create Presentation",
-    subtitle: "Preview, generate, and refine your academic presentation with OPUS 4.5.",
+    subtitle: "Preview, generate, and refine your academic presentation with ".concat(BACKEND_MODEL_LABEL, "."),
     settingsLabel: "Presentation Settings"
   }));
 }
@@ -1211,7 +1269,7 @@ function HumanizerTopBar(_ref19) {
     icon: WandSparkles,
     size: 17,
     strokeWidth: 1.75
-  }), /*#__PURE__*/React.createElement("span", null, "AI Model:"), /*#__PURE__*/React.createElement("strong", null, "OPUS 4.5"), /*#__PURE__*/React.createElement(Icon, {
+  }), /*#__PURE__*/React.createElement("span", null, "AI Model:"), /*#__PURE__*/React.createElement("strong", null, BACKEND_MODEL_LABEL), /*#__PURE__*/React.createElement(Icon, {
     icon: ChevronDown,
     size: 16,
     strokeWidth: 1.6
@@ -1362,11 +1420,21 @@ function InstructionComposer(_ref23) {
     _ref23$icon = _ref23.icon,
     icon = _ref23$icon === void 0 ? Sparkles : _ref23$icon,
     _ref23$placeholder = _ref23.placeholder,
-    placeholder = _ref23$placeholder === void 0 ? "Type your instructions here..." : _ref23$placeholder;
+    placeholder = _ref23$placeholder === void 0 ? "Type your instructions here..." : _ref23$placeholder,
+    _ref23$tool = _ref23.tool,
+    tool = _ref23$tool === void 0 ? "humanizer" : _ref23$tool;
   var _React$useState11 = React.useState(""),
     _React$useState12 = _slicedToArray(_React$useState11, 2),
     instructions = _React$useState12[0],
     setInstructions = _React$useState12[1];
+  var _React$useState13 = React.useState(""),
+    _React$useState14 = _slicedToArray(_React$useState13, 2),
+    aiResult = _React$useState14[0],
+    setAiResult = _React$useState14[1];
+  var _React$useState15 = React.useState("idle"),
+    _React$useState16 = _slicedToArray(_React$useState15, 2),
+    status = _React$useState16[0],
+    setStatus = _React$useState16[1];
   var maxCharacters = 1000;
   var keepViewportPinned = function keepViewportPinned() {
     requestAnimationFrame(function () {
@@ -1376,6 +1444,47 @@ function InstructionComposer(_ref23) {
       return window.scrollTo(0, 0);
     }, 40);
   };
+  var submitInstructions = /*#__PURE__*/function () {
+    var _ref24 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var trimmed, result, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            trimmed = instructions.trim();
+            if (!(!trimmed || status === "loading")) {
+              _context.n = 1;
+              break;
+            }
+            return _context.a(2);
+          case 1:
+            setStatus("loading");
+            setAiResult("");
+            _context.p = 2;
+            _context.n = 3;
+            return callAiprezAI(tool, trimmed, {
+              app: "AIPREZ",
+              model: BACKEND_MODEL_ID
+            });
+          case 3:
+            result = _context.v;
+            setAiResult(result.output || "AIPREZ AI finished, but no response text was returned.");
+            setStatus("complete");
+            _context.n = 5;
+            break;
+          case 4:
+            _context.p = 4;
+            _t = _context.v;
+            setAiResult("".concat(_t.message, " If this is running on GitHub Pages, deploy the repo on Vercel and set OPENAI_API_KEY there."));
+            setStatus("error");
+          case 5:
+            return _context.a(2);
+        }
+      }, _callee, null, [[2, 4]]);
+    }));
+    return function submitInstructions() {
+      return _ref24.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/React.createElement("div", {
     className: "humanizer-composer"
   }, /*#__PURE__*/React.createElement("textarea", {
@@ -1389,17 +1498,21 @@ function InstructionComposer(_ref23) {
     },
     placeholder: placeholder,
     "aria-label": label
-  }), /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), /*#__PURE__*/React.createElement("button", {
-    type: "button"
+  }), /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), aiResult && /*#__PURE__*/React.createElement("p", {
+    className: "ai-result ".concat(status === "error" ? "error" : "")
+  }, aiResult), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    disabled: status === "loading" || !instructions.trim(),
+    onClick: submitInstructions
   }, /*#__PURE__*/React.createElement(Icon, {
     icon: icon,
     size: 22,
     strokeWidth: 1.6
-  }), buttonLabel || (isCreate ? "Create Presentation" : "Humanize Presentation")));
+  }), status === "loading" ? "Thinking..." : buttonLabel || (isCreate ? "Create Presentation" : "Humanize Presentation")));
 }
-function AISpecifications(_ref24) {
-  var _ref24$mode = _ref24.mode,
-    mode = _ref24$mode === void 0 ? "humanizer" : _ref24$mode;
+function AISpecifications(_ref25) {
+  var _ref25$mode = _ref25.mode,
+    mode = _ref25$mode === void 0 ? "humanizer" : _ref25$mode;
   var isCreate = mode === "create";
   return /*#__PURE__*/React.createElement("aside", {
     className: "ai-spec-panel glass"
@@ -1420,16 +1533,17 @@ function AISpecifications(_ref24) {
     time: "2:42 PM"
   }, isCreate ? "Got it! I'll generate and refine your presentation based on your instructions." : "Got it! I'll humanize your presentation based on your instructions.")), /*#__PURE__*/React.createElement(InstructionComposer, {
     isCreate: isCreate,
-    label: isCreate ? "Create presentation instructions" : "Humanizer instructions"
+    label: isCreate ? "Create presentation instructions" : "Humanizer instructions",
+    tool: isCreate ? "create-presentation" : "humanizer"
   }));
 }
-function HumanizerWorkspace(_ref25) {
-  var onBack = _ref25.onBack,
-    _ref25$mode = _ref25.mode,
-    mode = _ref25$mode === void 0 ? "humanizer" : _ref25$mode,
-    title = _ref25.title,
-    subtitle = _ref25.subtitle,
-    settingsLabel = _ref25.settingsLabel;
+function HumanizerWorkspace(_ref26) {
+  var onBack = _ref26.onBack,
+    _ref26$mode = _ref26.mode,
+    mode = _ref26$mode === void 0 ? "humanizer" : _ref26$mode,
+    title = _ref26.title,
+    subtitle = _ref26.subtitle,
+    settingsLabel = _ref26.settingsLabel;
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1459,10 +1573,10 @@ function Waveform() {
     });
   }));
 }
-function RecordingControl(_ref26) {
-  var icon = _ref26.icon,
-    label = _ref26.label,
-    danger = _ref26.danger;
+function RecordingControl(_ref27) {
+  var icon = _ref27.icon,
+    label = _ref27.label,
+    danger = _ref27.danger;
   return /*#__PURE__*/React.createElement("button", {
     className: "recording-control ".concat(danger ? "danger" : ""),
     type: "button",
@@ -1473,9 +1587,9 @@ function RecordingControl(_ref26) {
     strokeWidth: 1.7
   }), label === "Bookmark" && /*#__PURE__*/React.createElement("span", null, label));
 }
-function TranscriptColumn(_ref27) {
-  var language = _ref27.language,
-    rows = _ref27.rows;
+function TranscriptColumn(_ref28) {
+  var language = _ref28.language,
+    rows = _ref28.rows;
   return /*#__PURE__*/React.createElement("section", {
     className: "transcript-column glass"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1572,8 +1686,8 @@ function RecordingPanel() {
     rows: spanishRows
   })));
 }
-function LiveNotesAction(_ref28) {
-  var children = _ref28.children;
+function LiveNotesAction(_ref29) {
+  var children = _ref29.children;
   return /*#__PURE__*/React.createElement("button", {
     className: "live-action-card",
     type: "button"
@@ -1587,8 +1701,8 @@ function LiveNotesAction(_ref28) {
     strokeWidth: 1.6
   }));
 }
-function LiveNotesBotMessage(_ref29) {
-  var children = _ref29.children;
+function LiveNotesBotMessage(_ref30) {
+  var children = _ref30.children;
   return /*#__PURE__*/React.createElement("article", {
     className: "live-notes-bot-message"
   }, /*#__PURE__*/React.createElement("span", {
@@ -1617,11 +1731,12 @@ function LiveNotesSpecifications() {
   })), /*#__PURE__*/React.createElement("h3", null, "Create Live Notes")), /*#__PURE__*/React.createElement(InstructionComposer, {
     label: "Live notes instructions",
     buttonLabel: "Create Live Notes",
-    icon: Mic
+    icon: Mic,
+    tool: "live-notes"
   })));
 }
-function LiveNotesWorkspace(_ref30) {
-  var onBack = _ref30.onBack;
+function LiveNotesWorkspace(_ref31) {
+  var onBack = _ref31.onBack;
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace live-notes-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1635,12 +1750,12 @@ function LiveNotesWorkspace(_ref30) {
     className: "humanizer-content live-notes-content"
   }, /*#__PURE__*/React.createElement(RecordingPanel, null), /*#__PURE__*/React.createElement(LiveNotesSpecifications, null)), /*#__PURE__*/React.createElement(BottomUtilityBar, null));
 }
-function LiveNotesScreen(_ref31) {
-  var onBack = _ref31.onBack,
-    onCreatePresentation = _ref31.onCreatePresentation,
-    onOpenHumanizer = _ref31.onOpenHumanizer,
-    onOpenLiveNotes = _ref31.onOpenLiveNotes,
-    onOpenAnalyzer = _ref31.onOpenAnalyzer;
+function LiveNotesScreen(_ref32) {
+  var onBack = _ref32.onBack,
+    onCreatePresentation = _ref32.onCreatePresentation,
+    onOpenHumanizer = _ref32.onOpenHumanizer,
+    onOpenLiveNotes = _ref32.onOpenLiveNotes,
+    onOpenAnalyzer = _ref32.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1660,10 +1775,10 @@ function LiveNotesScreen(_ref31) {
   }));
 }
 function AnalyzerSlideDeck() {
-  var _React$useState13 = React.useState(0),
-    _React$useState14 = _slicedToArray(_React$useState13, 2),
-    activeSlide = _React$useState14[0],
-    setActiveSlide = _React$useState14[1];
+  var _React$useState17 = React.useState(0),
+    _React$useState18 = _slicedToArray(_React$useState17, 2),
+    activeSlide = _React$useState18[0],
+    setActiveSlide = _React$useState18[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   var thumbs = PRESENTATION_SLIDES.slice(0, 6);
   return /*#__PURE__*/React.createElement("section", {
@@ -1729,11 +1844,11 @@ function AnalyzerSlideDeck() {
     className: "analyzer-slide-count"
   }, "Slide ", activeSlide + 1, " of ", PRESENTATION_SLIDES.length));
 }
-function AnalyzerScoreCard(_ref32) {
-  var icon = _ref32.icon,
-    label = _ref32.label,
-    score = _ref32.score,
-    tone = _ref32.tone;
+function AnalyzerScoreCard(_ref33) {
+  var icon = _ref33.icon,
+    label = _ref33.label,
+    score = _ref33.score,
+    tone = _ref33.tone;
   return /*#__PURE__*/React.createElement("article", {
     className: "analyzer-score-card glass ".concat(tone)
   }, /*#__PURE__*/React.createElement("header", null, /*#__PURE__*/React.createElement(Icon, {
@@ -1790,8 +1905,8 @@ function AnalyzerMainPanel() {
     strokeWidth: 1.65
   }), "Review your presentation and use the AI panel to get suggestions and feedback."));
 }
-function AnalyzerActionBubble(_ref33) {
-  var children = _ref33.children;
+function AnalyzerActionBubble(_ref34) {
+  var children = _ref34.children;
   return /*#__PURE__*/React.createElement("div", {
     className: "analyzer-user-bubble glass"
   }, children);
@@ -1831,11 +1946,12 @@ function AnalyzerSpecifications() {
     label: "Analyzer specifications",
     placeholder: "Type your specifications here...",
     buttonLabel: "Analyze Presentation",
-    icon: Sparkles
+    icon: Sparkles,
+    tool: "analyzer"
   }));
 }
-function AnalyzerWorkspace(_ref34) {
-  var onBack = _ref34.onBack;
+function AnalyzerWorkspace(_ref35) {
+  var onBack = _ref35.onBack;
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace analyzer-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1849,12 +1965,12 @@ function AnalyzerWorkspace(_ref34) {
     className: "humanizer-content analyzer-content"
   }, /*#__PURE__*/React.createElement(AnalyzerMainPanel, null), /*#__PURE__*/React.createElement(AnalyzerSpecifications, null)), /*#__PURE__*/React.createElement(BottomUtilityBar, null));
 }
-function AnalyzerScreen(_ref35) {
-  var onBack = _ref35.onBack,
-    onCreatePresentation = _ref35.onCreatePresentation,
-    onOpenHumanizer = _ref35.onOpenHumanizer,
-    onOpenLiveNotes = _ref35.onOpenLiveNotes,
-    onOpenAnalyzer = _ref35.onOpenAnalyzer;
+function AnalyzerScreen(_ref36) {
+  var onBack = _ref36.onBack,
+    onCreatePresentation = _ref36.onCreatePresentation,
+    onOpenHumanizer = _ref36.onOpenHumanizer,
+    onOpenLiveNotes = _ref36.onOpenLiveNotes,
+    onOpenAnalyzer = _ref36.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1873,12 +1989,12 @@ function AnalyzerScreen(_ref35) {
     onBack: onBack
   }));
 }
-function PresentationViewerScreen(_ref36) {
-  var onBack = _ref36.onBack;
-  var _React$useState15 = React.useState(0),
-    _React$useState16 = _slicedToArray(_React$useState15, 2),
-    activeSlide = _React$useState16[0],
-    setActiveSlide = _React$useState16[1];
+function PresentationViewerScreen(_ref37) {
+  var onBack = _ref37.onBack;
+  var _React$useState19 = React.useState(0),
+    _React$useState20 = _slicedToArray(_React$useState19, 2),
+    activeSlide = _React$useState20[0],
+    setActiveSlide = _React$useState20[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   React.useEffect(function () {
     var handleKeyDown = function handleKeyDown(event) {
@@ -1950,12 +2066,12 @@ function PresentationViewerScreen(_ref36) {
     className: "viewer-slide-status"
   }, "Slide ", activeSlide + 1, " of ", PRESENTATION_SLIDES.length));
 }
-function HumanizerScreen(_ref37) {
-  var onBack = _ref37.onBack,
-    onCreatePresentation = _ref37.onCreatePresentation,
-    onOpenHumanizer = _ref37.onOpenHumanizer,
-    onOpenLiveNotes = _ref37.onOpenLiveNotes,
-    onOpenAnalyzer = _ref37.onOpenAnalyzer;
+function HumanizerScreen(_ref38) {
+  var onBack = _ref38.onBack,
+    onCreatePresentation = _ref38.onCreatePresentation,
+    onOpenHumanizer = _ref38.onOpenHumanizer,
+    onOpenLiveNotes = _ref38.onOpenLiveNotes,
+    onOpenAnalyzer = _ref38.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1974,8 +2090,8 @@ function HumanizerScreen(_ref37) {
     onBack: onBack
   }));
 }
-function SettingsSidebar(_ref38) {
-  var onBack = _ref38.onBack;
+function SettingsSidebar(_ref39) {
+  var onBack = _ref39.onBack;
   var recent = [["The Future of Renewable Energy", "Edited 2h ago", UserRound, "blue"], ["Genetics & Inheritance Patterns", "Edited 1d ago", UserCog, "purple"], ["Rise and Fall of Ancient Civilizations", "Edited 2d ago", Box, "cyan"], ["Social Media Impact on Teens", "Edited 3d ago", FileText, "purple"]];
   var tools = [["Presentation Creator", Presentation, "cyan"], ["Humanizer", Sparkles, "purple"], ["Live Notes", Mic, "cyan"], ["Presentation Analyzer", ChartNoAxesCombined, "purple"], ["History", History, "gold"]];
   return /*#__PURE__*/React.createElement("aside", {
@@ -1992,12 +2108,12 @@ function SettingsSidebar(_ref38) {
     className: "settings-sidebar-section"
   }, /*#__PURE__*/React.createElement("h2", null, "Recent Presentations"), /*#__PURE__*/React.createElement("div", {
     className: "settings-recent-list"
-  }, recent.map(function (_ref39, index) {
-    var _ref40 = _slicedToArray(_ref39, 4),
-      title = _ref40[0],
-      edited = _ref40[1],
-      icon = _ref40[2],
-      tone = _ref40[3];
+  }, recent.map(function (_ref40, index) {
+    var _ref41 = _slicedToArray(_ref40, 4),
+      title = _ref41[0],
+      edited = _ref41[1],
+      icon = _ref41[2],
+      tone = _ref41[3];
     return /*#__PURE__*/React.createElement("button", {
       className: index === 0 ? "selected" : "",
       type: "button",
@@ -2020,11 +2136,11 @@ function SettingsSidebar(_ref38) {
     className: "settings-sidebar-section tools"
   }, /*#__PURE__*/React.createElement("h2", null, "Tools"), /*#__PURE__*/React.createElement("div", {
     className: "settings-tool-list"
-  }, tools.map(function (_ref41) {
-    var _ref42 = _slicedToArray(_ref41, 3),
-      label = _ref42[0],
-      icon = _ref42[1],
-      tone = _ref42[2];
+  }, tools.map(function (_ref42) {
+    var _ref43 = _slicedToArray(_ref42, 3),
+      label = _ref43[0],
+      icon = _ref43[1],
+      tone = _ref43[2];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2044,10 +2160,10 @@ function SettingsSidebar(_ref38) {
     strokeWidth: 1.6
   })));
 }
-function AccountSettingsWorkspace(_ref43) {
-  var onBack = _ref43.onBack,
-    _ref43$mode = _ref43.mode,
-    mode = _ref43$mode === void 0 ? "settings" : _ref43$mode;
+function AccountSettingsWorkspace(_ref44) {
+  var onBack = _ref44.onBack,
+    _ref44$mode = _ref44.mode,
+    mode = _ref44$mode === void 0 ? "settings" : _ref44$mode;
   var accountRows = [["Personal Information", "Update your name, email, and details", UserRound, "blue"], ["Security", "Password, 2FA, and login activity", Settings, "cyan"], ["Notifications", "Manage email and app notifications", Bell, "purple"], ["Privacy", "Control your data and privacy settings", UserCog, "purple"], ["Linked Accounts", "Connect Google, Microsoft, and more", BookOpen, "purple"], ["Appearance", "Choose theme and display options", Monitor, "purple"], ["Language", "Select your preferred language", CircleHelp, "purple"]];
   var recentLogins = [["MacBook Pro 14” Dover, NH", "This device", "Now"], ["iPhone 15 Pro – Dover, NH", "", "May 17, 2025"], ["iPad Air – Boston, MA", "", "May 12, 2025"]];
   return /*#__PURE__*/React.createElement("main", {
@@ -2116,13 +2232,13 @@ function AccountSettingsWorkspace(_ref43) {
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "billing-stats"
-  }, [["Storage Used", "12.4 GB / 100 GB", "20%", CreditCard, "purple"], ["AI Credits", "8,450 / 10,000", "78%", Sparkles, "cyan"], ["Usage This Month", "78%", "78%", ChartNoAxesCombined, "purple"]].map(function (_ref44) {
-    var _ref45 = _slicedToArray(_ref44, 5),
-      label = _ref45[0],
-      value = _ref45[1],
-      percent = _ref45[2],
-      icon = _ref45[3],
-      tone = _ref45[4];
+  }, [["Storage Used", "12.4 GB / 100 GB", "20%", CreditCard, "purple"], ["AI Credits", "8,450 / 10,000", "78%", Sparkles, "cyan"], ["Usage This Month", "78%", "78%", ChartNoAxesCombined, "purple"]].map(function (_ref45) {
+    var _ref46 = _slicedToArray(_ref45, 5),
+      label = _ref46[0],
+      value = _ref46[1],
+      percent = _ref46[2],
+      icon = _ref46[3],
+      tone = _ref46[4];
     return /*#__PURE__*/React.createElement("div", {
       className: "billing-stat",
       key: label
@@ -2145,12 +2261,12 @@ function AccountSettingsWorkspace(_ref43) {
     className: "settings-panel settings-account-panel glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Account Settings"), /*#__PURE__*/React.createElement("div", {
     className: "settings-row-list"
-  }, accountRows.map(function (_ref46) {
-    var _ref47 = _slicedToArray(_ref46, 4),
-      title = _ref47[0],
-      copy = _ref47[1],
-      icon = _ref47[2],
-      tone = _ref47[3];
+  }, accountRows.map(function (_ref47) {
+    var _ref48 = _slicedToArray(_ref47, 4),
+      title = _ref48[0],
+      copy = _ref48[1],
+      icon = _ref48[2],
+      tone = _ref48[3];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: title
@@ -2175,11 +2291,11 @@ function AccountSettingsWorkspace(_ref43) {
     strokeWidth: 1.6
   })), /*#__PURE__*/React.createElement("div", {
     className: "settings-preference-list"
-  }, [["AI Model", "OPUS 4.5", Sparkles], ["Response Style", "Balanced", NotebookText], ["Default Tone", "Academic", Mic]].map(function (_ref48) {
-    var _ref49 = _slicedToArray(_ref48, 3),
-      label = _ref49[0],
-      value = _ref49[1],
-      icon = _ref49[2];
+  }, [["AI Model", BACKEND_MODEL_LABEL, Sparkles], ["Response Style", "Balanced", NotebookText], ["Default Tone", "Academic", Mic]].map(function (_ref49) {
+    var _ref50 = _slicedToArray(_ref49, 3),
+      label = _ref50[0],
+      value = _ref50[1],
+      icon = _ref50[2];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2206,11 +2322,11 @@ function AccountSettingsWorkspace(_ref43) {
     className: "settings-panel glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Recent Login Activity"), /*#__PURE__*/React.createElement("div", {
     className: "login-list"
-  }, recentLogins.map(function (_ref50) {
-    var _ref51 = _slicedToArray(_ref50, 3),
-      device = _ref51[0],
-      badge = _ref51[1],
-      date = _ref51[2];
+  }, recentLogins.map(function (_ref51) {
+    var _ref52 = _slicedToArray(_ref51, 3),
+      device = _ref52[0],
+      badge = _ref52[1],
+      date = _ref52[2];
     return /*#__PURE__*/React.createElement("div", {
       className: "login-row",
       key: device
@@ -2230,10 +2346,10 @@ function AccountSettingsWorkspace(_ref43) {
     className: "settings-panel settings-quick-card glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Quick Actions"), /*#__PURE__*/React.createElement("div", {
     className: "settings-quick-list"
-  }, [["Export My Data", FileText], ["Download My Presentations", Upload], ["Manage Devices", Monitor]].map(function (_ref52) {
-    var _ref53 = _slicedToArray(_ref52, 2),
-      label = _ref53[0],
-      icon = _ref53[1];
+  }, [["Export My Data", FileText], ["Download My Presentations", Upload], ["Manage Devices", Monitor]].map(function (_ref53) {
+    var _ref54 = _slicedToArray(_ref53, 2),
+      label = _ref54[0],
+      icon = _ref54[1];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2291,9 +2407,9 @@ function AccountSettingsWorkspace(_ref43) {
     strokeWidth: 1.55
   }), "Settings"))));
 }
-function AccountSettingsScreen(_ref54) {
-  var onBack = _ref54.onBack,
-    mode = _ref54.mode;
+function AccountSettingsScreen(_ref55) {
+  var onBack = _ref55.onBack,
+    mode = _ref55.mode;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2310,13 +2426,13 @@ function AccountSettingsScreen(_ref54) {
   }));
 }
 function App() {
-  var _React$useState17 = React.useState(function () {
+  var _React$useState21 = React.useState(function () {
       var params = new URLSearchParams(window.location.search);
       return params.get("screen") || "dashboard";
     }),
-    _React$useState18 = _slicedToArray(_React$useState17, 2),
-    screen = _React$useState18[0],
-    setScreen = _React$useState18[1];
+    _React$useState22 = _slicedToArray(_React$useState21, 2),
+    screen = _React$useState22[0],
+    setScreen = _React$useState22[1];
   React.useEffect(function () {
     var updateScale = function updateScale() {
       var isPhone = window.innerWidth <= 760;

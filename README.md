@@ -26,3 +26,15 @@ http://localhost:4173
 - Presentation Viewer
 - Account Settings
 
+## AI Backend
+
+The frontend can call a serverless backend at `/api/ai`.
+
+For a real LLM connection, deploy this repo on Vercel and set these environment variables:
+
+```text
+OPENAI_API_KEY=your_openai_key
+AIPREZ_MODEL=gpt-5.4-mini
+```
+
+The app keeps API keys off the browser. GitHub Pages can still host the static UI, but GitHub Pages cannot run `/api/ai`.

@@ -121,6 +121,33 @@ const PRESENTATION_SLIDES = [
   },
 ];
 
+const BACKEND_MODEL_ID = "gpt-5.4-mini";
+const BACKEND_MODEL_LABEL = "GPT-5.4 Mini";
+
+function getAiprezApiUrl() {
+  const configuredBase = localStorage.getItem("aiprez_api_base") || window.AIPREZ_API_BASE || "";
+  if (configuredBase) {
+    return `${configuredBase.replace(/\/$/, "")}/api/ai`;
+  }
+  return "/api/ai";
+}
+
+async function callAiprezAI(tool, input, context = {}) {
+  const response = await fetch(getAiprezApiUrl(), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ tool, input, context }),
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error || "AIPREZ AI backend is not available yet.");
+  }
+  return payload;
+}
+
 function getNextSlide(index) {
   return (index + 1) % PRESENTATION_SLIDES.length;
 }
@@ -260,7 +287,7 @@ function TopBar({ onBack }) {
         <button className="model-pill" type="button">
           <Icon icon={WandSparkles} size={17} strokeWidth={1.75} />
           <span>AI Model:</span>
-          <strong>OPUS 4.5</strong>
+          <strong>{BACKEND_MODEL_LABEL}</strong>
           <Icon icon={ChevronDown} size={16} strokeWidth={1.6} />
         </button>
       </div>
@@ -302,7 +329,7 @@ function AIAvatar() {
 
 function ProgressBar() {
   return (
-    <div className="progress-wrap" aria-label="Generating your slides with OPUS 4.5, 72 percent complete">
+    <div className="progress-wrap" aria-label={`Generating your slides with ${BACKEND_MODEL_LABEL}, 72 percent complete`}>
       <div className="progress-track">
         <span className="progress-fill"></span>
       </div>
@@ -337,7 +364,7 @@ function OutlineCard() {
         ))}
       </ol>
       <div className="generation-status">
-        <p>Generating your slides with OPUS 4.5...</p>
+        <p>Generating your slides with {BACKEND_MODEL_LABEL}...</p>
         <ProgressBar />
       </div>
     </section>
@@ -354,7 +381,7 @@ function ChatMessageAI({ complete = false }) {
             <strong>AIPREZ AI</strong>
             <time>{complete ? "2:36 PM" : "2:35 PM"}</time>
           </div>
-          {!complete && <span className="opus-badge">OPUS 4.5</span>}
+          {!complete && <span className="opus-badge">{BACKEND_MODEL_LABEL}</span>}
         </div>
         {complete ? (
           <div className="completion-line">
@@ -401,7 +428,7 @@ function ChatComposer() {
         </div>
         <div className="send-controls">
           <button className="composer-model" type="button">
-            OPUS 4.5 <Icon icon={ChevronDown} size={16} strokeWidth={1.6} />
+            {BACKEND_MODEL_LABEL} <Icon icon={ChevronDown} size={16} strokeWidth={1.6} />
           </button>
           <button className="send-button" type="button" aria-label="Send message">
             <Icon icon={SendHorizontal} size={23} strokeWidth={1.8} />
@@ -572,7 +599,7 @@ function ChatWorkspace({ onBack }) {
   return (
     <main className="workspace">
       <TopBar onBack={onBack} />
-      <section className="chat-thread" aria-label="Create Presentation chat with OPUS 4.5">
+      <section className="chat-thread" aria-label={`Create Presentation chat with ${BACKEND_MODEL_LABEL}`}>
         <ChatMessageUser />
         <ChatMessageAI />
         <ChatMessageAI complete />
@@ -984,7 +1011,7 @@ function CreatePresentationScreen({ onBack, onOpenHumanizer, onOpenLiveNotes, on
         onBack={onBack}
         mode="create"
         title="Create Presentation"
-        subtitle="Preview, generate, and refine your academic presentation with OPUS 4.5."
+        subtitle={`Preview, generate, and refine your academic presentation with ${BACKEND_MODEL_LABEL}.`}
         settingsLabel="Presentation Settings"
       />
     </div>
@@ -1017,7 +1044,7 @@ function HumanizerTopBar({
       <button className="model-pill" type="button">
         <Icon icon={WandSparkles} size={17} strokeWidth={1.75} />
         <span>AI Model:</span>
-        <strong>OPUS 4.5</strong>
+        <strong>{BACKEND_MODEL_LABEL}</strong>
         <Icon icon={ChevronDown} size={16} strokeWidth={1.6} />
       </button>
       <button className="settings-button" type="button">
@@ -1127,12 +1154,40 @@ function HumanizerMessage({ children, ai, time, aiIcon = Sparkles }) {
   );
 }
 
-function InstructionComposer({ isCreate, label, buttonLabel, icon = Sparkles, placeholder = "Type your instructions here..." }) {
+function InstructionComposer({
+  isCreate,
+  label,
+  buttonLabel,
+  icon = Sparkles,
+  placeholder = "Type your instructions here...",
+  tool = "humanizer",
+}) {
   const [instructions, setInstructions] = React.useState("");
+  const [aiResult, setAiResult] = React.useState("");
+  const [status, setStatus] = React.useState("idle");
   const maxCharacters = 1000;
   const keepViewportPinned = () => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
     window.setTimeout(() => window.scrollTo(0, 0), 40);
+  };
+  const submitInstructions = async () => {
+    const trimmed = instructions.trim();
+    if (!trimmed || status === "loading") return;
+    setStatus("loading");
+    setAiResult("");
+    try {
+      const result = await callAiprezAI(tool, trimmed, {
+        app: "AIPREZ",
+        model: BACKEND_MODEL_ID,
+      });
+      setAiResult(result.output || "AIPREZ AI finished, but no response text was returned.");
+      setStatus("complete");
+    } catch (error) {
+      setAiResult(
+        `${error.message} If this is running on GitHub Pages, deploy the repo on Vercel and set OPENAI_API_KEY there.`
+      );
+      setStatus("error");
+    }
   };
 
   return (
@@ -1152,9 +1207,10 @@ function InstructionComposer({ isCreate, label, buttonLabel, icon = Sparkles, pl
       <span>
         {instructions.length} / {maxCharacters}
       </span>
-      <button type="button">
+      {aiResult && <p className={`ai-result ${status === "error" ? "error" : ""}`}>{aiResult}</p>}
+      <button type="button" disabled={status === "loading" || !instructions.trim()} onClick={submitInstructions}>
         <Icon icon={icon} size={22} strokeWidth={1.6} />
-        {buttonLabel || (isCreate ? "Create Presentation" : "Humanize Presentation")}
+        {status === "loading" ? "Thinking..." : buttonLabel || (isCreate ? "Create Presentation" : "Humanize Presentation")}
       </button>
     </div>
   );
@@ -1195,6 +1251,7 @@ function AISpecifications({ mode = "humanizer" }) {
       <InstructionComposer
         isCreate={isCreate}
         label={isCreate ? "Create presentation instructions" : "Humanizer instructions"}
+        tool={isCreate ? "create-presentation" : "humanizer"}
       />
     </aside>
   );
@@ -1343,7 +1400,7 @@ function LiveNotesSpecifications() {
           </span>
           <h3>Create Live Notes</h3>
         </div>
-        <InstructionComposer label="Live notes instructions" buttonLabel="Create Live Notes" icon={Mic} />
+        <InstructionComposer label="Live notes instructions" buttonLabel="Create Live Notes" icon={Mic} tool="live-notes" />
       </div>
     </aside>
   );
@@ -1530,6 +1587,7 @@ function AnalyzerSpecifications() {
         placeholder="Type your specifications here..."
         buttonLabel="Analyze Presentation"
         icon={Sparkles}
+        tool="analyzer"
       />
     </aside>
   );
@@ -1850,7 +1908,7 @@ function AccountSettingsWorkspace({ onBack, mode = "settings" }) {
             </h3>
             <div className="settings-preference-list">
               {[
-                ["AI Model", "OPUS 4.5", Sparkles],
+                ["AI Model", BACKEND_MODEL_LABEL, Sparkles],
                 ["Response Style", "Balanced", NotebookText],
                 ["Default Tone", "Academic", Mic],
               ].map(([label, value, icon]) => (
