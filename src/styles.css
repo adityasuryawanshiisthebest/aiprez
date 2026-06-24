@@ -2293,23 +2293,16 @@ button {
 
 .dash-empty-presentations {
   grid-column: 1 / -1;
-  min-height: 64px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  color: rgba(225, 236, 255, 0.78);
-  border-style: dashed;
-}
-
-.dash-empty-presentations svg {
-  color: #00d7ff;
-  filter: drop-shadow(0 0 9px rgba(0, 216, 255, 0.34));
+  color: rgba(194, 209, 235, 0.46);
 }
 
 .dash-empty-presentations span {
-  font-size: 0.96rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 .dash-recent-card {

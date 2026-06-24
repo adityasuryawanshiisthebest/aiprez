@@ -924,8 +924,7 @@ function DashboardRecent({
             />
           ))
         ) : (
-          <div className="dash-empty-presentations glass">
-            <Icon icon={Presentation} size={25} strokeWidth={1.6} />
+          <div className="dash-empty-presentations">
             <span>There are no presentations yet.</span>
           </div>
         )}

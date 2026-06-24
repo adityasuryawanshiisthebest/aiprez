@@ -1112,12 +1112,8 @@ function DashboardRecent(_ref16) {
       onRemove: removePresentation
     }));
   }) : /*#__PURE__*/React.createElement("div", {
-    className: "dash-empty-presentations glass"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    icon: Presentation,
-    size: 25,
-    strokeWidth: 1.6
-  }), /*#__PURE__*/React.createElement("span", null, "There are no presentations yet."))), showAll && /*#__PURE__*/React.createElement("div", {
+    className: "dash-empty-presentations"
+  }, /*#__PURE__*/React.createElement("span", null, "There are no presentations yet."))), showAll && /*#__PURE__*/React.createElement("div", {
     className: "recent-view-all-popover glass"
   }, /*#__PURE__*/React.createElement("strong", null, "All Recent Presentations"), presentations.length > 0 ? presentations.map(function (presentation, index) {
     return /*#__PURE__*/React.createElement("button", {
