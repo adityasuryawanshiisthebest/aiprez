@@ -1404,18 +1404,7 @@ function AISpecifications(_ref26) {
     className: "humanizer-chat"
   }, /*#__PURE__*/React.createElement(HumanizerMessage, {
     ai: true
-  }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."), /*#__PURE__*/React.createElement(HumanizerMessage, {
-    time: "2:40 PM"
-  }, isCreate ? "Create a presentation about the American Revolution." : "Make the slides more natural and less AI-sounding."), /*#__PURE__*/React.createElement(HumanizerMessage, {
-    time: "2:41 PM"
-  }, isCreate ? "Use 12 slides and include causes, events, and impact." : "Keep the wording simple and student-friendly."), /*#__PURE__*/React.createElement(HumanizerMessage, {
-    time: "2:41 PM"
-  }, isCreate ? "Add speaker notes and make it class-ready." : "Make it sound more conversational and engaging."), /*#__PURE__*/React.createElement(HumanizerMessage, {
-    time: "2:42 PM"
-  }, isCreate ? "Use a historical visual style." : "Remove overly formal language."), /*#__PURE__*/React.createElement(HumanizerMessage, {
-    ai: true,
-    time: "2:42 PM"
-  }, isCreate ? "Got it! I'll generate and refine your presentation based on your instructions." : "Got it! I'll humanize your presentation based on your instructions.")), /*#__PURE__*/React.createElement(InstructionComposer, {
+  }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation.")), /*#__PURE__*/React.createElement(InstructionComposer, {
     isCreate: isCreate,
     label: isCreate ? "Create presentation instructions" : "Humanizer instructions",
     tool: isCreate ? "create-presentation" : "humanizer"
@@ -1473,7 +1462,8 @@ function RecordingControl(_ref28) {
 }
 function TranscriptColumn(_ref29) {
   var language = _ref29.language,
-    rows = _ref29.rows;
+    _ref29$rows = _ref29.rows,
+    rows = _ref29$rows === void 0 ? [] : _ref29$rows;
   return /*#__PURE__*/React.createElement("section", {
     className: "transcript-column glass"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1485,40 +1475,14 @@ function TranscriptColumn(_ref29) {
     strokeWidth: 1.6
   })), /*#__PURE__*/React.createElement("div", {
     className: "transcript-list"
-  }, rows.map(function (row) {
+  }, rows.length > 0 ? rows.map(function (row) {
     return /*#__PURE__*/React.createElement("div", {
       className: "transcript-row",
       key: "".concat(language, "-").concat(row.time)
     }, /*#__PURE__*/React.createElement("time", null, row.time), /*#__PURE__*/React.createElement("p", null, row.text));
-  })));
+  }) : /*#__PURE__*/React.createElement(EmptyPresentationsMessage, null)));
 }
 function RecordingPanel() {
-  var englishRows = [{
-    time: "00:00",
-    text: "Good morning everyone, today we're going to discuss the key causes of the American Revolution."
-  }, {
-    time: "00:08",
-    text: "The first major cause was taxation without representation. The British government imposed taxes on the colonies..."
-  }, {
-    time: "00:18",
-    text: "Another important factor was the restriction of trade through acts like the Navigation Acts..."
-  }, {
-    time: "00:27",
-    text: "Finally, the desire for independence and self-governance played a crucial role in the colonies' decision..."
-  }];
-  var spanishRows = [{
-    time: "00:00",
-    text: "Buenos dias a todos, hoy vamos a discutir las causas clave de la Revolucion Americana."
-  }, {
-    time: "00:08",
-    text: "La primera causa importante fue la imposicion de impuestos sin representacion. El gobierno britanico impuso impuestos a las colonias..."
-  }, {
-    time: "00:18",
-    text: "Otro factor importante fue la restriccion del comercio a traves de leyes como las Leyes de Navegacion..."
-  }, {
-    time: "00:27",
-    text: "Finalmente, el deseo de independencia y autogobierno jugo un papel crucial en la decision de las colonias..."
-  }];
   return /*#__PURE__*/React.createElement("section", {
     className: "recording-panel glass"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1551,8 +1515,7 @@ function RecordingPanel() {
   }, "Summary")), /*#__PURE__*/React.createElement("div", {
     className: "transcript-grid"
   }, /*#__PURE__*/React.createElement(TranscriptColumn, {
-    language: "English (Detected)",
-    rows: englishRows
+    language: "English (Detected)"
   }), /*#__PURE__*/React.createElement("button", {
     className: "translate-swap",
     type: "button",
@@ -1566,8 +1529,7 @@ function RecordingPanel() {
     size: 22,
     strokeWidth: 1.5
   })), /*#__PURE__*/React.createElement(TranscriptColumn, {
-    language: "Spanish",
-    rows: spanishRows
+    language: "Spanish"
   })));
 }
 function LiveNotesAction(_ref30) {
@@ -1603,9 +1565,7 @@ function LiveNotesSpecifications() {
     className: "ai-spec-panel live-notes-spec glass"
   }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-chat"
-  }, /*#__PURE__*/React.createElement(LiveNotesBotMessage, null, "Hi Ava! I'm your AI live notes assistant. Tell me how you'd like me to process your recording."), /*#__PURE__*/React.createElement(LiveNotesAction, null, "Focus on key points and main ideas."), /*#__PURE__*/React.createElement(LiveNotesAction, null, "Generate a concise summary."), /*#__PURE__*/React.createElement(LiveNotesAction, null, "Identify action items and tasks."), /*#__PURE__*/React.createElement(LiveNotesAction, null, "Translate to a specific language."), /*#__PURE__*/React.createElement("span", {
-    className: "live-note-time"
-  }, "2:35 PM")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(LiveNotesBotMessage, null, "Hi Ava! I'm your AI live notes assistant. Tell me how you'd like me to process your recording.")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "live-composer-title"
   }, /*#__PURE__*/React.createElement("span", {
     className: "live-mic-avatar compact"
@@ -1814,17 +1774,7 @@ function AnalyzerSpecifications() {
     strokeWidth: 1.55
   })), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-bubble glass"
-  }, /*#__PURE__*/React.createElement("p", null, "Hi Ava! I'm your AI presentation analyzer. Tell me how you'd like me to review your presentation."))), /*#__PURE__*/React.createElement(AnalyzerActionBubble, null, "Check slide clarity and visual balance."), /*#__PURE__*/React.createElement(AnalyzerActionBubble, null, "Flag slides with too much text."), /*#__PURE__*/React.createElement(AnalyzerActionBubble, null, "Give feedback on structure and speaking flow."), /*#__PURE__*/React.createElement(AnalyzerActionBubble, null, "Suggest improvements for the conclusion."), /*#__PURE__*/React.createElement("article", {
-    className: "analyzer-bot-message"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "analyzer-bot-avatar"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    icon: TrendingUp,
-    size: 25,
-    strokeWidth: 1.55
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "humanizer-bubble glass"
-  }, /*#__PURE__*/React.createElement("p", null, "Got it! I'll analyze your presentation and highlight strengths, weak spots, and recommendations.")))), /*#__PURE__*/React.createElement(InstructionComposer, {
+  }, /*#__PURE__*/React.createElement("p", null, "Hi Ava! I'm your AI presentation analyzer. Tell me how you'd like me to review your presentation.")))), /*#__PURE__*/React.createElement(InstructionComposer, {
     label: "Analyzer specifications",
     placeholder: "Type your specifications here...",
     buttonLabel: "Analyze Presentation",

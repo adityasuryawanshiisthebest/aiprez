@@ -1176,25 +1176,6 @@ function AISpecifications({ mode = "humanizer" }) {
             ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation."
             : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."}
         </HumanizerMessage>
-        <HumanizerMessage time="2:40 PM">
-          {isCreate
-            ? "Create a presentation about the American Revolution."
-            : "Make the slides more natural and less AI-sounding."}
-        </HumanizerMessage>
-        <HumanizerMessage time="2:41 PM">
-          {isCreate ? "Use 12 slides and include causes, events, and impact." : "Keep the wording simple and student-friendly."}
-        </HumanizerMessage>
-        <HumanizerMessage time="2:41 PM">
-          {isCreate ? "Add speaker notes and make it class-ready." : "Make it sound more conversational and engaging."}
-        </HumanizerMessage>
-        <HumanizerMessage time="2:42 PM">
-          {isCreate ? "Use a historical visual style." : "Remove overly formal language."}
-        </HumanizerMessage>
-        <HumanizerMessage ai time="2:42 PM">
-          {isCreate
-            ? "Got it! I'll generate and refine your presentation based on your instructions."
-            : "Got it! I'll humanize your presentation based on your instructions."}
-        </HumanizerMessage>
       </div>
       <InstructionComposer
         isCreate={isCreate}
@@ -1239,7 +1220,7 @@ function RecordingControl({ icon, label, danger }) {
   );
 }
 
-function TranscriptColumn({ language, rows }) {
+function TranscriptColumn({ language, rows = [] }) {
   return (
     <section className="transcript-column glass">
       <button className="language-select" type="button">
@@ -1247,31 +1228,22 @@ function TranscriptColumn({ language, rows }) {
         <Icon icon={ChevronDown} size={15} strokeWidth={1.6} />
       </button>
       <div className="transcript-list">
-        {rows.map((row) => (
-          <div className="transcript-row" key={`${language}-${row.time}`}>
-            <time>{row.time}</time>
-            <p>{row.text}</p>
-          </div>
-        ))}
+        {rows.length > 0 ? (
+          rows.map((row) => (
+            <div className="transcript-row" key={`${language}-${row.time}`}>
+              <time>{row.time}</time>
+              <p>{row.text}</p>
+            </div>
+          ))
+        ) : (
+          <EmptyPresentationsMessage />
+        )}
       </div>
     </section>
   );
 }
 
 function RecordingPanel() {
-  const englishRows = [
-    { time: "00:00", text: "Good morning everyone, today we're going to discuss the key causes of the American Revolution." },
-    { time: "00:08", text: "The first major cause was taxation without representation. The British government imposed taxes on the colonies..." },
-    { time: "00:18", text: "Another important factor was the restriction of trade through acts like the Navigation Acts..." },
-    { time: "00:27", text: "Finally, the desire for independence and self-governance played a crucial role in the colonies' decision..." },
-  ];
-  const spanishRows = [
-    { time: "00:00", text: "Buenos dias a todos, hoy vamos a discutir las causas clave de la Revolucion Americana." },
-    { time: "00:08", text: "La primera causa importante fue la imposicion de impuestos sin representacion. El gobierno britanico impuso impuestos a las colonias..." },
-    { time: "00:18", text: "Otro factor importante fue la restriccion del comercio a traves de leyes como las Leyes de Navegacion..." },
-    { time: "00:27", text: "Finalmente, el deseo de independencia y autogobierno jugo un papel crucial en la decision de las colonias..." },
-  ];
-
   return (
     <section className="recording-panel glass">
       <div className="recording-status">
@@ -1291,12 +1263,12 @@ function RecordingPanel() {
         <button type="button">Summary</button>
       </div>
       <div className="transcript-grid">
-        <TranscriptColumn language="English (Detected)" rows={englishRows} />
+        <TranscriptColumn language="English (Detected)" />
         <button className="translate-swap" type="button" aria-label="Swap languages">
           <Icon icon={ArrowRight} size={22} strokeWidth={1.5} />
           <Icon icon={ArrowRight} size={22} strokeWidth={1.5} />
         </button>
-        <TranscriptColumn language="Spanish" rows={spanishRows} />
+        <TranscriptColumn language="Spanish" />
       </div>
     </section>
   );
@@ -1335,11 +1307,6 @@ function LiveNotesSpecifications() {
         <LiveNotesBotMessage>
           Hi Ava! I'm your AI live notes assistant. Tell me how you'd like me to process your recording.
         </LiveNotesBotMessage>
-        <LiveNotesAction>Focus on key points and main ideas.</LiveNotesAction>
-        <LiveNotesAction>Generate a concise summary.</LiveNotesAction>
-        <LiveNotesAction>Identify action items and tasks.</LiveNotesAction>
-        <LiveNotesAction>Translate to a specific language.</LiveNotesAction>
-        <span className="live-note-time">2:35 PM</span>
       </div>
       <div>
         <div className="live-composer-title">
@@ -1513,18 +1480,6 @@ function AnalyzerSpecifications() {
           </span>
           <div className="humanizer-bubble glass">
             <p>Hi Ava! I'm your AI presentation analyzer. Tell me how you'd like me to review your presentation.</p>
-          </div>
-        </article>
-        <AnalyzerActionBubble>Check slide clarity and visual balance.</AnalyzerActionBubble>
-        <AnalyzerActionBubble>Flag slides with too much text.</AnalyzerActionBubble>
-        <AnalyzerActionBubble>Give feedback on structure and speaking flow.</AnalyzerActionBubble>
-        <AnalyzerActionBubble>Suggest improvements for the conclusion.</AnalyzerActionBubble>
-        <article className="analyzer-bot-message">
-          <span className="analyzer-bot-avatar">
-            <Icon icon={TrendingUp} size={25} strokeWidth={1.55} />
-          </span>
-          <div className="humanizer-bubble glass">
-            <p>Got it! I'll analyze your presentation and highlight strengths, weak spots, and recommendations.</p>
           </div>
         </article>
       </div>
