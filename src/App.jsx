@@ -212,6 +212,10 @@ function UserRoundIcon() {
   return <Icon icon={UserRound} size={28} strokeWidth={1.45} />;
 }
 
+function EmptyPresentationsMessage({ className = "" }) {
+  return <div className={`empty-presentations-message ${className}`}>There are no presentations yet.</div>;
+}
+
 function Sidebar({ onNewPresentation, activeTool, onOpenHumanizer, onOpenLiveNotes, onOpenAnalyzer }) {
   const conversations = [];
 
@@ -239,8 +243,7 @@ function Sidebar({ onNewPresentation, activeTool, onOpenHumanizer, onOpenLiveNot
             ))
           ) : (
             <div className="sidebar-empty-state">
-              <Icon icon={Presentation} size={20} strokeWidth={1.6} />
-              <span>There are no presentations yet.</span>
+              <EmptyPresentationsMessage />
             </div>
           )}
         </div>
@@ -925,7 +928,7 @@ function DashboardRecent({
           ))
         ) : (
           <div className="dash-empty-presentations">
-            <span>There are no presentations yet.</span>
+            <EmptyPresentationsMessage />
           </div>
         )}
       </div>
@@ -1075,73 +1078,10 @@ function SlideThumbnail({ number, title, active, tone, onClick }) {
 }
 
 function PresentationPreview({ mode = "humanizer" }) {
-  const isCreate = mode === "create";
-  const [activeSlide, setActiveSlide] = React.useState(0);
-  const slide = PRESENTATION_SLIDES[activeSlide];
-  const visibleStart = Math.min(Math.max(activeSlide - 1, 0), PRESENTATION_SLIDES.length - 4);
-  const visibleSlides = PRESENTATION_SLIDES.slice(visibleStart, visibleStart + 4);
-
   return (
-    <section className="preview-panel glass">
+    <section className="preview-panel glass empty-tool-preview">
       <h3>Presentation Preview</h3>
-      <div className="upload-row">
-        <span className="ppt-icon">P3</span>
-        <strong>American Revolution Presentation.pptx</strong>
-        <span className="uploaded-pill">
-          Uploaded <Icon icon={CheckCircle} size={15} strokeWidth={1.8} />
-        </span>
-      </div>
-      <div className="main-slide">
-        <div className="slide-copy">
-          <h4>{slide.title}</h4>
-          <span></span>
-          <p>{slide.subtitle}</p>
-        </div>
-        <div className="revolution-art">
-          <span className="flag"></span>
-          <span className="soldier one"></span>
-          <span className="soldier two"></span>
-          <span className="smoke"></span>
-        </div>
-      </div>
-      <div className="slide-strip">
-        <button className="prev-slide" type="button" aria-label="Previous slide" onClick={() => setActiveSlide(getPreviousSlide)}>
-          <Icon icon={ChevronDown} size={25} strokeWidth={1.7} />
-        </button>
-        {visibleSlides.map((item, index) => (
-          <SlideThumbnail
-            key={item.title}
-            number={visibleStart + index + 1}
-            title={item.thumb}
-            active={activeSlide === visibleStart + index}
-            tone={index === 0 ? "warm" : index === 1 ? "city" : index === 2 ? "battle" : "church"}
-            onClick={() => setActiveSlide(visibleStart + index)}
-          />
-        ))}
-        <button className="next-slide" type="button" aria-label="Next slide" onClick={() => setActiveSlide(getNextSlide)}>
-          <Icon icon={ChevronDown} size={25} strokeWidth={1.7} />
-        </button>
-      </div>
-      <div className="preview-controls">
-        <span>Slide {activeSlide + 1} of {PRESENTATION_SLIDES.length}</span>
-        <button type="button">
-          <Icon icon={Monitor} size={18} strokeWidth={1.6} />
-          Fit
-        </button>
-        <button type="button">
-          <Icon icon={NotebookText} size={18} strokeWidth={1.6} />
-          Notes
-        </button>
-        <button type="button" aria-label="Full screen">
-          <Icon icon={Maximize} size={18} strokeWidth={1.6} />
-        </button>
-      </div>
-      <p className="preview-tip">
-        <Icon icon={Lightbulb} size={19} strokeWidth={1.65} />
-        {isCreate
-          ? "Review your presentation and use the AI panel to generate or refine the deck."
-          : "Review your presentation and use the AI panel to humanize the content."}
-      </p>
+      <EmptyPresentationsMessage className="tool-empty-message" />
     </section>
   );
 }
@@ -1533,26 +1473,9 @@ function AnalyzerScoreCard({ icon, label, score, tone }) {
 }
 
 function AnalyzerMainPanel() {
-  const scores = [
-    { icon: Sparkles, label: "Overall Score", score: 85, tone: "purple-score" },
-    { icon: FileText, label: "Content Quality", score: 88, tone: "blue-score" },
-    { icon: SlidersHorizontal, label: "Structure & Flow", score: 82, tone: "cyan-score" },
-    { icon: Monitor, label: "Visual Design", score: 78, tone: "pink-score" },
-    { icon: Mic, label: "Delivery Impact", score: 89, tone: "teal-score" },
-  ];
-
   return (
-    <div className="analyzer-main-panel">
-      <AnalyzerSlideDeck />
-      <div className="analyzer-score-grid">
-        {scores.map((score) => (
-          <AnalyzerScoreCard key={score.label} {...score} />
-        ))}
-      </div>
-      <p className="preview-tip analyzer-tip">
-        <Icon icon={CircleHelp} size={17} strokeWidth={1.65} />
-        Review your presentation and use the AI panel to get suggestions and feedback.
-      </p>
+    <div className="analyzer-main-panel empty-analyzer-panel glass">
+      <EmptyPresentationsMessage className="tool-empty-message" />
     </div>
   );
 }
@@ -1757,8 +1680,7 @@ function SettingsSidebar({ onBack }) {
             ))
           ) : (
             <div className="settings-empty-state">
-              <Icon icon={Presentation} size={18} strokeWidth={1.6} />
-              <span>There are no presentations yet.</span>
+              <EmptyPresentationsMessage />
             </div>
           )}
         </div>

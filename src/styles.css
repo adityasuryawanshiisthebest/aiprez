@@ -220,28 +220,19 @@ button {
   gap: 4px;
 }
 
+.empty-presentations-message {
+  color: rgba(194, 209, 235, 0.46);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .sidebar-empty-state {
-  min-height: 92px;
+  min-height: 78px;
   display: grid;
   place-items: center;
-  gap: 9px;
-  padding: 14px;
-  color: rgba(219, 232, 255, 0.72);
-  text-align: center;
-  border: 1px solid rgba(0, 174, 255, 0.2);
-  border-radius: 13px;
-  background: rgba(4, 17, 42, 0.42);
-  box-shadow: inset 0 0 18px rgba(0, 174, 255, 0.05);
-}
-
-.sidebar-empty-state svg {
-  color: #00d7ff;
-  filter: drop-shadow(0 0 8px rgba(0, 216, 255, 0.32));
-}
-
-.sidebar-empty-state span {
-  font-size: 0.82rem;
-  line-height: 1.35;
+  padding: 8px 10px;
 }
 
 .conversation-item {
@@ -1302,26 +1293,10 @@ button {
 }
 
 .settings-empty-state {
-  min-height: 122px;
+  min-height: 96px;
   display: grid;
   place-items: center;
-  gap: 9px;
-  padding: 14px;
-  color: rgba(219, 232, 255, 0.72);
-  text-align: center;
-  border: 1px solid rgba(0, 174, 255, 0.22);
-  border-radius: 12px;
-  background: rgba(4, 17, 42, 0.42);
-}
-
-.settings-empty-state svg {
-  color: #00d7ff;
-  filter: drop-shadow(0 0 8px rgba(0, 216, 255, 0.3));
-}
-
-.settings-empty-state span {
-  font-size: 0.82rem;
-  line-height: 1.35;
+  padding: 8px 10px;
 }
 
 .settings-recent-list strong {
@@ -2297,12 +2272,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(194, 209, 235, 0.46);
-}
-
-.dash-empty-presentations span {
-  font-size: 0.78rem;
-  font-weight: 500;
 }
 
 .dash-recent-card {
@@ -2587,6 +2556,15 @@ button {
   grid-template-rows: auto auto minmax(0, auto) auto auto;
   overflow: hidden;
   padding: 16px 18px 14px;
+}
+
+.preview-panel.empty-tool-preview {
+  grid-template-rows: auto 1fr;
+}
+
+.tool-empty-message {
+  align-self: center;
+  justify-self: center;
 }
 
 .preview-panel h3,
@@ -3370,6 +3348,13 @@ button {
   grid-template-rows: minmax(0, 1fr) auto auto;
   gap: 10px;
   overflow: hidden;
+}
+
+.analyzer-main-panel.empty-analyzer-panel {
+  grid-template-rows: 1fr;
+  place-items: center;
+  padding: 18px;
+  border-radius: 14px;
 }
 
 .analyzer-preview {
