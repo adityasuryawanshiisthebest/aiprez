@@ -266,28 +266,7 @@ function Sidebar(_ref6) {
     onOpenHumanizer = _ref6.onOpenHumanizer,
     onOpenLiveNotes = _ref6.onOpenLiveNotes,
     onOpenAnalyzer = _ref6.onOpenAnalyzer;
-  var conversations = [{
-    title: "Causes of the American Revolution",
-    time: "2:35 PM",
-    selected: true,
-    tone: "cyan"
-  }, {
-    title: "Renewable Energy Presentation",
-    time: "Yesterday, 8:42 PM",
-    tone: "gold"
-  }, {
-    title: "Genetics & Inheritance Patterns",
-    time: "May 18, 2025",
-    tone: "blue"
-  }, {
-    title: "Social Media Impact on Teens",
-    time: "May 17, 2025",
-    tone: "cyan"
-  }, {
-    title: "Rise and Fall of Ancient Civilizations",
-    time: "May 16, 2025",
-    tone: "purple"
-  }];
+  var conversations = [];
   var tools = [{
     icon: ChartNoAxesCombined,
     label: "Presentation Analyzer",
@@ -319,11 +298,17 @@ function Sidebar(_ref6) {
     className: "sidebar-section"
   }, /*#__PURE__*/React.createElement("h2", null, "Conversations"), /*#__PURE__*/React.createElement("div", {
     className: "conversation-list"
-  }, conversations.map(function (conversation) {
+  }, conversations.length > 0 ? conversations.map(function (conversation) {
     return /*#__PURE__*/React.createElement(SidebarConversationItem, _extends({
       key: conversation.title
     }, conversation));
-  })), /*#__PURE__*/React.createElement("a", {
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "sidebar-empty-state"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Presentation,
+    size: 20,
+    strokeWidth: 1.6
+  }), /*#__PURE__*/React.createElement("span", null, "There are no presentations yet."))), conversations.length > 0 && /*#__PURE__*/React.createElement("a", {
     className: "view-all",
     href: "#"
   }, "View all conversations ", /*#__PURE__*/React.createElement(Icon, {
@@ -1068,23 +1053,7 @@ function DashboardRecent(_ref16) {
     }
     setLocalShowAll(!showAll);
   };
-  var _React$useState7 = React.useState([{
-      title: "The Future of Renewable Energy",
-      edited: "Edited 2h ago",
-      variant: "energy"
-    }, {
-      title: "Genetics and Inheritance Patterns",
-      edited: "Edited 1d ago",
-      variant: "genetics"
-    }, {
-      title: "The Rise and Fall of Ancient Civilizations",
-      edited: "Edited 2d ago",
-      variant: "ancient"
-    }, {
-      title: "The Impact of Social Media on Teens",
-      edited: "Edited 3d ago",
-      variant: "social"
-    }]),
+  var _React$useState7 = React.useState([]),
     _React$useState8 = _slicedToArray(_React$useState7, 2),
     presentations = _React$useState8[0],
     setPresentations = _React$useState8[1];
@@ -1128,7 +1097,7 @@ function DashboardRecent(_ref16) {
     strokeWidth: 1.8
   }))), /*#__PURE__*/React.createElement("div", {
     className: "dash-recent-grid"
-  }, visiblePresentations.map(function (presentation, index) {
+  }, visiblePresentations.length > 0 ? visiblePresentations.map(function (presentation, index) {
     return /*#__PURE__*/React.createElement(DashboardRecentCard, _extends({
       key: "".concat(presentation.title, "-").concat(index)
     }, presentation, {
@@ -1142,9 +1111,15 @@ function DashboardRecent(_ref16) {
       onDuplicate: duplicatePresentation,
       onRemove: removePresentation
     }));
-  })), showAll && /*#__PURE__*/React.createElement("div", {
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "dash-empty-presentations glass"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Presentation,
+    size: 25,
+    strokeWidth: 1.6
+  }), /*#__PURE__*/React.createElement("span", null, "There are no presentations yet."))), showAll && /*#__PURE__*/React.createElement("div", {
     className: "recent-view-all-popover glass"
-  }, /*#__PURE__*/React.createElement("strong", null, "All Recent Presentations"), presentations.map(function (presentation, index) {
+  }, /*#__PURE__*/React.createElement("strong", null, "All Recent Presentations"), presentations.length > 0 ? presentations.map(function (presentation, index) {
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: "".concat(presentation.title, "-").concat(index),
@@ -1154,7 +1129,9 @@ function DashboardRecent(_ref16) {
     }, /*#__PURE__*/React.createElement("span", null)), /*#__PURE__*/React.createElement("span", {
       className: "recent-view-copy"
     }, /*#__PURE__*/React.createElement("span", null, presentation.title), /*#__PURE__*/React.createElement("small", null, presentation.edited)));
-  })));
+  }) : /*#__PURE__*/React.createElement("p", {
+    className: "recent-empty-copy"
+  }, "There are no presentations yet.")));
 }
 function DashboardScreen(_ref17) {
   var onCreatePresentation = _ref17.onCreatePresentation,
@@ -2092,7 +2069,7 @@ function HumanizerScreen(_ref38) {
 }
 function SettingsSidebar(_ref39) {
   var onBack = _ref39.onBack;
-  var recent = [["The Future of Renewable Energy", "Edited 2h ago", UserRound, "blue"], ["Genetics & Inheritance Patterns", "Edited 1d ago", UserCog, "purple"], ["Rise and Fall of Ancient Civilizations", "Edited 2d ago", Box, "cyan"], ["Social Media Impact on Teens", "Edited 3d ago", FileText, "purple"]];
+  var recent = [];
   var tools = [["Presentation Creator", Presentation, "cyan"], ["Humanizer", Sparkles, "purple"], ["Live Notes", Mic, "cyan"], ["Presentation Analyzer", ChartNoAxesCombined, "purple"], ["History", History, "gold"]];
   return /*#__PURE__*/React.createElement("aside", {
     className: "sidebar settings-sidebar"
@@ -2108,7 +2085,7 @@ function SettingsSidebar(_ref39) {
     className: "settings-sidebar-section"
   }, /*#__PURE__*/React.createElement("h2", null, "Recent Presentations"), /*#__PURE__*/React.createElement("div", {
     className: "settings-recent-list"
-  }, recent.map(function (_ref40, index) {
+  }, recent.length > 0 ? recent.map(function (_ref40, index) {
     var _ref41 = _slicedToArray(_ref40, 4),
       title = _ref41[0],
       edited = _ref41[1],
@@ -2125,7 +2102,13 @@ function SettingsSidebar(_ref39) {
       size: 19,
       strokeWidth: 1.7
     })), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, title), /*#__PURE__*/React.createElement("small", null, edited)));
-  })), /*#__PURE__*/React.createElement("button", {
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "settings-empty-state"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Presentation,
+    size: 18,
+    strokeWidth: 1.6
+  }), /*#__PURE__*/React.createElement("span", null, "There are no presentations yet."))), recent.length > 0 && /*#__PURE__*/React.createElement("button", {
     className: "settings-sidebar-link",
     type: "button"
   }, "View all ", /*#__PURE__*/React.createElement(Icon, {

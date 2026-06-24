@@ -213,13 +213,7 @@ function UserRoundIcon() {
 }
 
 function Sidebar({ onNewPresentation, activeTool, onOpenHumanizer, onOpenLiveNotes, onOpenAnalyzer }) {
-  const conversations = [
-    { title: "Causes of the American Revolution", time: "2:35 PM", selected: true, tone: "cyan" },
-    { title: "Renewable Energy Presentation", time: "Yesterday, 8:42 PM", tone: "gold" },
-    { title: "Genetics & Inheritance Patterns", time: "May 18, 2025", tone: "blue" },
-    { title: "Social Media Impact on Teens", time: "May 17, 2025", tone: "cyan" },
-    { title: "Rise and Fall of Ancient Civilizations", time: "May 16, 2025", tone: "purple" },
-  ];
+  const conversations = [];
 
   const tools = [
     { icon: ChartNoAxesCombined, label: "Presentation Analyzer", tone: "purple" },
@@ -239,13 +233,22 @@ function Sidebar({ onNewPresentation, activeTool, onOpenHumanizer, onOpenLiveNot
       <section className="sidebar-section">
         <h2>Conversations</h2>
         <div className="conversation-list">
-          {conversations.map((conversation) => (
-            <SidebarConversationItem key={conversation.title} {...conversation} />
-          ))}
+          {conversations.length > 0 ? (
+            conversations.map((conversation) => (
+              <SidebarConversationItem key={conversation.title} {...conversation} />
+            ))
+          ) : (
+            <div className="sidebar-empty-state">
+              <Icon icon={Presentation} size={20} strokeWidth={1.6} />
+              <span>There are no presentations yet.</span>
+            </div>
+          )}
         </div>
-        <a className="view-all" href="#">
-          View all conversations <Icon icon={ArrowRight} size={16} strokeWidth={1.8} />
-        </a>
+        {conversations.length > 0 && (
+          <a className="view-all" href="#">
+            View all conversations <Icon icon={ArrowRight} size={16} strokeWidth={1.8} />
+          </a>
+        )}
       </section>
 
       <section className="sidebar-section tools-section">
@@ -863,12 +866,7 @@ function DashboardRecent({
     }
     setLocalShowAll(!showAll);
   };
-  const [presentations, setPresentations] = React.useState([
-    { title: "The Future of Renewable Energy", edited: "Edited 2h ago", variant: "energy" },
-    { title: "Genetics and Inheritance Patterns", edited: "Edited 1d ago", variant: "genetics" },
-    { title: "The Rise and Fall of Ancient Civilizations", edited: "Edited 2d ago", variant: "ancient" },
-    { title: "The Impact of Social Media on Teens", edited: "Edited 3d ago", variant: "social" },
-  ]);
+  const [presentations, setPresentations] = React.useState([]);
 
   const duplicatePresentation = (title) => {
     const source = presentations.find((presentation) => presentation.title === title);
@@ -909,36 +907,47 @@ function DashboardRecent({
         </a>
       </div>
       <div className="dash-recent-grid">
-        {visiblePresentations.map((presentation, index) => (
-          <DashboardRecentCard
-            key={`${presentation.title}-${index}`}
-            {...presentation}
-            isMenuOpen={openMenu === presentation.title}
-            onToggleMenu={() => {
-              onOpenFloatingMenu?.();
-              setOpenMenu(openMenu === presentation.title ? null : presentation.title);
-            }}
-            onOpen={onOpenPresentation}
-            onEdit={onEditPresentation}
-            onDuplicate={duplicatePresentation}
-            onRemove={removePresentation}
-          />
-        ))}
+        {visiblePresentations.length > 0 ? (
+          visiblePresentations.map((presentation, index) => (
+            <DashboardRecentCard
+              key={`${presentation.title}-${index}`}
+              {...presentation}
+              isMenuOpen={openMenu === presentation.title}
+              onToggleMenu={() => {
+                onOpenFloatingMenu?.();
+                setOpenMenu(openMenu === presentation.title ? null : presentation.title);
+              }}
+              onOpen={onOpenPresentation}
+              onEdit={onEditPresentation}
+              onDuplicate={duplicatePresentation}
+              onRemove={removePresentation}
+            />
+          ))
+        ) : (
+          <div className="dash-empty-presentations glass">
+            <Icon icon={Presentation} size={25} strokeWidth={1.6} />
+            <span>There are no presentations yet.</span>
+          </div>
+        )}
       </div>
       {showAll && (
         <div className="recent-view-all-popover glass">
           <strong>All Recent Presentations</strong>
-          {presentations.map((presentation, index) => (
-            <button type="button" key={`${presentation.title}-${index}`} onClick={onOpenPresentation}>
-              <span className={`dash-thumb ${presentation.variant}`}>
-                <span></span>
-              </span>
-              <span className="recent-view-copy">
-                <span>{presentation.title}</span>
-                <small>{presentation.edited}</small>
-              </span>
-            </button>
-          ))}
+          {presentations.length > 0 ? (
+            presentations.map((presentation, index) => (
+              <button type="button" key={`${presentation.title}-${index}`} onClick={onOpenPresentation}>
+                <span className={`dash-thumb ${presentation.variant}`}>
+                  <span></span>
+                </span>
+                <span className="recent-view-copy">
+                  <span>{presentation.title}</span>
+                  <small>{presentation.edited}</small>
+                </span>
+              </button>
+            ))
+          ) : (
+            <p className="recent-empty-copy">There are no presentations yet.</p>
+          )}
         </div>
       )}
     </section>
@@ -1715,12 +1724,7 @@ function HumanizerScreen({ onBack, onCreatePresentation, onOpenHumanizer, onOpen
 }
 
 function SettingsSidebar({ onBack }) {
-  const recent = [
-    ["The Future of Renewable Energy", "Edited 2h ago", UserRound, "blue"],
-    ["Genetics & Inheritance Patterns", "Edited 1d ago", UserCog, "purple"],
-    ["Rise and Fall of Ancient Civilizations", "Edited 2d ago", Box, "cyan"],
-    ["Social Media Impact on Teens", "Edited 3d ago", FileText, "purple"],
-  ];
+  const recent = [];
   const tools = [
     ["Presentation Creator", Presentation, "cyan"],
     ["Humanizer", Sparkles, "purple"],
@@ -1740,21 +1744,30 @@ function SettingsSidebar({ onBack }) {
       <section className="settings-sidebar-section">
         <h2>Recent Presentations</h2>
         <div className="settings-recent-list">
-          {recent.map(([title, edited, icon, tone], index) => (
-            <button className={index === 0 ? "selected" : ""} type="button" key={title}>
-              <span className={`settings-row-icon ${tone}`}>
-                <Icon icon={icon} size={19} strokeWidth={1.7} />
-              </span>
-              <span>
-                <strong>{title}</strong>
-                <small>{edited}</small>
-              </span>
-            </button>
-          ))}
+          {recent.length > 0 ? (
+            recent.map(([title, edited, icon, tone], index) => (
+              <button className={index === 0 ? "selected" : ""} type="button" key={title}>
+                <span className={`settings-row-icon ${tone}`}>
+                  <Icon icon={icon} size={19} strokeWidth={1.7} />
+                </span>
+                <span>
+                  <strong>{title}</strong>
+                  <small>{edited}</small>
+                </span>
+              </button>
+            ))
+          ) : (
+            <div className="settings-empty-state">
+              <Icon icon={Presentation} size={18} strokeWidth={1.6} />
+              <span>There are no presentations yet.</span>
+            </div>
+          )}
         </div>
-        <button className="settings-sidebar-link" type="button">
-          View all <Icon icon={ArrowRight} size={15} strokeWidth={1.7} />
-        </button>
+        {recent.length > 0 && (
+          <button className="settings-sidebar-link" type="button">
+            View all <Icon icon={ArrowRight} size={15} strokeWidth={1.7} />
+          </button>
+        )}
       </section>
 
       <section className="settings-sidebar-section tools">

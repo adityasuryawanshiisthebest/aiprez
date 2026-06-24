@@ -220,6 +220,30 @@ button {
   gap: 4px;
 }
 
+.sidebar-empty-state {
+  min-height: 92px;
+  display: grid;
+  place-items: center;
+  gap: 9px;
+  padding: 14px;
+  color: rgba(219, 232, 255, 0.72);
+  text-align: center;
+  border: 1px solid rgba(0, 174, 255, 0.2);
+  border-radius: 13px;
+  background: rgba(4, 17, 42, 0.42);
+  box-shadow: inset 0 0 18px rgba(0, 174, 255, 0.05);
+}
+
+.sidebar-empty-state svg {
+  color: #00d7ff;
+  filter: drop-shadow(0 0 8px rgba(0, 216, 255, 0.32));
+}
+
+.sidebar-empty-state span {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .conversation-item {
   display: grid;
   grid-template-columns: 32px 1fr;
@@ -1277,6 +1301,29 @@ button {
   background: rgba(0, 116, 255, 0.11);
 }
 
+.settings-empty-state {
+  min-height: 122px;
+  display: grid;
+  place-items: center;
+  gap: 9px;
+  padding: 14px;
+  color: rgba(219, 232, 255, 0.72);
+  text-align: center;
+  border: 1px solid rgba(0, 174, 255, 0.22);
+  border-radius: 12px;
+  background: rgba(4, 17, 42, 0.42);
+}
+
+.settings-empty-state svg {
+  color: #00d7ff;
+  filter: drop-shadow(0 0 8px rgba(0, 216, 255, 0.3));
+}
+
+.settings-empty-state span {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .settings-recent-list strong {
   display: block;
   font-size: 0.8rem;
@@ -2244,6 +2291,27 @@ button {
   gap: 10px;
 }
 
+.dash-empty-presentations {
+  grid-column: 1 / -1;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: rgba(225, 236, 255, 0.78);
+  border-style: dashed;
+}
+
+.dash-empty-presentations svg {
+  color: #00d7ff;
+  filter: drop-shadow(0 0 9px rgba(0, 216, 255, 0.34));
+}
+
+.dash-empty-presentations span {
+  font-size: 0.96rem;
+  font-weight: 600;
+}
+
 .dash-recent-card {
   position: relative;
   min-height: 82px;
@@ -2419,6 +2487,13 @@ button {
   margin-top: 2px;
   color: var(--dim);
   font-size: 0.72rem;
+}
+
+.recent-empty-copy {
+  margin: 0;
+  padding: 12px 6px 8px;
+  color: rgba(219, 232, 255, 0.68);
+  font-size: 0.82rem;
 }
 
 .back-dashboard-box {
