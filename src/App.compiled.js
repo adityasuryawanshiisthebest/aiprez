@@ -1747,11 +1747,45 @@ function AnalyzerScoreCard(_ref34) {
   }, /*#__PURE__*/React.createElement("strong", null, score), /*#__PURE__*/React.createElement("small", null, "/100")));
 }
 function AnalyzerMainPanel() {
+  var scores = [{
+    icon: Sparkles,
+    label: "Overall Score",
+    score: 100,
+    tone: "purple-score"
+  }, {
+    icon: FileText,
+    label: "Content Quality",
+    score: 100,
+    tone: "blue-score"
+  }, {
+    icon: SlidersHorizontal,
+    label: "Structure & Flow",
+    score: 100,
+    tone: "cyan-score"
+  }, {
+    icon: Monitor,
+    label: "Visual Design",
+    score: 100,
+    tone: "pink-score"
+  }, {
+    icon: Mic,
+    label: "Delivery Impact",
+    score: 100,
+    tone: "teal-score"
+  }];
   return /*#__PURE__*/React.createElement("div", {
-    className: "analyzer-main-panel empty-analyzer-panel glass"
+    className: "analyzer-main-panel"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: "empty-analyzer-panel glass"
   }, /*#__PURE__*/React.createElement(EmptyPresentationsMessage, {
     className: "tool-empty-message"
-  }));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "analyzer-score-grid"
+  }, scores.map(function (score) {
+    return /*#__PURE__*/React.createElement(AnalyzerScoreCard, _extends({
+      key: score.label
+    }, score));
+  })));
 }
 function AnalyzerActionBubble(_ref35) {
   var children = _ref35.children;

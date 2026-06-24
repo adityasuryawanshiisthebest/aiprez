@@ -1473,9 +1473,24 @@ function AnalyzerScoreCard({ icon, label, score, tone }) {
 }
 
 function AnalyzerMainPanel() {
+  const scores = [
+    { icon: Sparkles, label: "Overall Score", score: 100, tone: "purple-score" },
+    { icon: FileText, label: "Content Quality", score: 100, tone: "blue-score" },
+    { icon: SlidersHorizontal, label: "Structure & Flow", score: 100, tone: "cyan-score" },
+    { icon: Monitor, label: "Visual Design", score: 100, tone: "pink-score" },
+    { icon: Mic, label: "Delivery Impact", score: 100, tone: "teal-score" },
+  ];
+
   return (
-    <div className="analyzer-main-panel empty-analyzer-panel glass">
-      <EmptyPresentationsMessage className="tool-empty-message" />
+    <div className="analyzer-main-panel">
+      <section className="empty-analyzer-panel glass">
+        <EmptyPresentationsMessage className="tool-empty-message" />
+      </section>
+      <div className="analyzer-score-grid">
+        {scores.map((score) => (
+          <AnalyzerScoreCard key={score.label} {...score} />
+        ))}
+      </div>
     </div>
   );
 }

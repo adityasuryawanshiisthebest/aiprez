@@ -3350,8 +3350,9 @@ button {
   overflow: hidden;
 }
 
-.analyzer-main-panel.empty-analyzer-panel {
-  grid-template-rows: 1fr;
+.empty-analyzer-panel {
+  min-height: 0;
+  display: grid;
   place-items: center;
   padding: 18px;
   border-radius: 14px;
