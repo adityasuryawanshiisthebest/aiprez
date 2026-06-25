@@ -20,7 +20,7 @@ For local AI, create a `.env` file:
 
 ```text
 OPENAI_API_KEY=your_openai_key
-AIPREZ_MODEL=gpt-5.5-mini
+AIPREZ_MODEL=gpt-5.4-mini
 ```
 
 Do not commit `.env`; it is ignored by git.
@@ -43,7 +43,7 @@ For a real LLM connection, deploy this repo on Vercel and set these environment 
 
 ```text
 OPENAI_API_KEY=your_openai_key
-AIPREZ_MODEL=gpt-5.5-mini
+AIPREZ_MODEL=gpt-5.4-mini
 ```
 
 The app keeps API keys off the browser. GitHub Pages can still host the static UI, but GitHub Pages cannot run `/api/ai`.
