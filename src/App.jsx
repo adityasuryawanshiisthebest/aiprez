@@ -121,8 +121,8 @@ const PRESENTATION_SLIDES = [
   },
 ];
 
-const BACKEND_MODEL_ID = "gpt-5.4-mini";
-const BACKEND_MODEL_LABEL = "GPT-5.4 Mini";
+const BACKEND_MODEL_ID = "gpt-5.5-mini";
+const BACKEND_MODEL_LABEL = "GPT-5.5 Mini";
 
 function getAiprezApiUrl() {
   const configuredBase = localStorage.getItem("aiprez_api_base") || window.AIPREZ_API_BASE || "";

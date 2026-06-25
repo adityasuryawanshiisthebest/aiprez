@@ -1,4 +1,4 @@
-const DEFAULT_MODEL = process.env.AIPREZ_MODEL || "gpt-5.4-mini";
+const DEFAULT_MODEL = process.env.AIPREZ_MODEL || "gpt-5.5-mini";
 
 const TOOL_PROMPTS = {
   "create-presentation": `You are AIPREZ, an AI academic presentation assistant for students.

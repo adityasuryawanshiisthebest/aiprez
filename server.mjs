@@ -49,6 +49,7 @@ function collectRequestBody(request) {
 }
 
 async function handleApi(request, response) {
+  await loadEnvFile();
   const bodyText = await collectRequestBody(request);
   let parsedBody = bodyText;
   if ((request.headers["content-type"] || "").includes("application/json")) {

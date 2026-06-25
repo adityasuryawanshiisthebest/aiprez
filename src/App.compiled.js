@@ -135,8 +135,8 @@ var PRESENTATION_SLIDES = [{
   subtitle: "The causes that sparked a new nation",
   thumb: "Conclusion"
 }];
-var BACKEND_MODEL_ID = "gpt-5.4-mini";
-var BACKEND_MODEL_LABEL = "GPT-5.4 Mini";
+var BACKEND_MODEL_ID = "gpt-5.5-mini";
+var BACKEND_MODEL_LABEL = "GPT-5.5 Mini";
 function getAiprezApiUrl() {
   var configuredBase = localStorage.getItem("aiprez_api_base") || window.AIPREZ_API_BASE || "";
   if (configuredBase) {
