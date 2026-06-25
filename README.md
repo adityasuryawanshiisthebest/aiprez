@@ -7,7 +7,7 @@ AIPREZ is a dark futuristic React dashboard for an AI Academic Presentation Syst
 From this folder:
 
 ```bash
-python3 -m http.server 4173
+node server.mjs
 ```
 
 Then open:
@@ -15,6 +15,15 @@ Then open:
 ```text
 http://localhost:4173
 ```
+
+For local AI, create a `.env` file:
+
+```text
+OPENAI_API_KEY=your_openai_key
+AIPREZ_MODEL=gpt-5.4-mini
+```
+
+Do not commit `.env`; it is ignored by git.
 
 ## Screens
 
