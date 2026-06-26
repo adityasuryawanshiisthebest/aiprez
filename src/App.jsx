@@ -1128,9 +1128,7 @@ function InstructionComposer({
       setAiResult(result.output || "AIPREZ AI finished, but no response text was returned.");
       setStatus("complete");
     } catch (error) {
-      setAiResult(
-        `${error.message} If this is running on GitHub Pages, deploy the repo on Vercel and set OPENAI_API_KEY there.`
-      );
+      setAiResult(`${error.message} Make sure the local AIPREZ backend is running at http://localhost:4173.`);
       setStatus("error");
     }
   };

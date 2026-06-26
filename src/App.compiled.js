@@ -1354,7 +1354,7 @@ function InstructionComposer(_ref24) {
           case 4:
             _context.p = 4;
             _t = _context.v;
-            setAiResult("".concat(_t.message, " If this is running on GitHub Pages, deploy the repo on Vercel and set OPENAI_API_KEY there."));
+            setAiResult("".concat(_t.message, " Make sure the local AIPREZ backend is running at http://localhost:4173."));
             setStatus("error");
           case 5:
             return _context.a(2);
