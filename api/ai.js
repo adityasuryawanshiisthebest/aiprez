@@ -39,6 +39,17 @@ function extractOutputText(payload) {
   return parts.join("\n\n").trim();
 }
 
+function formatChatHistory(history) {
+  if (!Array.isArray(history) || history.length === 0) return "No previous messages.";
+  return history
+    .slice(-8)
+    .map((message, index) => {
+      const role = message?.role === "assistant" ? "AIPREZ AI" : "Student";
+      return `${index + 1}. ${role}: ${String(message?.text || "").slice(0, 1800)}`;
+    })
+    .join("\n\n");
+}
+
 export default async function handler(request, response) {
   setCors(response);
 
@@ -66,6 +77,7 @@ export default async function handler(request, response) {
   }
 
   const systemPrompt = TOOL_PROMPTS[tool] || TOOL_PROMPTS["create-presentation"];
+  const chatHistory = formatChatHistory(context.chatHistory);
   const openAIResponse = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: {
@@ -84,7 +96,17 @@ export default async function handler(request, response) {
           content: [
             {
               type: "input_text",
-              text: `Tool: ${tool}\nContext: ${JSON.stringify(context)}\nStudent request:\n${trimmedInput}`,
+              text: `Tool: ${tool}
+Use the previous conversation as memory. If the student asks for a change, follow-up, or continuation, apply it to the latest relevant presentation/content from the chat history.
+
+Previous conversation:
+${chatHistory}
+
+Additional context:
+${JSON.stringify({ ...context, chatHistory: undefined })}
+
+Latest student request:
+${trimmedInput}`,
             },
           ],
         },

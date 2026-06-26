@@ -148,6 +148,32 @@ async function callAiprezAI(tool, input, context = {}) {
   return payload;
 }
 
+function formatChatHistoryForContext(messages) {
+  return messages
+    .filter((message) => message.status !== "loading")
+    .slice(-8)
+    .map((message) => ({
+      role: message.role === "user" ? "student" : "assistant",
+      text: message.memoryText || message.text,
+    }));
+}
+
+function normalizeCompletionResult(result, fallbackText) {
+  if (result && typeof result === "object" && ("displayText" in result || "memoryText" in result)) {
+    const displayText = result.displayText || result.memoryText || fallbackText;
+    return {
+      displayText,
+      memoryText: result.memoryText || displayText,
+    };
+  }
+
+  const displayText = result || fallbackText;
+  return {
+    displayText,
+    memoryText: displayText,
+  };
+}
+
 function cleanMarkdownText(text) {
   return String(text || "")
     .replace(/\*\*/g, "")
@@ -1252,6 +1278,7 @@ function InstructionComposer({
   onComplete,
   onSubmitStart,
   onResponse,
+  getContext,
 }) {
   const [instructions, setInstructions] = React.useState("");
   const [status, setStatus] = React.useState("idle");
@@ -1270,12 +1297,17 @@ function InstructionComposer({
       const result = await callAiprezAI(tool, trimmed, {
         app: "AIPREZ",
         model: BACKEND_MODEL_ID,
+        ...(getContext?.() || {}),
       });
-      const completionMessage = onComplete?.(result, trimmed);
-      onResponse?.(completionMessage || result.output || "AIPREZ AI finished, but no response text was returned.");
+      const completion = normalizeCompletionResult(
+        onComplete?.(result, trimmed),
+        result.output || "AIPREZ AI finished, but no response text was returned."
+      );
+      onResponse?.(completion.displayText, "complete", completion.memoryText);
       setStatus("complete");
     } catch (error) {
-      onResponse?.(`${error.message} Make sure the local AIPREZ backend is running at http://localhost:4173.`, "error");
+      const errorMessage = `${error.message} Make sure the local AIPREZ backend is running at http://localhost:4173.`;
+      onResponse?.(errorMessage, "error", errorMessage);
       setStatus("error");
     }
   };
@@ -1331,20 +1363,36 @@ function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
     ]);
   };
 
-  const handleResponse = (text, status = "complete") => {
+  const handleResponse = (text, status = "complete", memoryText = text) => {
     const responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    const responseMemoryText = String(memoryText || responseText).trim();
     const activeId = pendingMessageId.current;
     setMessages((current) => {
       if (!activeId) {
-        return [...current, { id: `ai-${Date.now()}`, role: "ai", text: responseText, time: getMessageTime(), status }];
+        return [
+          ...current,
+          {
+            id: `ai-${Date.now()}`,
+            role: "ai",
+            text: responseText,
+            memoryText: responseMemoryText,
+            time: getMessageTime(),
+            status,
+          },
+        ];
       }
       return current.map((message) =>
         message.id === activeId
-          ? { ...message, text: responseText, time: getMessageTime(), status }
+          ? { ...message, text: responseText, memoryText: responseMemoryText, time: getMessageTime(), status }
           : message
       );
     });
     pendingMessageId.current = null;
+  };
+
+  const clearChat = () => {
+    pendingMessageId.current = null;
+    setMessages([]);
   };
 
   React.useEffect(() => {
@@ -1353,7 +1401,13 @@ function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
 
   return (
     <aside className="ai-spec-panel glass">
-      <h3>AI Specifications</h3>
+      <div className="ai-spec-header">
+        <h3>AI Specifications</h3>
+        <button className="clear-chat-button" type="button" onClick={clearChat} disabled={messages.length === 0}>
+          <Icon icon={Trash2} size={15} strokeWidth={1.8} />
+          Clear
+        </button>
+      </div>
       <div className="humanizer-chat">
         <HumanizerMessage ai>
           {isCreate
@@ -1378,11 +1432,17 @@ function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
         tool={isCreate ? "create-presentation" : "humanizer"}
         onSubmitStart={handleSubmitStart}
         onResponse={handleResponse}
+        getContext={() => ({
+          chatHistory: formatChatHistoryForContext(messages),
+        })}
         onComplete={
           isCreate
             ? (result, prompt) => {
                 onPresentationGenerated?.(parseGeneratedPresentation(result.output, prompt));
-                return "Presentation generated in the preview.";
+                return {
+                  displayText: "Presentation generated in the preview.",
+                  memoryText: result.output,
+                };
               }
             : undefined
         }
@@ -1507,13 +1567,65 @@ function LiveNotesBotMessage({ children }) {
 }
 
 function LiveNotesSpecifications() {
+  const [messages, setMessages] = React.useState([]);
+  const pendingMessageId = React.useRef(null);
+  const chatEndRef = React.useRef(null);
+  const getMessageTime = () =>
+    new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(new Date());
+  const handleSubmitStart = (text) => {
+    const timestamp = Date.now();
+    const aiMessageId = `live-ai-${timestamp}`;
+    pendingMessageId.current = aiMessageId;
+    setMessages((current) => [
+      ...current,
+      { id: `live-user-${timestamp}`, role: "user", text, time: getMessageTime() },
+      { id: aiMessageId, role: "ai", text: "Working on it...", time: getMessageTime(), status: "loading" },
+    ]);
+  };
+  const handleResponse = (text, status = "complete", memoryText = text) => {
+    const activeId = pendingMessageId.current;
+    const responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    const responseMemoryText = String(memoryText || responseText).trim();
+    setMessages((current) =>
+      current.map((message) =>
+        message.id === activeId
+          ? { ...message, text: responseText, memoryText: responseMemoryText, time: getMessageTime(), status }
+          : message
+      )
+    );
+    pendingMessageId.current = null;
+  };
+  React.useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ block: "end" });
+  }, [messages]);
+
   return (
     <aside className="ai-spec-panel live-notes-spec glass">
-      <h3>AI Specifications</h3>
+      <div className="ai-spec-header">
+        <h3>AI Specifications</h3>
+        <button
+          className="clear-chat-button"
+          type="button"
+          onClick={() => {
+            pendingMessageId.current = null;
+            setMessages([]);
+          }}
+          disabled={messages.length === 0}
+        >
+          <Icon icon={Trash2} size={15} strokeWidth={1.8} />
+          Clear
+        </button>
+      </div>
       <div className="humanizer-chat">
         <LiveNotesBotMessage>
           Hi Ava! I'm your AI live notes assistant. Tell me how you'd like me to process your recording.
         </LiveNotesBotMessage>
+        {messages.map((message) => (
+          <HumanizerMessage key={message.id} ai={message.role === "ai"} time={message.time} status={message.status}>
+            {message.text}
+          </HumanizerMessage>
+        ))}
+        <span ref={chatEndRef} aria-hidden="true"></span>
       </div>
       <div>
         <div className="live-composer-title">
@@ -1522,7 +1634,13 @@ function LiveNotesSpecifications() {
           </span>
           <h3>Create Live Notes</h3>
         </div>
-        <InstructionComposer label="Live notes instructions" tool="live-notes" />
+        <InstructionComposer
+          label="Live notes instructions"
+          tool="live-notes"
+          onSubmitStart={handleSubmitStart}
+          onResponse={handleResponse}
+          getContext={() => ({ chatHistory: formatChatHistoryForContext(messages) })}
+        />
       </div>
     </aside>
   );
@@ -1674,11 +1792,57 @@ function AnalyzerActionBubble({ children }) {
 }
 
 function AnalyzerSpecifications() {
+  const [messages, setMessages] = React.useState([]);
+  const pendingMessageId = React.useRef(null);
+  const chatEndRef = React.useRef(null);
+  const getMessageTime = () =>
+    new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(new Date());
+  const handleSubmitStart = (text) => {
+    const timestamp = Date.now();
+    const aiMessageId = `analyzer-ai-${timestamp}`;
+    pendingMessageId.current = aiMessageId;
+    setMessages((current) => [
+      ...current,
+      { id: `analyzer-user-${timestamp}`, role: "user", text, time: getMessageTime() },
+      { id: aiMessageId, role: "ai", text: "Working on it...", time: getMessageTime(), status: "loading" },
+    ]);
+  };
+  const handleResponse = (text, status = "complete", memoryText = text) => {
+    const activeId = pendingMessageId.current;
+    const responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    const responseMemoryText = String(memoryText || responseText).trim();
+    setMessages((current) =>
+      current.map((message) =>
+        message.id === activeId
+          ? { ...message, text: responseText, memoryText: responseMemoryText, time: getMessageTime(), status }
+          : message
+      )
+    );
+    pendingMessageId.current = null;
+  };
+  React.useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ block: "end" });
+  }, [messages]);
+
   return (
     <aside className="ai-spec-panel analyzer-spec glass">
       <div className="analyzer-spec-heading">
         <h3>AI Specifications</h3>
-        <Icon icon={Maximize} size={17} strokeWidth={1.6} />
+        <div className="analyzer-header-actions">
+          <button
+            className="clear-chat-button"
+            type="button"
+            onClick={() => {
+              pendingMessageId.current = null;
+              setMessages([]);
+            }}
+            disabled={messages.length === 0}
+          >
+            <Icon icon={Trash2} size={15} strokeWidth={1.8} />
+            Clear
+          </button>
+          <Icon icon={Maximize} size={17} strokeWidth={1.6} />
+        </div>
       </div>
       <div className="humanizer-chat analyzer-chat">
         <article className="analyzer-bot-message">
@@ -1689,11 +1853,20 @@ function AnalyzerSpecifications() {
             <p>Hi Ava! I'm your AI presentation analyzer. Tell me how you'd like me to review your presentation.</p>
           </div>
         </article>
+        {messages.map((message) => (
+          <HumanizerMessage key={message.id} ai={message.role === "ai"} time={message.time} status={message.status}>
+            {message.text}
+          </HumanizerMessage>
+        ))}
+        <span ref={chatEndRef} aria-hidden="true"></span>
       </div>
       <InstructionComposer
         label="Analyzer specifications"
         placeholder="Type your specifications here..."
         tool="analyzer"
+        onSubmitStart={handleSubmitStart}
+        onResponse={handleResponse}
+        getContext={() => ({ chatHistory: formatChatHistoryForContext(messages) })}
       />
     </aside>
   );

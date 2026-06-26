@@ -1,6 +1,5 @@
 "use strict";
 
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
@@ -8,6 +7,7 @@ function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArra
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -188,6 +188,30 @@ function _callAiprezAI() {
     }, _callee2);
   }));
   return _callAiprezAI.apply(this, arguments);
+}
+function formatChatHistoryForContext(messages) {
+  return messages.filter(function (message) {
+    return message.status !== "loading";
+  }).slice(-8).map(function (message) {
+    return {
+      role: message.role === "user" ? "student" : "assistant",
+      text: message.memoryText || message.text
+    };
+  });
+}
+function normalizeCompletionResult(result, fallbackText) {
+  if (result && _typeof(result) === "object" && ("displayText" in result || "memoryText" in result)) {
+    var _displayText = result.displayText || result.memoryText || fallbackText;
+    return {
+      displayText: _displayText,
+      memoryText: result.memoryText || _displayText
+    };
+  }
+  var displayText = result || fallbackText;
+  return {
+    displayText: displayText,
+    memoryText: displayText
+  };
 }
 function cleanMarkdownText(text) {
   return String(text || "").replace(/\*\*/g, "").replace(/^-+\s*/gm, "").trim();
@@ -1465,7 +1489,8 @@ function InstructionComposer(_ref25) {
     tool = _ref25$tool === void 0 ? "humanizer" : _ref25$tool,
     onComplete = _ref25.onComplete,
     onSubmitStart = _ref25.onSubmitStart,
-    onResponse = _ref25.onResponse;
+    onResponse = _ref25.onResponse,
+    getContext = _ref25.getContext;
   var _React$useState11 = React.useState(""),
     _React$useState12 = _slicedToArray(_React$useState11, 2),
     instructions = _React$useState12[0],
@@ -1485,7 +1510,7 @@ function InstructionComposer(_ref25) {
   };
   var submitInstructions = /*#__PURE__*/function () {
     var _ref26 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var trimmed, result, completionMessage, _t;
+      var trimmed, result, completion, errorMessage, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -1501,21 +1526,22 @@ function InstructionComposer(_ref25) {
             onSubmitStart === null || onSubmitStart === void 0 || onSubmitStart(trimmed);
             _context.p = 2;
             _context.n = 3;
-            return callAiprezAI(tool, trimmed, {
+            return callAiprezAI(tool, trimmed, _objectSpread({
               app: "AIPREZ",
               model: BACKEND_MODEL_ID
-            });
+            }, (getContext === null || getContext === void 0 ? void 0 : getContext()) || {}));
           case 3:
             result = _context.v;
-            completionMessage = onComplete === null || onComplete === void 0 ? void 0 : onComplete(result, trimmed);
-            onResponse === null || onResponse === void 0 || onResponse(completionMessage || result.output || "AIPREZ AI finished, but no response text was returned.");
+            completion = normalizeCompletionResult(onComplete === null || onComplete === void 0 ? void 0 : onComplete(result, trimmed), result.output || "AIPREZ AI finished, but no response text was returned.");
+            onResponse === null || onResponse === void 0 || onResponse(completion.displayText, "complete", completion.memoryText);
             setStatus("complete");
             _context.n = 5;
             break;
           case 4:
             _context.p = 4;
             _t = _context.v;
-            onResponse === null || onResponse === void 0 || onResponse("".concat(_t.message, " Make sure the local AIPREZ backend is running at http://localhost:4173."), "error");
+            errorMessage = "".concat(_t.message, " Make sure the local AIPREZ backend is running at http://localhost:4173.");
+            onResponse === null || onResponse === void 0 || onResponse(errorMessage, "error", errorMessage);
             setStatus("error");
           case 5:
             return _context.a(2);
@@ -1587,7 +1613,9 @@ function AISpecifications(_ref27) {
   };
   var handleResponse = function handleResponse(text) {
     var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "complete";
+    var memoryText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : text;
     var responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    var responseMemoryText = String(memoryText || responseText).trim();
     var activeId = pendingMessageId.current;
     setMessages(function (current) {
       if (!activeId) {
@@ -1595,6 +1623,7 @@ function AISpecifications(_ref27) {
           id: "ai-".concat(Date.now()),
           role: "ai",
           text: responseText,
+          memoryText: responseMemoryText,
           time: getMessageTime(),
           status: status
         }]);
@@ -1602,12 +1631,17 @@ function AISpecifications(_ref27) {
       return current.map(function (message) {
         return message.id === activeId ? _objectSpread(_objectSpread({}, message), {}, {
           text: responseText,
+          memoryText: responseMemoryText,
           time: getMessageTime(),
           status: status
         }) : message;
       });
     });
     pendingMessageId.current = null;
+  };
+  var clearChat = function clearChat() {
+    pendingMessageId.current = null;
+    setMessages([]);
   };
   React.useEffect(function () {
     var _chatEndRef$current;
@@ -1617,7 +1651,18 @@ function AISpecifications(_ref27) {
   }, [messages]);
   return /*#__PURE__*/React.createElement("aside", {
     className: "ai-spec-panel glass"
-  }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ai-spec-header"
+  }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement("button", {
+    className: "clear-chat-button",
+    type: "button",
+    onClick: clearChat,
+    disabled: messages.length === 0
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Trash2,
+    size: 15,
+    strokeWidth: 1.8
+  }), "Clear")), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-chat"
   }, /*#__PURE__*/React.createElement(HumanizerMessage, {
     ai: true
@@ -1637,9 +1682,17 @@ function AISpecifications(_ref27) {
     tool: isCreate ? "create-presentation" : "humanizer",
     onSubmitStart: handleSubmitStart,
     onResponse: handleResponse,
+    getContext: function getContext() {
+      return {
+        chatHistory: formatChatHistoryForContext(messages)
+      };
+    },
     onComplete: isCreate ? function (result, prompt) {
       onPresentationGenerated === null || onPresentationGenerated === void 0 || onPresentationGenerated(parseGeneratedPresentation(result.output, prompt));
-      return "Presentation generated in the preview.";
+      return {
+        displayText: "Presentation generated in the preview.",
+        memoryText: result.output
+      };
     } : undefined
   }));
 }
@@ -1800,11 +1853,90 @@ function LiveNotesBotMessage(_ref32) {
   }, /*#__PURE__*/React.createElement("p", null, children)));
 }
 function LiveNotesSpecifications() {
+  var _React$useState19 = React.useState([]),
+    _React$useState20 = _slicedToArray(_React$useState19, 2),
+    messages = _React$useState20[0],
+    setMessages = _React$useState20[1];
+  var pendingMessageId = React.useRef(null);
+  var chatEndRef = React.useRef(null);
+  var getMessageTime = function getMessageTime() {
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit"
+    }).format(new Date());
+  };
+  var handleSubmitStart = function handleSubmitStart(text) {
+    var timestamp = Date.now();
+    var aiMessageId = "live-ai-".concat(timestamp);
+    pendingMessageId.current = aiMessageId;
+    setMessages(function (current) {
+      return [].concat(_toConsumableArray(current), [{
+        id: "live-user-".concat(timestamp),
+        role: "user",
+        text: text,
+        time: getMessageTime()
+      }, {
+        id: aiMessageId,
+        role: "ai",
+        text: "Working on it...",
+        time: getMessageTime(),
+        status: "loading"
+      }]);
+    });
+  };
+  var handleResponse = function handleResponse(text) {
+    var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "complete";
+    var memoryText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : text;
+    var activeId = pendingMessageId.current;
+    var responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    var responseMemoryText = String(memoryText || responseText).trim();
+    setMessages(function (current) {
+      return current.map(function (message) {
+        return message.id === activeId ? _objectSpread(_objectSpread({}, message), {}, {
+          text: responseText,
+          memoryText: responseMemoryText,
+          time: getMessageTime(),
+          status: status
+        }) : message;
+      });
+    });
+    pendingMessageId.current = null;
+  };
+  React.useEffect(function () {
+    var _chatEndRef$current2;
+    (_chatEndRef$current2 = chatEndRef.current) === null || _chatEndRef$current2 === void 0 || _chatEndRef$current2.scrollIntoView({
+      block: "end"
+    });
+  }, [messages]);
   return /*#__PURE__*/React.createElement("aside", {
     className: "ai-spec-panel live-notes-spec glass"
-  }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ai-spec-header"
+  }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement("button", {
+    className: "clear-chat-button",
+    type: "button",
+    onClick: function onClick() {
+      pendingMessageId.current = null;
+      setMessages([]);
+    },
+    disabled: messages.length === 0
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Trash2,
+    size: 15,
+    strokeWidth: 1.8
+  }), "Clear")), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-chat"
-  }, /*#__PURE__*/React.createElement(LiveNotesBotMessage, null, "Hi Ava! I'm your AI live notes assistant. Tell me how you'd like me to process your recording.")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(LiveNotesBotMessage, null, "Hi Ava! I'm your AI live notes assistant. Tell me how you'd like me to process your recording."), messages.map(function (message) {
+    return /*#__PURE__*/React.createElement(HumanizerMessage, {
+      key: message.id,
+      ai: message.role === "ai",
+      time: message.time,
+      status: message.status
+    }, message.text);
+  }), /*#__PURE__*/React.createElement("span", {
+    ref: chatEndRef,
+    "aria-hidden": "true"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "live-composer-title"
   }, /*#__PURE__*/React.createElement("span", {
     className: "live-mic-avatar compact"
@@ -1813,7 +1945,14 @@ function LiveNotesSpecifications() {
     "aria-hidden": "true"
   })), /*#__PURE__*/React.createElement("h3", null, "Create Live Notes")), /*#__PURE__*/React.createElement(InstructionComposer, {
     label: "Live notes instructions",
-    tool: "live-notes"
+    tool: "live-notes",
+    onSubmitStart: handleSubmitStart,
+    onResponse: handleResponse,
+    getContext: function getContext() {
+      return {
+        chatHistory: formatChatHistoryForContext(messages)
+      };
+    }
   })));
 }
 function LiveNotesWorkspace(_ref33) {
@@ -1856,10 +1995,10 @@ function LiveNotesScreen(_ref34) {
   }));
 }
 function AnalyzerSlideDeck() {
-  var _React$useState19 = React.useState(0),
-    _React$useState20 = _slicedToArray(_React$useState19, 2),
-    activeSlide = _React$useState20[0],
-    setActiveSlide = _React$useState20[1];
+  var _React$useState21 = React.useState(0),
+    _React$useState22 = _slicedToArray(_React$useState21, 2),
+    activeSlide = _React$useState22[0],
+    setActiveSlide = _React$useState22[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   var thumbs = PRESENTATION_SLIDES.slice(0, 6);
   return /*#__PURE__*/React.createElement("section", {
@@ -1991,15 +2130,84 @@ function AnalyzerActionBubble(_ref36) {
   }, children);
 }
 function AnalyzerSpecifications() {
+  var _React$useState23 = React.useState([]),
+    _React$useState24 = _slicedToArray(_React$useState23, 2),
+    messages = _React$useState24[0],
+    setMessages = _React$useState24[1];
+  var pendingMessageId = React.useRef(null);
+  var chatEndRef = React.useRef(null);
+  var getMessageTime = function getMessageTime() {
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit"
+    }).format(new Date());
+  };
+  var handleSubmitStart = function handleSubmitStart(text) {
+    var timestamp = Date.now();
+    var aiMessageId = "analyzer-ai-".concat(timestamp);
+    pendingMessageId.current = aiMessageId;
+    setMessages(function (current) {
+      return [].concat(_toConsumableArray(current), [{
+        id: "analyzer-user-".concat(timestamp),
+        role: "user",
+        text: text,
+        time: getMessageTime()
+      }, {
+        id: aiMessageId,
+        role: "ai",
+        text: "Working on it...",
+        time: getMessageTime(),
+        status: "loading"
+      }]);
+    });
+  };
+  var handleResponse = function handleResponse(text) {
+    var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "complete";
+    var memoryText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : text;
+    var activeId = pendingMessageId.current;
+    var responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    var responseMemoryText = String(memoryText || responseText).trim();
+    setMessages(function (current) {
+      return current.map(function (message) {
+        return message.id === activeId ? _objectSpread(_objectSpread({}, message), {}, {
+          text: responseText,
+          memoryText: responseMemoryText,
+          time: getMessageTime(),
+          status: status
+        }) : message;
+      });
+    });
+    pendingMessageId.current = null;
+  };
+  React.useEffect(function () {
+    var _chatEndRef$current3;
+    (_chatEndRef$current3 = chatEndRef.current) === null || _chatEndRef$current3 === void 0 || _chatEndRef$current3.scrollIntoView({
+      block: "end"
+    });
+  }, [messages]);
   return /*#__PURE__*/React.createElement("aside", {
     className: "ai-spec-panel analyzer-spec glass"
   }, /*#__PURE__*/React.createElement("div", {
     className: "analyzer-spec-heading"
-  }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement(Icon, {
+  }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement("div", {
+    className: "analyzer-header-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "clear-chat-button",
+    type: "button",
+    onClick: function onClick() {
+      pendingMessageId.current = null;
+      setMessages([]);
+    },
+    disabled: messages.length === 0
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Trash2,
+    size: 15,
+    strokeWidth: 1.8
+  }), "Clear"), /*#__PURE__*/React.createElement(Icon, {
     icon: Maximize,
     size: 17,
     strokeWidth: 1.6
-  })), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-chat analyzer-chat"
   }, /*#__PURE__*/React.createElement("article", {
     className: "analyzer-bot-message"
@@ -2011,10 +2219,27 @@ function AnalyzerSpecifications() {
     strokeWidth: 1.55
   })), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-bubble glass"
-  }, /*#__PURE__*/React.createElement("p", null, "Hi Ava! I'm your AI presentation analyzer. Tell me how you'd like me to review your presentation.")))), /*#__PURE__*/React.createElement(InstructionComposer, {
+  }, /*#__PURE__*/React.createElement("p", null, "Hi Ava! I'm your AI presentation analyzer. Tell me how you'd like me to review your presentation."))), messages.map(function (message) {
+    return /*#__PURE__*/React.createElement(HumanizerMessage, {
+      key: message.id,
+      ai: message.role === "ai",
+      time: message.time,
+      status: message.status
+    }, message.text);
+  }), /*#__PURE__*/React.createElement("span", {
+    ref: chatEndRef,
+    "aria-hidden": "true"
+  })), /*#__PURE__*/React.createElement(InstructionComposer, {
     label: "Analyzer specifications",
     placeholder: "Type your specifications here...",
-    tool: "analyzer"
+    tool: "analyzer",
+    onSubmitStart: handleSubmitStart,
+    onResponse: handleResponse,
+    getContext: function getContext() {
+      return {
+        chatHistory: formatChatHistoryForContext(messages)
+      };
+    }
   }));
 }
 function AnalyzerWorkspace(_ref37) {
@@ -2058,10 +2283,10 @@ function AnalyzerScreen(_ref38) {
 }
 function PresentationViewerScreen(_ref39) {
   var onBack = _ref39.onBack;
-  var _React$useState21 = React.useState(0),
-    _React$useState22 = _slicedToArray(_React$useState21, 2),
-    activeSlide = _React$useState22[0],
-    setActiveSlide = _React$useState22[1];
+  var _React$useState25 = React.useState(0),
+    _React$useState26 = _slicedToArray(_React$useState25, 2),
+    activeSlide = _React$useState26[0],
+    setActiveSlide = _React$useState26[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   React.useEffect(function () {
     var handleKeyDown = function handleKeyDown(event) {
@@ -2495,13 +2720,13 @@ function AccountSettingsScreen(_ref57) {
   }));
 }
 function App() {
-  var _React$useState23 = React.useState(function () {
+  var _React$useState27 = React.useState(function () {
       var params = new URLSearchParams(window.location.search);
       return params.get("screen") || "dashboard";
     }),
-    _React$useState24 = _slicedToArray(_React$useState23, 2),
-    screen = _React$useState24[0],
-    setScreen = _React$useState24[1];
+    _React$useState28 = _slicedToArray(_React$useState27, 2),
+    screen = _React$useState28[0],
+    setScreen = _React$useState28[1];
   React.useEffect(function () {
     var updateScale = function updateScale() {
       var isPhone = window.innerWidth <= 760;
