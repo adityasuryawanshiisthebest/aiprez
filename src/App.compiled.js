@@ -1298,11 +1298,7 @@ function HumanizerMessage(_ref23) {
   }, /*#__PURE__*/React.createElement("p", null, children), time && /*#__PURE__*/React.createElement("time", null, time)));
 }
 function InstructionComposer(_ref24) {
-  var isCreate = _ref24.isCreate,
-    label = _ref24.label,
-    buttonLabel = _ref24.buttonLabel,
-    _ref24$icon = _ref24.icon,
-    icon = _ref24$icon === void 0 ? Sparkles : _ref24$icon,
+  var label = _ref24.label,
     _ref24$placeholder = _ref24.placeholder,
     placeholder = _ref24$placeholder === void 0 ? "Type your instructions here..." : _ref24$placeholder,
     _ref24$tool = _ref24.tool,
@@ -1380,19 +1376,19 @@ function InstructionComposer(_ref24) {
       setInstructions(event.target.value);
       keepViewportPinned();
     },
+    onKeyDown: function onKeyDown(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        submitInstructions();
+      }
+    },
     placeholder: placeholder,
     "aria-label": label
-  }), /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), aiResult && /*#__PURE__*/React.createElement("p", {
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "composer-meta"
+  }, /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), status === "loading" && /*#__PURE__*/React.createElement("small", null, "Thinking...")), aiResult && /*#__PURE__*/React.createElement("p", {
     className: "ai-result ".concat(status === "error" ? "error" : "")
-  }, aiResult), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    disabled: status === "loading" || !instructions.trim(),
-    onClick: submitInstructions
-  }, /*#__PURE__*/React.createElement(Icon, {
-    icon: icon,
-    size: 22,
-    strokeWidth: 1.6
-  }), status === "loading" ? "Thinking..." : buttonLabel || (isCreate ? "Create Presentation" : "Humanize Presentation")));
+  }, aiResult));
 }
 function AISpecifications(_ref26) {
   var _ref26$mode = _ref26.mode,
@@ -1574,8 +1570,6 @@ function LiveNotesSpecifications() {
     "aria-hidden": "true"
   })), /*#__PURE__*/React.createElement("h3", null, "Create Live Notes")), /*#__PURE__*/React.createElement(InstructionComposer, {
     label: "Live notes instructions",
-    buttonLabel: "Create Live Notes",
-    icon: Mic,
     tool: "live-notes"
   })));
 }
@@ -1777,8 +1771,6 @@ function AnalyzerSpecifications() {
   }, /*#__PURE__*/React.createElement("p", null, "Hi Ava! I'm your AI presentation analyzer. Tell me how you'd like me to review your presentation.")))), /*#__PURE__*/React.createElement(InstructionComposer, {
     label: "Analyzer specifications",
     placeholder: "Type your specifications here...",
-    buttonLabel: "Analyze Presentation",
-    icon: Sparkles,
     tool: "analyzer"
   }));
 }

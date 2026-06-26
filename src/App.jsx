@@ -1103,10 +1103,7 @@ function HumanizerMessage({ children, ai, time, aiIcon = Sparkles }) {
 }
 
 function InstructionComposer({
-  isCreate,
   label,
-  buttonLabel,
-  icon = Sparkles,
   placeholder = "Type your instructions here...",
   tool = "humanizer",
 }) {
@@ -1149,17 +1146,20 @@ function InstructionComposer({
           setInstructions(event.target.value);
           keepViewportPinned();
         }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            submitInstructions();
+          }
+        }}
         placeholder={placeholder}
         aria-label={label}
       />
-      <span>
-        {instructions.length} / {maxCharacters}
-      </span>
+      <div className="composer-meta">
+        <span>{instructions.length} / {maxCharacters}</span>
+        {status === "loading" && <small>Thinking...</small>}
+      </div>
       {aiResult && <p className={`ai-result ${status === "error" ? "error" : ""}`}>{aiResult}</p>}
-      <button type="button" disabled={status === "loading" || !instructions.trim()} onClick={submitInstructions}>
-        <Icon icon={icon} size={22} strokeWidth={1.6} />
-        {status === "loading" ? "Thinking..." : buttonLabel || (isCreate ? "Create Presentation" : "Humanize Presentation")}
-      </button>
     </div>
   );
 }
@@ -1315,7 +1315,7 @@ function LiveNotesSpecifications() {
           </span>
           <h3>Create Live Notes</h3>
         </div>
-        <InstructionComposer label="Live notes instructions" buttonLabel="Create Live Notes" icon={Mic} tool="live-notes" />
+        <InstructionComposer label="Live notes instructions" tool="live-notes" />
       </div>
     </aside>
   );
@@ -1486,8 +1486,6 @@ function AnalyzerSpecifications() {
       <InstructionComposer
         label="Analyzer specifications"
         placeholder="Type your specifications here..."
-        buttonLabel="Analyze Presentation"
-        icon={Sparkles}
         tool="analyzer"
       />
     </aside>

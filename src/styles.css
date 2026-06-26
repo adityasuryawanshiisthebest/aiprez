@@ -2913,9 +2913,10 @@ button {
 }
 
 .humanizer-composer {
-  min-height: 158px;
+  min-height: 126px;
   display: grid;
   align-content: space-between;
+  gap: 8px;
   margin-top: 10px;
   padding: 15px;
   border: 1px solid rgba(34, 116, 255, 0.46);
@@ -2923,9 +2924,21 @@ button {
   background: rgba(5, 17, 42, 0.62);
 }
 
-.humanizer-composer span {
+.composer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.composer-meta span,
+.composer-meta small {
   color: var(--dim);
   font-size: 0.9rem;
+}
+
+.composer-meta small {
+  color: rgba(0, 226, 255, 0.74);
 }
 
 .humanizer-composer .ai-result {
@@ -2969,26 +2982,6 @@ button {
   box-shadow:
     inset 0 0 22px rgba(0, 174, 255, 0.08),
     0 0 20px rgba(0, 153, 255, 0.14);
-}
-
-.humanizer-composer button {
-  min-height: 46px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: #fff;
-  border: 1px solid rgba(0, 153, 255, 0.64);
-  border-radius: 8px;
-  background: linear-gradient(100deg, #008cff, #1245ff 60%, #345bff);
-  box-shadow: 0 0 20px rgba(0, 140, 255, 0.28);
-  font-size: 1.02rem;
-}
-
-.humanizer-composer button:disabled {
-  cursor: not-allowed;
-  opacity: 0.58;
-  box-shadow: none;
 }
 
 .live-notes-content {
@@ -3645,11 +3638,6 @@ button {
   font-size: 0.84rem;
 }
 
-.analyzer-spec .humanizer-composer button {
-  background: linear-gradient(100deg, #bd2cff, #7a24ff 56%, #0e8dff);
-  border-color: rgba(189, 76, 255, 0.6);
-}
-
 .presentation-viewer-screen {
   position: relative;
   width: 100%;
@@ -4076,11 +4064,6 @@ button {
     min-height: 128px;
     margin-top: 8px;
     padding: 11px;
-  }
-
-  .humanizer-composer button {
-    min-height: 40px;
-    font-size: 0.92rem;
   }
 
   .bottom-utility {
@@ -4532,10 +4515,6 @@ button {
     padding: 9px;
   }
 
-  .humanizer-composer button {
-    min-height: 36px;
-    font-size: 0.84rem;
-  }
 }
 
 @media (max-width: 1180px) {
