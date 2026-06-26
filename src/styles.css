@@ -3162,6 +3162,30 @@ button {
   background: linear-gradient(135deg, rgba(11, 40, 113, 0.7), rgba(8, 16, 48, 0.74));
 }
 
+.humanizer-message.loading .humanizer-bubble {
+  border-color: rgba(0, 226, 255, 0.26);
+  background: rgba(0, 143, 255, 0.08);
+}
+
+.humanizer-message.loading .humanizer-bubble p::after {
+  content: "...";
+  display: inline-block;
+  width: 0.9em;
+  margin-left: 4px;
+  overflow: hidden;
+  vertical-align: bottom;
+  animation: thinkingDots 1.2s steps(4, end) infinite;
+}
+
+.humanizer-message.error .humanizer-bubble {
+  border-color: rgba(255, 72, 106, 0.36);
+  background: rgba(255, 47, 92, 0.09);
+}
+
+.humanizer-message.error .humanizer-bubble p {
+  color: #ffd7df;
+}
+
 .humanizer-bubble p {
   margin: 0;
   color: rgba(255, 255, 255, 0.9);
@@ -3247,6 +3271,25 @@ button {
   box-shadow:
     inset 0 0 22px rgba(0, 174, 255, 0.08),
     0 0 20px rgba(0, 153, 255, 0.14);
+}
+
+@keyframes thinkingDots {
+  0% {
+    width: 0;
+  }
+
+  25% {
+    width: 0.3em;
+  }
+
+  50% {
+    width: 0.6em;
+  }
+
+  75%,
+  100% {
+    width: 0.9em;
+  }
 }
 
 .live-notes-content {

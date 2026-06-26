@@ -1229,9 +1229,9 @@ function PresentationPreview({ mode = "humanizer", generatedDeck }) {
   );
 }
 
-function HumanizerMessage({ children, ai, time, aiIcon = Sparkles }) {
+function HumanizerMessage({ children, ai, time, aiIcon = Sparkles, status }) {
   return (
-    <article className={`humanizer-message ${ai ? "ai" : "user"}`}>
+    <article className={`humanizer-message ${ai ? "ai" : "user"} ${status || ""}`}>
       {ai && (
         <span className="spark-avatar">
           <Icon icon={aiIcon} size={26} strokeWidth={1.5} />
@@ -1250,9 +1250,10 @@ function InstructionComposer({
   placeholder = "Type your instructions here...",
   tool = "humanizer",
   onComplete,
+  onSubmitStart,
+  onResponse,
 }) {
   const [instructions, setInstructions] = React.useState("");
-  const [aiResult, setAiResult] = React.useState("");
   const [status, setStatus] = React.useState("idle");
   const maxCharacters = 1000;
   const keepViewportPinned = () => {
@@ -1262,18 +1263,19 @@ function InstructionComposer({
   const submitInstructions = async () => {
     const trimmed = instructions.trim();
     if (!trimmed || status === "loading") return;
+    setInstructions("");
     setStatus("loading");
-    setAiResult("");
+    onSubmitStart?.(trimmed);
     try {
       const result = await callAiprezAI(tool, trimmed, {
         app: "AIPREZ",
         model: BACKEND_MODEL_ID,
       });
       const completionMessage = onComplete?.(result, trimmed);
-      setAiResult(completionMessage || result.output || "AIPREZ AI finished, but no response text was returned.");
+      onResponse?.(completionMessage || result.output || "AIPREZ AI finished, but no response text was returned.");
       setStatus("complete");
     } catch (error) {
-      setAiResult(`${error.message} Make sure the local AIPREZ backend is running at http://localhost:4173.`);
+      onResponse?.(`${error.message} Make sure the local AIPREZ backend is running at http://localhost:4173.`, "error");
       setStatus("error");
     }
   };
@@ -1302,13 +1304,52 @@ function InstructionComposer({
         <span>{instructions.length} / {maxCharacters}</span>
         {status === "loading" && <small>Thinking...</small>}
       </div>
-      {aiResult && <p className={`ai-result ${status === "error" ? "error" : ""}`}>{aiResult}</p>}
     </div>
   );
 }
 
 function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
   const isCreate = mode === "create";
+  const [messages, setMessages] = React.useState([]);
+  const pendingMessageId = React.useRef(null);
+  const chatEndRef = React.useRef(null);
+
+  const getMessageTime = () =>
+    new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    }).format(new Date());
+
+  const handleSubmitStart = (text) => {
+    const timestamp = Date.now();
+    const aiMessageId = `ai-${timestamp}`;
+    pendingMessageId.current = aiMessageId;
+    setMessages((current) => [
+      ...current,
+      { id: `user-${timestamp}`, role: "user", text, time: getMessageTime() },
+      { id: aiMessageId, role: "ai", text: "Working on it...", time: getMessageTime(), status: "loading" },
+    ]);
+  };
+
+  const handleResponse = (text, status = "complete") => {
+    const responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    const activeId = pendingMessageId.current;
+    setMessages((current) => {
+      if (!activeId) {
+        return [...current, { id: `ai-${Date.now()}`, role: "ai", text: responseText, time: getMessageTime(), status }];
+      }
+      return current.map((message) =>
+        message.id === activeId
+          ? { ...message, text: responseText, time: getMessageTime(), status }
+          : message
+      );
+    });
+    pendingMessageId.current = null;
+  };
+
+  React.useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ block: "end" });
+  }, [messages]);
 
   return (
     <aside className="ai-spec-panel glass">
@@ -1319,11 +1360,24 @@ function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
             ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation."
             : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."}
         </HumanizerMessage>
+        {messages.map((message) => (
+          <HumanizerMessage
+            key={message.id}
+            ai={message.role === "ai"}
+            time={message.time}
+            status={message.status}
+          >
+            {message.text}
+          </HumanizerMessage>
+        ))}
+        <span ref={chatEndRef} aria-hidden="true"></span>
       </div>
       <InstructionComposer
         isCreate={isCreate}
         label={isCreate ? "Create presentation instructions" : "Humanizer instructions"}
         tool={isCreate ? "create-presentation" : "humanizer"}
+        onSubmitStart={handleSubmitStart}
+        onResponse={handleResponse}
         onComplete={
           isCreate
             ? (result, prompt) => {

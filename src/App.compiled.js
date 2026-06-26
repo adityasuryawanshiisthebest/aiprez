@@ -1443,9 +1443,10 @@ function HumanizerMessage(_ref24) {
     ai = _ref24.ai,
     time = _ref24.time,
     _ref24$aiIcon = _ref24.aiIcon,
-    aiIcon = _ref24$aiIcon === void 0 ? Sparkles : _ref24$aiIcon;
+    aiIcon = _ref24$aiIcon === void 0 ? Sparkles : _ref24$aiIcon,
+    status = _ref24.status;
   return /*#__PURE__*/React.createElement("article", {
-    className: "humanizer-message ".concat(ai ? "ai" : "user")
+    className: "humanizer-message ".concat(ai ? "ai" : "user", " ").concat(status || "")
   }, ai && /*#__PURE__*/React.createElement("span", {
     className: "spark-avatar"
   }, /*#__PURE__*/React.createElement(Icon, {
@@ -1462,19 +1463,17 @@ function InstructionComposer(_ref25) {
     placeholder = _ref25$placeholder === void 0 ? "Type your instructions here..." : _ref25$placeholder,
     _ref25$tool = _ref25.tool,
     tool = _ref25$tool === void 0 ? "humanizer" : _ref25$tool,
-    onComplete = _ref25.onComplete;
+    onComplete = _ref25.onComplete,
+    onSubmitStart = _ref25.onSubmitStart,
+    onResponse = _ref25.onResponse;
   var _React$useState11 = React.useState(""),
     _React$useState12 = _slicedToArray(_React$useState11, 2),
     instructions = _React$useState12[0],
     setInstructions = _React$useState12[1];
-  var _React$useState13 = React.useState(""),
+  var _React$useState13 = React.useState("idle"),
     _React$useState14 = _slicedToArray(_React$useState13, 2),
-    aiResult = _React$useState14[0],
-    setAiResult = _React$useState14[1];
-  var _React$useState15 = React.useState("idle"),
-    _React$useState16 = _slicedToArray(_React$useState15, 2),
-    status = _React$useState16[0],
-    setStatus = _React$useState16[1];
+    status = _React$useState14[0],
+    setStatus = _React$useState14[1];
   var maxCharacters = 1000;
   var keepViewportPinned = function keepViewportPinned() {
     requestAnimationFrame(function () {
@@ -1497,8 +1496,9 @@ function InstructionComposer(_ref25) {
             }
             return _context.a(2);
           case 1:
+            setInstructions("");
             setStatus("loading");
-            setAiResult("");
+            onSubmitStart === null || onSubmitStart === void 0 || onSubmitStart(trimmed);
             _context.p = 2;
             _context.n = 3;
             return callAiprezAI(tool, trimmed, {
@@ -1508,14 +1508,14 @@ function InstructionComposer(_ref25) {
           case 3:
             result = _context.v;
             completionMessage = onComplete === null || onComplete === void 0 ? void 0 : onComplete(result, trimmed);
-            setAiResult(completionMessage || result.output || "AIPREZ AI finished, but no response text was returned.");
+            onResponse === null || onResponse === void 0 || onResponse(completionMessage || result.output || "AIPREZ AI finished, but no response text was returned.");
             setStatus("complete");
             _context.n = 5;
             break;
           case 4:
             _context.p = 4;
             _t = _context.v;
-            setAiResult("".concat(_t.message, " Make sure the local AIPREZ backend is running at http://localhost:4173."));
+            onResponse === null || onResponse === void 0 || onResponse("".concat(_t.message, " Make sure the local AIPREZ backend is running at http://localhost:4173."), "error");
             setStatus("error");
           case 5:
             return _context.a(2);
@@ -1547,25 +1547,96 @@ function InstructionComposer(_ref25) {
     "aria-label": label
   }), /*#__PURE__*/React.createElement("div", {
     className: "composer-meta"
-  }, /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), status === "loading" && /*#__PURE__*/React.createElement("small", null, "Thinking...")), aiResult && /*#__PURE__*/React.createElement("p", {
-    className: "ai-result ".concat(status === "error" ? "error" : "")
-  }, aiResult));
+  }, /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), status === "loading" && /*#__PURE__*/React.createElement("small", null, "Thinking...")));
 }
 function AISpecifications(_ref27) {
   var _ref27$mode = _ref27.mode,
     mode = _ref27$mode === void 0 ? "humanizer" : _ref27$mode,
     onPresentationGenerated = _ref27.onPresentationGenerated;
   var isCreate = mode === "create";
+  var _React$useState15 = React.useState([]),
+    _React$useState16 = _slicedToArray(_React$useState15, 2),
+    messages = _React$useState16[0],
+    setMessages = _React$useState16[1];
+  var pendingMessageId = React.useRef(null);
+  var chatEndRef = React.useRef(null);
+  var getMessageTime = function getMessageTime() {
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit"
+    }).format(new Date());
+  };
+  var handleSubmitStart = function handleSubmitStart(text) {
+    var timestamp = Date.now();
+    var aiMessageId = "ai-".concat(timestamp);
+    pendingMessageId.current = aiMessageId;
+    setMessages(function (current) {
+      return [].concat(_toConsumableArray(current), [{
+        id: "user-".concat(timestamp),
+        role: "user",
+        text: text,
+        time: getMessageTime()
+      }, {
+        id: aiMessageId,
+        role: "ai",
+        text: "Working on it...",
+        time: getMessageTime(),
+        status: "loading"
+      }]);
+    });
+  };
+  var handleResponse = function handleResponse(text) {
+    var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "complete";
+    var responseText = String(text || "").trim() || "AIPREZ AI finished, but no response text was returned.";
+    var activeId = pendingMessageId.current;
+    setMessages(function (current) {
+      if (!activeId) {
+        return [].concat(_toConsumableArray(current), [{
+          id: "ai-".concat(Date.now()),
+          role: "ai",
+          text: responseText,
+          time: getMessageTime(),
+          status: status
+        }]);
+      }
+      return current.map(function (message) {
+        return message.id === activeId ? _objectSpread(_objectSpread({}, message), {}, {
+          text: responseText,
+          time: getMessageTime(),
+          status: status
+        }) : message;
+      });
+    });
+    pendingMessageId.current = null;
+  };
+  React.useEffect(function () {
+    var _chatEndRef$current;
+    (_chatEndRef$current = chatEndRef.current) === null || _chatEndRef$current === void 0 || _chatEndRef$current.scrollIntoView({
+      block: "end"
+    });
+  }, [messages]);
   return /*#__PURE__*/React.createElement("aside", {
     className: "ai-spec-panel glass"
   }, /*#__PURE__*/React.createElement("h3", null, "AI Specifications"), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-chat"
   }, /*#__PURE__*/React.createElement(HumanizerMessage, {
     ai: true
-  }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation.")), /*#__PURE__*/React.createElement(InstructionComposer, {
+  }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."), messages.map(function (message) {
+    return /*#__PURE__*/React.createElement(HumanizerMessage, {
+      key: message.id,
+      ai: message.role === "ai",
+      time: message.time,
+      status: message.status
+    }, message.text);
+  }), /*#__PURE__*/React.createElement("span", {
+    ref: chatEndRef,
+    "aria-hidden": "true"
+  })), /*#__PURE__*/React.createElement(InstructionComposer, {
     isCreate: isCreate,
     label: isCreate ? "Create presentation instructions" : "Humanizer instructions",
     tool: isCreate ? "create-presentation" : "humanizer",
+    onSubmitStart: handleSubmitStart,
+    onResponse: handleResponse,
     onComplete: isCreate ? function (result, prompt) {
       onPresentationGenerated === null || onPresentationGenerated === void 0 || onPresentationGenerated(parseGeneratedPresentation(result.output, prompt));
       return "Presentation generated in the preview.";
