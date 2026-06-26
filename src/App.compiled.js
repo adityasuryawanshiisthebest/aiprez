@@ -219,9 +219,9 @@ function cleanMarkdownText(text) {
 function parseGeneratedPresentation(output) {
   var prompt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
   var text = String(output || "");
-  var titleMatch = text.match(/##\s*(?:Presentation\s*)?Title\s*\n+([\s\S]*?)(?=\n##|\n###|$)/i);
+  var titleMatch = text.match(/#{1,3}\s*(?:Presentation\s*)?Title\s*:?\s*([\s\S]*?)(?=\n#{1,3}\s|$)/i);
   var title = cleanMarkdownText(titleMatch === null || titleMatch === void 0 ? void 0 : titleMatch[1]).split(/\n/).find(Boolean) || cleanMarkdownText(prompt).split(/[.!?]/)[0] || "Generated Presentation";
-  var slideMatches = _toConsumableArray(text.matchAll(/(?:^|\n)(?:###\s*)?\*{0,2}Slide\s*(\d+)\s*[—-]\s*([^\n*]+?)\*{0,2}\s*\n([\s\S]*?)(?=\n(?:###\s*)?\*{0,2}Slide\s*\d+\s*[—-]|\n##\s|$)/gi));
+  var slideMatches = _toConsumableArray(text.matchAll(/(?:^|\n)\s*#{0,4}\s*\*{0,2}Slide\s*(\d+)\s*[—-]\s*([^\n*]+?)\*{0,2}\s*\n([\s\S]*?)(?=\n\s*#{0,4}\s*\*{0,2}Slide\s*\d+\s*[—-]|\n#{1,3}\s|$)/gi));
   var tones = ["solar", "wind", "earth", "innovation", "challenge", "future", "grid", "classroom"];
   var slides = slideMatches.map(function (match, index) {
     var _body$match, _body$match2;
@@ -1345,6 +1345,8 @@ function GeneratedSlideVisual(_ref22) {
   }, /*#__PURE__*/React.createElement("span", {
     className: "visual-orbit"
   }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-orbit second"
+  }), /*#__PURE__*/React.createElement("span", {
     className: "visual-core"
   }), /*#__PURE__*/React.createElement("span", {
     className: "visual-panel one"
@@ -1353,14 +1355,19 @@ function GeneratedSlideVisual(_ref22) {
   }), /*#__PURE__*/React.createElement("span", {
     className: "visual-panel three"
   }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-chart"
+  }, /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null)), /*#__PURE__*/React.createElement("span", {
     className: "visual-grid"
   }), /*#__PURE__*/React.createElement("span", {
     className: "visual-spark one"
   }), /*#__PURE__*/React.createElement("span", {
     className: "visual-spark two"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-spark three"
   }));
 }
 function PresentationPreview(_ref23) {
+  var _slide$bullets;
   var _ref23$mode = _ref23.mode,
     mode = _ref23$mode === void 0 ? "humanizer" : _ref23$mode,
     generatedDeck = _ref23.generatedDeck;
@@ -1398,7 +1405,14 @@ function PresentationPreview(_ref23) {
     className: "main-slide generated-main-slide ".concat(slide.tone)
   }, /*#__PURE__*/React.createElement("div", {
     className: "slide-copy generated-slide-copy"
-  }, /*#__PURE__*/React.createElement("small", null, "Slide ", activeSlide + 1), /*#__PURE__*/React.createElement("h4", null, slide.title), /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("p", null, slide.subtitle)), /*#__PURE__*/React.createElement(GeneratedSlideVisual, {
+  }, /*#__PURE__*/React.createElement("small", null, "Slide ", activeSlide + 1), /*#__PURE__*/React.createElement("h4", null, slide.title), /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("p", null, slide.subtitle)), ((_slide$bullets = slide.bullets) === null || _slide$bullets === void 0 ? void 0 : _slide$bullets.length) > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "generated-detail-grid"
+  }, slide.bullets.slice(0, 3).map(function (bullet, index) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "generated-detail-card",
+      key: "".concat(bullet, "-").concat(index)
+    }, /*#__PURE__*/React.createElement("strong", null, String(index + 1).padStart(2, "0")), /*#__PURE__*/React.createElement("span", null, bullet));
+  })), /*#__PURE__*/React.createElement(GeneratedSlideVisual, {
     tone: slide.tone
   })), /*#__PURE__*/React.createElement("div", {
     className: "slide-strip"

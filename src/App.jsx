@@ -183,7 +183,7 @@ function cleanMarkdownText(text) {
 
 function parseGeneratedPresentation(output, prompt = "") {
   const text = String(output || "");
-  const titleMatch = text.match(/##\s*(?:Presentation\s*)?Title\s*\n+([\s\S]*?)(?=\n##|\n###|$)/i);
+  const titleMatch = text.match(/#{1,3}\s*(?:Presentation\s*)?Title\s*:?\s*([\s\S]*?)(?=\n#{1,3}\s|$)/i);
   const title =
     cleanMarkdownText(titleMatch?.[1])
       .split(/\n/)
@@ -192,7 +192,7 @@ function parseGeneratedPresentation(output, prompt = "") {
     "Generated Presentation";
   const slideMatches = [
     ...text.matchAll(
-      /(?:^|\n)(?:###\s*)?\*{0,2}Slide\s*(\d+)\s*[—-]\s*([^\n*]+?)\*{0,2}\s*\n([\s\S]*?)(?=\n(?:###\s*)?\*{0,2}Slide\s*\d+\s*[—-]|\n##\s|$)/gi
+      /(?:^|\n)\s*#{0,4}\s*\*{0,2}Slide\s*(\d+)\s*[—-]\s*([^\n*]+?)\*{0,2}\s*\n([\s\S]*?)(?=\n\s*#{0,4}\s*\*{0,2}Slide\s*\d+\s*[—-]|\n#{1,3}\s|$)/gi
     ),
   ];
   const tones = ["solar", "wind", "earth", "innovation", "challenge", "future", "grid", "classroom"];
@@ -1169,13 +1169,21 @@ function GeneratedSlideVisual({ tone }) {
   return (
     <div className={`generated-slide-visual ${tone}`} aria-hidden="true">
       <span className="visual-orbit"></span>
+      <span className="visual-orbit second"></span>
       <span className="visual-core"></span>
       <span className="visual-panel one"></span>
       <span className="visual-panel two"></span>
       <span className="visual-panel three"></span>
+      <span className="visual-chart">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
       <span className="visual-grid"></span>
       <span className="visual-spark one"></span>
       <span className="visual-spark two"></span>
+      <span className="visual-spark three"></span>
     </div>
   );
 }
@@ -1217,6 +1225,16 @@ function PresentationPreview({ mode = "humanizer", generatedDeck }) {
           <span></span>
           <p>{slide.subtitle}</p>
         </div>
+        {slide.bullets?.length > 0 && (
+          <div className="generated-detail-grid">
+            {slide.bullets.slice(0, 3).map((bullet, index) => (
+              <div className="generated-detail-card" key={`${bullet}-${index}`}>
+                <strong>{String(index + 1).padStart(2, "0")}</strong>
+                <span>{bullet}</span>
+              </div>
+            ))}
+          </div>
+        )}
         <GeneratedSlideVisual tone={slide.tone} />
       </div>
       <div className="slide-strip">

@@ -2,14 +2,15 @@ const DEFAULT_MODEL = process.env.AIPREZ_MODEL || "gpt-5.4-mini";
 
 const TOOL_PROMPTS = {
   "create-presentation": `You are AIPREZ, an AI academic presentation assistant for students.
-Create a polished presentation plan from the student's request.
-Return concise, useful content with:
+Create a polished, classroom-ready presentation plan from the student's request.
+Return detailed, useful content with:
 - title
-- slide outline
+- slide outline with 4-5 specific, student-friendly bullets per slide
 - speaker notes suggestions
-- visual direction
+- vivid visual direction for each slide, including imagery, colors, icons, or layout ideas
 - next refinement questions if needed.
-Format each slide heading exactly like: "### Slide 1 — Slide Title".`,
+Format each slide heading exactly like: "### Slide 1 — Slide Title".
+Do not add any extra markdown heading marks before slide headings.`,
   humanizer: `You are AIPREZ Humanizer.
 Rewrite or improve the student's presentation content so it sounds natural, student-written, clear, and classroom appropriate.
 Do not make it evasive or deceptive; focus on clarity, originality, and natural tone.
