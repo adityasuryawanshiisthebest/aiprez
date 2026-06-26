@@ -8,7 +8,8 @@ Return concise, useful content with:
 - slide outline
 - speaker notes suggestions
 - visual direction
-- next refinement questions if needed.`,
+- next refinement questions if needed.
+Format each slide heading exactly like: "### Slide 1 — Slide Title".`,
   humanizer: `You are AIPREZ Humanizer.
 Rewrite or improve the student's presentation content so it sounds natural, student-written, clear, and classroom appropriate.
 Do not make it evasive or deceptive; focus on clarity, originality, and natural tone.

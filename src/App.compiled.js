@@ -3,11 +3,11 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -188,6 +188,49 @@ function _callAiprezAI() {
     }, _callee2);
   }));
   return _callAiprezAI.apply(this, arguments);
+}
+function cleanMarkdownText(text) {
+  return String(text || "").replace(/\*\*/g, "").replace(/^-+\s*/gm, "").trim();
+}
+function parseGeneratedPresentation(output) {
+  var prompt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var text = String(output || "");
+  var titleMatch = text.match(/##\s*(?:Presentation\s*)?Title\s*\n+([\s\S]*?)(?=\n##|\n###|$)/i);
+  var title = cleanMarkdownText(titleMatch === null || titleMatch === void 0 ? void 0 : titleMatch[1]).split(/\n/).find(Boolean) || cleanMarkdownText(prompt).split(/[.!?]/)[0] || "Generated Presentation";
+  var slideMatches = _toConsumableArray(text.matchAll(/(?:^|\n)(?:###\s*)?\*{0,2}Slide\s*(\d+)\s*[—-]\s*([^\n*]+?)\*{0,2}\s*\n([\s\S]*?)(?=\n(?:###\s*)?\*{0,2}Slide\s*\d+\s*[—-]|\n##\s|$)/gi));
+  var tones = ["solar", "wind", "earth", "innovation", "challenge", "future", "grid", "classroom"];
+  var slides = slideMatches.map(function (match, index) {
+    var _body$match, _body$match2;
+    var body = match[3] || "";
+    var bullets = _toConsumableArray(body.matchAll(/^\s*-\s+(.+)$/gm)).map(function (item) {
+      return cleanMarkdownText(item[1]);
+    });
+    var speakerNotes = cleanMarkdownText(((_body$match = body.match(/\*\*Speaker notes suggestion:\*\*\s*([\s\S]*?)(?=\n---|\n\s*###|\n\s*##|$)/i)) === null || _body$match === void 0 ? void 0 : _body$match[1]) || "");
+    var visualDirection = cleanMarkdownText(((_body$match2 = body.match(/\*\*Visual direction:\*\*\s*([\s\S]*?)(?=\n---|\n\s*###|\n\s*##|$)/i)) === null || _body$match2 === void 0 ? void 0 : _body$match2[1]) || "");
+    return {
+      number: Number(match[1]) || index + 1,
+      title: cleanMarkdownText(match[2]),
+      subtitle: bullets[0] || speakerNotes || "Generated by AIPREZ AI",
+      bullets: bullets.slice(1, 4),
+      speakerNotes: speakerNotes,
+      visualDirection: visualDirection,
+      thumb: cleanMarkdownText(match[2]).replace(/^Benefit\s*\d+:\s*/i, ""),
+      tone: tones[index % tones.length]
+    };
+  });
+  return {
+    title: title,
+    slides: slides.length ? slides : [{
+      number: 1,
+      title: title,
+      subtitle: "Generated by AIPREZ AI",
+      bullets: cleanMarkdownText(output).split(/\n+/).filter(Boolean).slice(0, 4),
+      speakerNotes: "",
+      thumb: title,
+      tone: "solar"
+    }],
+    raw: output
+  };
 }
 function getNextSlide(index) {
   return (index + 1) % PRESENTATION_SLIDES.length;
@@ -1270,21 +1313,137 @@ function SlideThumbnail(_ref21) {
     onClick: onClick
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, title), /*#__PURE__*/React.createElement("span", null, number)));
 }
-function PresentationPreview(_ref22) {
-  var _ref22$mode = _ref22.mode,
-    mode = _ref22$mode === void 0 ? "humanizer" : _ref22$mode;
-  return /*#__PURE__*/React.createElement("section", {
-    className: "preview-panel glass empty-tool-preview"
-  }, /*#__PURE__*/React.createElement("h3", null, "Presentation Preview"), /*#__PURE__*/React.createElement(EmptyPresentationsMessage, {
-    className: "tool-empty-message"
+function GeneratedSlideVisual(_ref22) {
+  var tone = _ref22.tone;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "generated-slide-visual ".concat(tone),
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "visual-orbit"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-core"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-panel one"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-panel two"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-panel three"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-grid"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-spark one"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "visual-spark two"
   }));
 }
-function HumanizerMessage(_ref23) {
-  var children = _ref23.children,
-    ai = _ref23.ai,
-    time = _ref23.time,
-    _ref23$aiIcon = _ref23.aiIcon,
-    aiIcon = _ref23$aiIcon === void 0 ? Sparkles : _ref23$aiIcon;
+function PresentationPreview(_ref23) {
+  var _ref23$mode = _ref23.mode,
+    mode = _ref23$mode === void 0 ? "humanizer" : _ref23$mode,
+    generatedDeck = _ref23.generatedDeck;
+  var _React$useState1 = React.useState(0),
+    _React$useState10 = _slicedToArray(_React$useState1, 2),
+    activeSlide = _React$useState10[0],
+    setActiveSlide = _React$useState10[1];
+  var slides = (generatedDeck === null || generatedDeck === void 0 ? void 0 : generatedDeck.slides) || [];
+  var slide = slides[activeSlide] || slides[0];
+  var visibleStart = slides.length > 4 ? Math.min(Math.max(activeSlide - 1, 0), slides.length - 4) : 0;
+  var visibleSlides = slides.slice(visibleStart, visibleStart + 4);
+  React.useEffect(function () {
+    setActiveSlide(0);
+  }, [generatedDeck === null || generatedDeck === void 0 ? void 0 : generatedDeck.raw]);
+  if (!generatedDeck || !slide) {
+    return /*#__PURE__*/React.createElement("section", {
+      className: "preview-panel glass empty-tool-preview"
+    }, /*#__PURE__*/React.createElement("h3", null, "Presentation Preview"), /*#__PURE__*/React.createElement(EmptyPresentationsMessage, {
+      className: "tool-empty-message"
+    }));
+  }
+  return /*#__PURE__*/React.createElement("section", {
+    className: "preview-panel glass generated-preview-panel"
+  }, /*#__PURE__*/React.createElement("h3", null, "Presentation Preview"), /*#__PURE__*/React.createElement("div", {
+    className: "upload-row generated-upload-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ppt-icon"
+  }, "AI"), /*#__PURE__*/React.createElement("strong", null, generatedDeck.title), /*#__PURE__*/React.createElement("span", {
+    className: "uploaded-pill"
+  }, "Generated ", /*#__PURE__*/React.createElement(Icon, {
+    icon: CheckCircle,
+    size: 15,
+    strokeWidth: 1.8
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "main-slide generated-main-slide ".concat(slide.tone)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "slide-copy generated-slide-copy"
+  }, /*#__PURE__*/React.createElement("small", null, "Slide ", activeSlide + 1), /*#__PURE__*/React.createElement("h4", null, slide.title), /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("p", null, slide.subtitle)), /*#__PURE__*/React.createElement(GeneratedSlideVisual, {
+    tone: slide.tone
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "slide-strip"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "prev-slide",
+    type: "button",
+    "aria-label": "Previous slide",
+    onClick: function onClick() {
+      return setActiveSlide(function (index) {
+        return (index - 1 + slides.length) % slides.length;
+      });
+    }
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: ChevronDown,
+    size: 25,
+    strokeWidth: 1.7
+  })), visibleSlides.map(function (item, index) {
+    return /*#__PURE__*/React.createElement(SlideThumbnail, {
+      key: "".concat(item.title, "-").concat(item.number),
+      number: visibleStart + index + 1,
+      title: item.thumb,
+      active: activeSlide === visibleStart + index,
+      tone: item.tone,
+      onClick: function onClick() {
+        return setActiveSlide(visibleStart + index);
+      }
+    });
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "next-slide",
+    type: "button",
+    "aria-label": "Next slide",
+    onClick: function onClick() {
+      return setActiveSlide(function (index) {
+        return (index + 1) % slides.length;
+      });
+    }
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: ChevronDown,
+    size: 25,
+    strokeWidth: 1.7
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "preview-controls"
+  }, /*#__PURE__*/React.createElement("span", null, "Slide ", activeSlide + 1, " of ", slides.length), /*#__PURE__*/React.createElement("button", {
+    type: "button"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Monitor,
+    size: 18,
+    strokeWidth: 1.6
+  }), "Fit"), /*#__PURE__*/React.createElement("button", {
+    type: "button"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: NotebookText,
+    size: 18,
+    strokeWidth: 1.6
+  }), "Notes"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-label": "Full screen"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    icon: Maximize,
+    size: 18,
+    strokeWidth: 1.6
+  }))));
+}
+function HumanizerMessage(_ref24) {
+  var children = _ref24.children,
+    ai = _ref24.ai,
+    time = _ref24.time,
+    _ref24$aiIcon = _ref24.aiIcon,
+    aiIcon = _ref24$aiIcon === void 0 ? Sparkles : _ref24$aiIcon;
   return /*#__PURE__*/React.createElement("article", {
     className: "humanizer-message ".concat(ai ? "ai" : "user")
   }, ai && /*#__PURE__*/React.createElement("span", {
@@ -1297,24 +1456,25 @@ function HumanizerMessage(_ref23) {
     className: "humanizer-bubble glass"
   }, /*#__PURE__*/React.createElement("p", null, children), time && /*#__PURE__*/React.createElement("time", null, time)));
 }
-function InstructionComposer(_ref24) {
-  var label = _ref24.label,
-    _ref24$placeholder = _ref24.placeholder,
-    placeholder = _ref24$placeholder === void 0 ? "Type your instructions here..." : _ref24$placeholder,
-    _ref24$tool = _ref24.tool,
-    tool = _ref24$tool === void 0 ? "humanizer" : _ref24$tool;
-  var _React$useState1 = React.useState(""),
-    _React$useState10 = _slicedToArray(_React$useState1, 2),
-    instructions = _React$useState10[0],
-    setInstructions = _React$useState10[1];
+function InstructionComposer(_ref25) {
+  var label = _ref25.label,
+    _ref25$placeholder = _ref25.placeholder,
+    placeholder = _ref25$placeholder === void 0 ? "Type your instructions here..." : _ref25$placeholder,
+    _ref25$tool = _ref25.tool,
+    tool = _ref25$tool === void 0 ? "humanizer" : _ref25$tool,
+    onComplete = _ref25.onComplete;
   var _React$useState11 = React.useState(""),
     _React$useState12 = _slicedToArray(_React$useState11, 2),
-    aiResult = _React$useState12[0],
-    setAiResult = _React$useState12[1];
-  var _React$useState13 = React.useState("idle"),
+    instructions = _React$useState12[0],
+    setInstructions = _React$useState12[1];
+  var _React$useState13 = React.useState(""),
     _React$useState14 = _slicedToArray(_React$useState13, 2),
-    status = _React$useState14[0],
-    setStatus = _React$useState14[1];
+    aiResult = _React$useState14[0],
+    setAiResult = _React$useState14[1];
+  var _React$useState15 = React.useState("idle"),
+    _React$useState16 = _slicedToArray(_React$useState15, 2),
+    status = _React$useState16[0],
+    setStatus = _React$useState16[1];
   var maxCharacters = 1000;
   var keepViewportPinned = function keepViewportPinned() {
     requestAnimationFrame(function () {
@@ -1325,8 +1485,8 @@ function InstructionComposer(_ref24) {
     }, 40);
   };
   var submitInstructions = /*#__PURE__*/function () {
-    var _ref25 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var trimmed, result, _t;
+    var _ref26 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var trimmed, result, completionMessage, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -1347,7 +1507,8 @@ function InstructionComposer(_ref24) {
             });
           case 3:
             result = _context.v;
-            setAiResult(result.output || "AIPREZ AI finished, but no response text was returned.");
+            completionMessage = onComplete === null || onComplete === void 0 ? void 0 : onComplete(result, trimmed);
+            setAiResult(completionMessage || result.output || "AIPREZ AI finished, but no response text was returned.");
             setStatus("complete");
             _context.n = 5;
             break;
@@ -1362,7 +1523,7 @@ function InstructionComposer(_ref24) {
       }, _callee, null, [[2, 4]]);
     }));
     return function submitInstructions() {
-      return _ref25.apply(this, arguments);
+      return _ref26.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/React.createElement("div", {
@@ -1390,9 +1551,10 @@ function InstructionComposer(_ref24) {
     className: "ai-result ".concat(status === "error" ? "error" : "")
   }, aiResult));
 }
-function AISpecifications(_ref26) {
-  var _ref26$mode = _ref26.mode,
-    mode = _ref26$mode === void 0 ? "humanizer" : _ref26$mode;
+function AISpecifications(_ref27) {
+  var _ref27$mode = _ref27.mode,
+    mode = _ref27$mode === void 0 ? "humanizer" : _ref27$mode,
+    onPresentationGenerated = _ref27.onPresentationGenerated;
   var isCreate = mode === "create";
   return /*#__PURE__*/React.createElement("aside", {
     className: "ai-spec-panel glass"
@@ -1403,16 +1565,24 @@ function AISpecifications(_ref26) {
   }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation.")), /*#__PURE__*/React.createElement(InstructionComposer, {
     isCreate: isCreate,
     label: isCreate ? "Create presentation instructions" : "Humanizer instructions",
-    tool: isCreate ? "create-presentation" : "humanizer"
+    tool: isCreate ? "create-presentation" : "humanizer",
+    onComplete: isCreate ? function (result, prompt) {
+      onPresentationGenerated === null || onPresentationGenerated === void 0 || onPresentationGenerated(parseGeneratedPresentation(result.output, prompt));
+      return "Presentation generated in the preview.";
+    } : undefined
   }));
 }
-function HumanizerWorkspace(_ref27) {
-  var onBack = _ref27.onBack,
-    _ref27$mode = _ref27.mode,
-    mode = _ref27$mode === void 0 ? "humanizer" : _ref27$mode,
-    title = _ref27.title,
-    subtitle = _ref27.subtitle,
-    settingsLabel = _ref27.settingsLabel;
+function HumanizerWorkspace(_ref28) {
+  var onBack = _ref28.onBack,
+    _ref28$mode = _ref28.mode,
+    mode = _ref28$mode === void 0 ? "humanizer" : _ref28$mode,
+    title = _ref28.title,
+    subtitle = _ref28.subtitle,
+    settingsLabel = _ref28.settingsLabel;
+  var _React$useState17 = React.useState(null),
+    _React$useState18 = _slicedToArray(_React$useState17, 2),
+    generatedDeck = _React$useState18[0],
+    setGeneratedDeck = _React$useState18[1];
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1423,9 +1593,11 @@ function HumanizerWorkspace(_ref27) {
   }), /*#__PURE__*/React.createElement("div", {
     className: "humanizer-content"
   }, /*#__PURE__*/React.createElement(PresentationPreview, {
-    mode: mode
+    mode: mode,
+    generatedDeck: mode === "create" ? generatedDeck : null
   }), /*#__PURE__*/React.createElement(AISpecifications, {
-    mode: mode
+    mode: mode,
+    onPresentationGenerated: setGeneratedDeck
   })), /*#__PURE__*/React.createElement(BottomUtilityBar, null));
 }
 function Waveform() {
@@ -1442,10 +1614,10 @@ function Waveform() {
     });
   }));
 }
-function RecordingControl(_ref28) {
-  var icon = _ref28.icon,
-    label = _ref28.label,
-    danger = _ref28.danger;
+function RecordingControl(_ref29) {
+  var icon = _ref29.icon,
+    label = _ref29.label,
+    danger = _ref29.danger;
   return /*#__PURE__*/React.createElement("button", {
     className: "recording-control ".concat(danger ? "danger" : ""),
     type: "button",
@@ -1456,10 +1628,10 @@ function RecordingControl(_ref28) {
     strokeWidth: 1.7
   }), label === "Bookmark" && /*#__PURE__*/React.createElement("span", null, label));
 }
-function TranscriptColumn(_ref29) {
-  var language = _ref29.language,
-    _ref29$rows = _ref29.rows,
-    rows = _ref29$rows === void 0 ? [] : _ref29$rows;
+function TranscriptColumn(_ref30) {
+  var language = _ref30.language,
+    _ref30$rows = _ref30.rows,
+    rows = _ref30$rows === void 0 ? [] : _ref30$rows;
   return /*#__PURE__*/React.createElement("section", {
     className: "transcript-column glass"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1528,8 +1700,8 @@ function RecordingPanel() {
     language: "Spanish"
   })));
 }
-function LiveNotesAction(_ref30) {
-  var children = _ref30.children;
+function LiveNotesAction(_ref31) {
+  var children = _ref31.children;
   return /*#__PURE__*/React.createElement("button", {
     className: "live-action-card",
     type: "button"
@@ -1543,8 +1715,8 @@ function LiveNotesAction(_ref30) {
     strokeWidth: 1.6
   }));
 }
-function LiveNotesBotMessage(_ref31) {
-  var children = _ref31.children;
+function LiveNotesBotMessage(_ref32) {
+  var children = _ref32.children;
   return /*#__PURE__*/React.createElement("article", {
     className: "live-notes-bot-message"
   }, /*#__PURE__*/React.createElement("span", {
@@ -1573,8 +1745,8 @@ function LiveNotesSpecifications() {
     tool: "live-notes"
   })));
 }
-function LiveNotesWorkspace(_ref32) {
-  var onBack = _ref32.onBack;
+function LiveNotesWorkspace(_ref33) {
+  var onBack = _ref33.onBack;
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace live-notes-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1588,12 +1760,12 @@ function LiveNotesWorkspace(_ref32) {
     className: "humanizer-content live-notes-content"
   }, /*#__PURE__*/React.createElement(RecordingPanel, null), /*#__PURE__*/React.createElement(LiveNotesSpecifications, null)), /*#__PURE__*/React.createElement(BottomUtilityBar, null));
 }
-function LiveNotesScreen(_ref33) {
-  var onBack = _ref33.onBack,
-    onCreatePresentation = _ref33.onCreatePresentation,
-    onOpenHumanizer = _ref33.onOpenHumanizer,
-    onOpenLiveNotes = _ref33.onOpenLiveNotes,
-    onOpenAnalyzer = _ref33.onOpenAnalyzer;
+function LiveNotesScreen(_ref34) {
+  var onBack = _ref34.onBack,
+    onCreatePresentation = _ref34.onCreatePresentation,
+    onOpenHumanizer = _ref34.onOpenHumanizer,
+    onOpenLiveNotes = _ref34.onOpenLiveNotes,
+    onOpenAnalyzer = _ref34.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1613,10 +1785,10 @@ function LiveNotesScreen(_ref33) {
   }));
 }
 function AnalyzerSlideDeck() {
-  var _React$useState15 = React.useState(0),
-    _React$useState16 = _slicedToArray(_React$useState15, 2),
-    activeSlide = _React$useState16[0],
-    setActiveSlide = _React$useState16[1];
+  var _React$useState19 = React.useState(0),
+    _React$useState20 = _slicedToArray(_React$useState19, 2),
+    activeSlide = _React$useState20[0],
+    setActiveSlide = _React$useState20[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   var thumbs = PRESENTATION_SLIDES.slice(0, 6);
   return /*#__PURE__*/React.createElement("section", {
@@ -1682,11 +1854,11 @@ function AnalyzerSlideDeck() {
     className: "analyzer-slide-count"
   }, "Slide ", activeSlide + 1, " of ", PRESENTATION_SLIDES.length));
 }
-function AnalyzerScoreCard(_ref34) {
-  var icon = _ref34.icon,
-    label = _ref34.label,
-    score = _ref34.score,
-    tone = _ref34.tone;
+function AnalyzerScoreCard(_ref35) {
+  var icon = _ref35.icon,
+    label = _ref35.label,
+    score = _ref35.score,
+    tone = _ref35.tone;
   return /*#__PURE__*/React.createElement("article", {
     className: "analyzer-score-card glass ".concat(tone)
   }, /*#__PURE__*/React.createElement("header", null, /*#__PURE__*/React.createElement(Icon, {
@@ -1741,8 +1913,8 @@ function AnalyzerMainPanel() {
     }, score));
   })));
 }
-function AnalyzerActionBubble(_ref35) {
-  var children = _ref35.children;
+function AnalyzerActionBubble(_ref36) {
+  var children = _ref36.children;
   return /*#__PURE__*/React.createElement("div", {
     className: "analyzer-user-bubble glass"
   }, children);
@@ -1774,8 +1946,8 @@ function AnalyzerSpecifications() {
     tool: "analyzer"
   }));
 }
-function AnalyzerWorkspace(_ref36) {
-  var onBack = _ref36.onBack;
+function AnalyzerWorkspace(_ref37) {
+  var onBack = _ref37.onBack;
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace analyzer-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1789,12 +1961,12 @@ function AnalyzerWorkspace(_ref36) {
     className: "humanizer-content analyzer-content"
   }, /*#__PURE__*/React.createElement(AnalyzerMainPanel, null), /*#__PURE__*/React.createElement(AnalyzerSpecifications, null)), /*#__PURE__*/React.createElement(BottomUtilityBar, null));
 }
-function AnalyzerScreen(_ref37) {
-  var onBack = _ref37.onBack,
-    onCreatePresentation = _ref37.onCreatePresentation,
-    onOpenHumanizer = _ref37.onOpenHumanizer,
-    onOpenLiveNotes = _ref37.onOpenLiveNotes,
-    onOpenAnalyzer = _ref37.onOpenAnalyzer;
+function AnalyzerScreen(_ref38) {
+  var onBack = _ref38.onBack,
+    onCreatePresentation = _ref38.onCreatePresentation,
+    onOpenHumanizer = _ref38.onOpenHumanizer,
+    onOpenLiveNotes = _ref38.onOpenLiveNotes,
+    onOpenAnalyzer = _ref38.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1813,12 +1985,12 @@ function AnalyzerScreen(_ref37) {
     onBack: onBack
   }));
 }
-function PresentationViewerScreen(_ref38) {
-  var onBack = _ref38.onBack;
-  var _React$useState17 = React.useState(0),
-    _React$useState18 = _slicedToArray(_React$useState17, 2),
-    activeSlide = _React$useState18[0],
-    setActiveSlide = _React$useState18[1];
+function PresentationViewerScreen(_ref39) {
+  var onBack = _ref39.onBack;
+  var _React$useState21 = React.useState(0),
+    _React$useState22 = _slicedToArray(_React$useState21, 2),
+    activeSlide = _React$useState22[0],
+    setActiveSlide = _React$useState22[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   React.useEffect(function () {
     var handleKeyDown = function handleKeyDown(event) {
@@ -1890,12 +2062,12 @@ function PresentationViewerScreen(_ref38) {
     className: "viewer-slide-status"
   }, "Slide ", activeSlide + 1, " of ", PRESENTATION_SLIDES.length));
 }
-function HumanizerScreen(_ref39) {
-  var onBack = _ref39.onBack,
-    onCreatePresentation = _ref39.onCreatePresentation,
-    onOpenHumanizer = _ref39.onOpenHumanizer,
-    onOpenLiveNotes = _ref39.onOpenLiveNotes,
-    onOpenAnalyzer = _ref39.onOpenAnalyzer;
+function HumanizerScreen(_ref40) {
+  var onBack = _ref40.onBack,
+    onCreatePresentation = _ref40.onCreatePresentation,
+    onOpenHumanizer = _ref40.onOpenHumanizer,
+    onOpenLiveNotes = _ref40.onOpenLiveNotes,
+    onOpenAnalyzer = _ref40.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1914,8 +2086,8 @@ function HumanizerScreen(_ref39) {
     onBack: onBack
   }));
 }
-function SettingsSidebar(_ref40) {
-  var onBack = _ref40.onBack;
+function SettingsSidebar(_ref41) {
+  var onBack = _ref41.onBack;
   var recent = [];
   var tools = [["Presentation Creator", Presentation, "cyan"], ["Humanizer", Sparkles, "purple"], ["Live Notes", Mic, "cyan"], ["Presentation Analyzer", ChartNoAxesCombined, "purple"], ["History", History, "gold"]];
   return /*#__PURE__*/React.createElement("aside", {
@@ -1932,12 +2104,12 @@ function SettingsSidebar(_ref40) {
     className: "settings-sidebar-section"
   }, /*#__PURE__*/React.createElement("h2", null, "Recent Presentations"), /*#__PURE__*/React.createElement("div", {
     className: "settings-recent-list"
-  }, recent.length > 0 ? recent.map(function (_ref41, index) {
-    var _ref42 = _slicedToArray(_ref41, 4),
-      title = _ref42[0],
-      edited = _ref42[1],
-      icon = _ref42[2],
-      tone = _ref42[3];
+  }, recent.length > 0 ? recent.map(function (_ref42, index) {
+    var _ref43 = _slicedToArray(_ref42, 4),
+      title = _ref43[0],
+      edited = _ref43[1],
+      icon = _ref43[2],
+      tone = _ref43[3];
     return /*#__PURE__*/React.createElement("button", {
       className: index === 0 ? "selected" : "",
       type: "button",
@@ -1962,11 +2134,11 @@ function SettingsSidebar(_ref40) {
     className: "settings-sidebar-section tools"
   }, /*#__PURE__*/React.createElement("h2", null, "Tools"), /*#__PURE__*/React.createElement("div", {
     className: "settings-tool-list"
-  }, tools.map(function (_ref43) {
-    var _ref44 = _slicedToArray(_ref43, 3),
-      label = _ref44[0],
-      icon = _ref44[1],
-      tone = _ref44[2];
+  }, tools.map(function (_ref44) {
+    var _ref45 = _slicedToArray(_ref44, 3),
+      label = _ref45[0],
+      icon = _ref45[1],
+      tone = _ref45[2];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -1986,10 +2158,10 @@ function SettingsSidebar(_ref40) {
     strokeWidth: 1.6
   })));
 }
-function AccountSettingsWorkspace(_ref45) {
-  var onBack = _ref45.onBack,
-    _ref45$mode = _ref45.mode,
-    mode = _ref45$mode === void 0 ? "settings" : _ref45$mode;
+function AccountSettingsWorkspace(_ref46) {
+  var onBack = _ref46.onBack,
+    _ref46$mode = _ref46.mode,
+    mode = _ref46$mode === void 0 ? "settings" : _ref46$mode;
   var accountRows = [["Personal Information", "Update your name, email, and details", UserRound, "blue"], ["Security", "Password, 2FA, and login activity", Settings, "cyan"], ["Notifications", "Manage email and app notifications", Bell, "purple"], ["Privacy", "Control your data and privacy settings", UserCog, "purple"], ["Linked Accounts", "Connect Google, Microsoft, and more", BookOpen, "purple"], ["Appearance", "Choose theme and display options", Monitor, "purple"], ["Language", "Select your preferred language", CircleHelp, "purple"]];
   var recentLogins = [["MacBook Pro 14” Dover, NH", "This device", "Now"], ["iPhone 15 Pro – Dover, NH", "", "May 17, 2025"], ["iPad Air – Boston, MA", "", "May 12, 2025"]];
   return /*#__PURE__*/React.createElement("main", {
@@ -2058,13 +2230,13 @@ function AccountSettingsWorkspace(_ref45) {
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "billing-stats"
-  }, [["Storage Used", "12.4 GB / 100 GB", "20%", CreditCard, "purple"], ["AI Credits", "8,450 / 10,000", "78%", Sparkles, "cyan"], ["Usage This Month", "78%", "78%", ChartNoAxesCombined, "purple"]].map(function (_ref46) {
-    var _ref47 = _slicedToArray(_ref46, 5),
-      label = _ref47[0],
-      value = _ref47[1],
-      percent = _ref47[2],
-      icon = _ref47[3],
-      tone = _ref47[4];
+  }, [["Storage Used", "12.4 GB / 100 GB", "20%", CreditCard, "purple"], ["AI Credits", "8,450 / 10,000", "78%", Sparkles, "cyan"], ["Usage This Month", "78%", "78%", ChartNoAxesCombined, "purple"]].map(function (_ref47) {
+    var _ref48 = _slicedToArray(_ref47, 5),
+      label = _ref48[0],
+      value = _ref48[1],
+      percent = _ref48[2],
+      icon = _ref48[3],
+      tone = _ref48[4];
     return /*#__PURE__*/React.createElement("div", {
       className: "billing-stat",
       key: label
@@ -2087,12 +2259,12 @@ function AccountSettingsWorkspace(_ref45) {
     className: "settings-panel settings-account-panel glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Account Settings"), /*#__PURE__*/React.createElement("div", {
     className: "settings-row-list"
-  }, accountRows.map(function (_ref48) {
-    var _ref49 = _slicedToArray(_ref48, 4),
-      title = _ref49[0],
-      copy = _ref49[1],
-      icon = _ref49[2],
-      tone = _ref49[3];
+  }, accountRows.map(function (_ref49) {
+    var _ref50 = _slicedToArray(_ref49, 4),
+      title = _ref50[0],
+      copy = _ref50[1],
+      icon = _ref50[2],
+      tone = _ref50[3];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: title
@@ -2117,11 +2289,11 @@ function AccountSettingsWorkspace(_ref45) {
     strokeWidth: 1.6
   })), /*#__PURE__*/React.createElement("div", {
     className: "settings-preference-list"
-  }, [["AI Model", BACKEND_MODEL_LABEL, Sparkles], ["Response Style", "Balanced", NotebookText], ["Default Tone", "Academic", Mic]].map(function (_ref50) {
-    var _ref51 = _slicedToArray(_ref50, 3),
-      label = _ref51[0],
-      value = _ref51[1],
-      icon = _ref51[2];
+  }, [["AI Model", BACKEND_MODEL_LABEL, Sparkles], ["Response Style", "Balanced", NotebookText], ["Default Tone", "Academic", Mic]].map(function (_ref51) {
+    var _ref52 = _slicedToArray(_ref51, 3),
+      label = _ref52[0],
+      value = _ref52[1],
+      icon = _ref52[2];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2148,11 +2320,11 @@ function AccountSettingsWorkspace(_ref45) {
     className: "settings-panel glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Recent Login Activity"), /*#__PURE__*/React.createElement("div", {
     className: "login-list"
-  }, recentLogins.map(function (_ref52) {
-    var _ref53 = _slicedToArray(_ref52, 3),
-      device = _ref53[0],
-      badge = _ref53[1],
-      date = _ref53[2];
+  }, recentLogins.map(function (_ref53) {
+    var _ref54 = _slicedToArray(_ref53, 3),
+      device = _ref54[0],
+      badge = _ref54[1],
+      date = _ref54[2];
     return /*#__PURE__*/React.createElement("div", {
       className: "login-row",
       key: device
@@ -2172,10 +2344,10 @@ function AccountSettingsWorkspace(_ref45) {
     className: "settings-panel settings-quick-card glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Quick Actions"), /*#__PURE__*/React.createElement("div", {
     className: "settings-quick-list"
-  }, [["Export My Data", FileText], ["Download My Presentations", Upload], ["Manage Devices", Monitor]].map(function (_ref54) {
-    var _ref55 = _slicedToArray(_ref54, 2),
-      label = _ref55[0],
-      icon = _ref55[1];
+  }, [["Export My Data", FileText], ["Download My Presentations", Upload], ["Manage Devices", Monitor]].map(function (_ref55) {
+    var _ref56 = _slicedToArray(_ref55, 2),
+      label = _ref56[0],
+      icon = _ref56[1];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2233,9 +2405,9 @@ function AccountSettingsWorkspace(_ref45) {
     strokeWidth: 1.55
   }), "Settings"))));
 }
-function AccountSettingsScreen(_ref56) {
-  var onBack = _ref56.onBack,
-    mode = _ref56.mode;
+function AccountSettingsScreen(_ref57) {
+  var onBack = _ref57.onBack,
+    mode = _ref57.mode;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2252,13 +2424,13 @@ function AccountSettingsScreen(_ref56) {
   }));
 }
 function App() {
-  var _React$useState19 = React.useState(function () {
+  var _React$useState23 = React.useState(function () {
       var params = new URLSearchParams(window.location.search);
       return params.get("screen") || "dashboard";
     }),
-    _React$useState20 = _slicedToArray(_React$useState19, 2),
-    screen = _React$useState20[0],
-    setScreen = _React$useState20[1];
+    _React$useState24 = _slicedToArray(_React$useState23, 2),
+    screen = _React$useState24[0],
+    setScreen = _React$useState24[1];
   React.useEffect(function () {
     var updateScale = function updateScale() {
       var isPhone = window.innerWidth <= 760;
