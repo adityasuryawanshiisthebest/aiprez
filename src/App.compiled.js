@@ -224,13 +224,14 @@ function parseGeneratedPresentation(output) {
   var slideMatches = _toConsumableArray(text.matchAll(/(?:^|\n)\s*#{0,4}\s*\*{0,2}Slide\s*(\d+)\s*[—-]\s*([^\n*]+?)\*{0,2}\s*\n([\s\S]*?)(?=\n\s*#{0,4}\s*\*{0,2}Slide\s*\d+\s*[—-]|\n#{1,3}\s|$)/gi));
   var tones = ["solar", "wind", "earth", "innovation", "challenge", "future", "grid", "classroom"];
   var slides = slideMatches.map(function (match, index) {
-    var _body$match, _body$match2;
+    var _body$match, _body$match2, _body$match3;
     var body = match[3] || "";
     var bullets = _toConsumableArray(body.matchAll(/^\s*-\s+(.+)$/gm)).map(function (item) {
       return cleanMarkdownText(item[1]);
     });
     var speakerNotes = cleanMarkdownText(((_body$match = body.match(/\*\*Speaker notes suggestion:\*\*\s*([\s\S]*?)(?=\n---|\n\s*###|\n\s*##|$)/i)) === null || _body$match === void 0 ? void 0 : _body$match[1]) || "");
     var visualDirection = cleanMarkdownText(((_body$match2 = body.match(/\*\*Visual direction:\*\*\s*([\s\S]*?)(?=\n---|\n\s*###|\n\s*##|$)/i)) === null || _body$match2 === void 0 ? void 0 : _body$match2[1]) || "");
+    var picturePrompt = cleanMarkdownText(((_body$match3 = body.match(/\*\*Picture:\*\*\s*([\s\S]*?)(?=\n\s*\*\*Speaker notes|\n\s*\*\*Visual direction|\n---|\n\s*###|\n\s*##|$)/i)) === null || _body$match3 === void 0 ? void 0 : _body$match3[1]) || "");
     return {
       number: Number(match[1]) || index + 1,
       title: cleanMarkdownText(match[2]),
@@ -238,6 +239,7 @@ function parseGeneratedPresentation(output) {
       bullets: bullets.slice(1, 4),
       speakerNotes: speakerNotes,
       visualDirection: visualDirection,
+      picturePrompt: picturePrompt,
       thumb: cleanMarkdownText(match[2]).replace(/^Benefit\s*\d+:\s*/i, ""),
       tone: tones[index % tones.length]
     };
@@ -1436,7 +1438,9 @@ function PresentationPreview(_ref23) {
       className: "generated-detail-card",
       key: "".concat(bullet, "-").concat(index)
     }, /*#__PURE__*/React.createElement("strong", null, String(index + 1).padStart(2, "0")), /*#__PURE__*/React.createElement("span", null, bullet));
-  })), /*#__PURE__*/React.createElement(GeneratedSlideVisual, {
+  })), slide.picturePrompt && /*#__PURE__*/React.createElement("div", {
+    className: "generated-picture-card"
+  }, /*#__PURE__*/React.createElement("strong", null, "Picture"), /*#__PURE__*/React.createElement("span", null, slide.picturePrompt)), /*#__PURE__*/React.createElement(GeneratedSlideVisual, {
     tone: slide.tone
   })), /*#__PURE__*/React.createElement("div", {
     className: "slide-strip"

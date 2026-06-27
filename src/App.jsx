@@ -205,6 +205,9 @@ function parseGeneratedPresentation(output, prompt = "") {
     const visualDirection = cleanMarkdownText(
       body.match(/\*\*Visual direction:\*\*\s*([\s\S]*?)(?=\n---|\n\s*###|\n\s*##|$)/i)?.[1] || ""
     );
+    const picturePrompt = cleanMarkdownText(
+      body.match(/\*\*Picture:\*\*\s*([\s\S]*?)(?=\n\s*\*\*Speaker notes|\n\s*\*\*Visual direction|\n---|\n\s*###|\n\s*##|$)/i)?.[1] || ""
+    );
     return {
       number: Number(match[1]) || index + 1,
       title: cleanMarkdownText(match[2]),
@@ -212,6 +215,7 @@ function parseGeneratedPresentation(output, prompt = "") {
       bullets: bullets.slice(1, 4),
       speakerNotes,
       visualDirection,
+      picturePrompt,
       thumb: cleanMarkdownText(match[2]).replace(/^Benefit\s*\d+:\s*/i, ""),
       tone: tones[index % tones.length],
     };
@@ -1255,6 +1259,12 @@ function PresentationPreview({ mode = "humanizer", generatedDeck }) {
                 <span>{bullet}</span>
               </div>
             ))}
+          </div>
+        )}
+        {slide.picturePrompt && (
+          <div className="generated-picture-card">
+            <strong>Picture</strong>
+            <span>{slide.picturePrompt}</span>
           </div>
         )}
         <GeneratedSlideVisual tone={slide.tone} />

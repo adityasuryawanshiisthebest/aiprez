@@ -11,8 +11,11 @@ Return detailed, useful content with:
 - title
 - slide outline with 4-5 specific, student-friendly bullets per slide
 - speaker notes suggestions
+- a topic-specific picture plan for each slide
 - vivid visual direction for each slide, including imagery, colors, icons, or layout ideas
 - next refinement questions if needed.
+For every slide, include a line formatted exactly like:
+**Picture:** A short description of the specific picture, image, diagram, historical photo, map, chart, or illustration that should appear on that slide.
 Format each slide heading exactly like: "### Slide 1 — Slide Title".
 Do not add any extra markdown heading marks before slide headings.`,
   humanizer: `You are AIPREZ Humanizer.

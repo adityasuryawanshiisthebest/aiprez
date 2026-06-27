@@ -3052,6 +3052,49 @@ button {
   -webkit-box-orient: vertical;
 }
 
+.generated-picture-card {
+  position: absolute;
+  right: 7%;
+  bottom: 86px;
+  z-index: 4;
+  width: min(38%, 240px);
+  padding: 9px 11px;
+  overflow: hidden;
+  border: 1px solid rgba(16, 33, 61, 0.13);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 14px 28px rgba(16, 33, 61, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+.generated-picture-card strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #ff4f75;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.generated-picture-card span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgba(16, 33, 61, 0.82);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.25;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.generated-main-slide.wind .generated-picture-card,
+.generated-main-slide.future .generated-picture-card,
+.generated-main-slide.innovation .generated-picture-card,
+.generated-main-slide.classroom .generated-picture-card {
+  left: 7%;
+  right: auto;
+}
+
 .generated-visual-note {
   position: absolute;
   left: 7%;
