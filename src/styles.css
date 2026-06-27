@@ -2790,6 +2790,179 @@ button {
   min-height: 44px;
 }
 
+.generated-main-slide.solar {
+  background:
+    radial-gradient(circle at 78% 20%, rgba(255, 228, 90, 0.95) 0 10%, transparent 16%),
+    linear-gradient(180deg, rgba(110, 209, 255, 0.96) 0 48%, rgba(255, 199, 88, 0.92) 49% 100%);
+}
+
+.generated-main-slide.wind {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(255, 255, 255, 0.9), transparent 18%),
+    linear-gradient(180deg, rgba(117, 222, 255, 0.96) 0 50%, rgba(122, 224, 143, 0.94) 51% 100%);
+}
+
+.generated-main-slide.earth {
+  background:
+    radial-gradient(circle at 78% 24%, rgba(70, 232, 155, 0.82), transparent 20%),
+    linear-gradient(135deg, #fff3c4 0 34%, #94e8a8 35% 68%, #4ac4c8 100%);
+}
+
+.generated-main-slide.innovation {
+  background:
+    radial-gradient(circle at 22% 22%, rgba(255, 244, 128, 0.8), transparent 18%),
+    linear-gradient(135deg, #ff80b5 0 34%, #8e63ff 56%, #42d7ff 100%);
+}
+
+.generated-main-slide.challenge {
+  background:
+    radial-gradient(circle at 72% 22%, rgba(255, 230, 91, 0.9), transparent 18%),
+    linear-gradient(135deg, #ff694a 0 38%, #ffb13d 62%, #3c79ff 100%);
+}
+
+.generated-main-slide.future {
+  background:
+    linear-gradient(180deg, #9ce7ff 0 42%, #7d82ff 43% 68%, #ff8fd8 100%);
+}
+
+.generated-main-slide.grid,
+.generated-main-slide.classroom {
+  background:
+    radial-gradient(circle at 22% 26%, rgba(255, 255, 255, 0.74), transparent 18%),
+    linear-gradient(135deg, #ffe66d 0 24%, #ff6fb1 25% 54%, #6c63ff 55% 100%);
+}
+
+.generated-main-slide.solar::before,
+.generated-main-slide.wind::before,
+.generated-main-slide.earth::before,
+.generated-main-slide.innovation::before,
+.generated-main-slide.challenge::before,
+.generated-main-slide.future::before,
+.generated-main-slide.grid::before,
+.generated-main-slide.classroom::before {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.32), transparent 15%),
+    radial-gradient(circle at 88% 84%, rgba(255, 255, 255, 0.22), transparent 18%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: auto, auto, 34px 34px, 34px 34px;
+  mask-image: none;
+}
+
+.generated-main-slide.solar::after,
+.generated-main-slide.wind::after,
+.generated-main-slide.earth::after,
+.generated-main-slide.innovation::after,
+.generated-main-slide.challenge::after,
+.generated-main-slide.future::after,
+.generated-main-slide.grid::after,
+.generated-main-slide.classroom::after {
+  right: -18%;
+  top: -18%;
+  width: 58%;
+  height: 135%;
+  background: rgba(255, 255, 255, 0.18);
+  filter: none;
+  opacity: 1;
+}
+
+.generated-main-slide.solar .generated-slide-copy,
+.generated-main-slide.wind .generated-slide-copy,
+.generated-main-slide.earth .generated-slide-copy,
+.generated-main-slide.innovation .generated-slide-copy,
+.generated-main-slide.challenge .generated-slide-copy,
+.generated-main-slide.future .generated-slide-copy,
+.generated-main-slide.grid .generated-slide-copy,
+.generated-main-slide.classroom .generated-slide-copy {
+  color: #10213d;
+}
+
+.generated-main-slide.solar .generated-slide-copy h4,
+.generated-main-slide.wind .generated-slide-copy h4,
+.generated-main-slide.earth .generated-slide-copy h4,
+.generated-main-slide.innovation .generated-slide-copy h4,
+.generated-main-slide.challenge .generated-slide-copy h4,
+.generated-main-slide.future .generated-slide-copy h4,
+.generated-main-slide.grid .generated-slide-copy h4,
+.generated-main-slide.classroom .generated-slide-copy h4 {
+  color: #10213d;
+  text-shadow: none;
+}
+
+.generated-main-slide.solar .generated-slide-copy p,
+.generated-main-slide.wind .generated-slide-copy p,
+.generated-main-slide.earth .generated-slide-copy p,
+.generated-main-slide.innovation .generated-slide-copy p,
+.generated-main-slide.challenge .generated-slide-copy p,
+.generated-main-slide.future .generated-slide-copy p,
+.generated-main-slide.grid .generated-slide-copy p,
+.generated-main-slide.classroom .generated-slide-copy p {
+  color: rgba(16, 33, 61, 0.82);
+  font-weight: 600;
+}
+
+.generated-main-slide.solar .generated-slide-copy small,
+.generated-main-slide.wind .generated-slide-copy small,
+.generated-main-slide.earth .generated-slide-copy small,
+.generated-main-slide.innovation .generated-slide-copy small,
+.generated-main-slide.challenge .generated-slide-copy small,
+.generated-main-slide.future .generated-slide-copy small,
+.generated-main-slide.grid .generated-slide-copy small,
+.generated-main-slide.classroom .generated-slide-copy small {
+  color: #fff;
+  background: #10213d;
+  box-shadow: 0 10px 20px rgba(16, 33, 61, 0.18);
+}
+
+.generated-main-slide.solar .generated-slide-copy > span,
+.generated-main-slide.wind .generated-slide-copy > span,
+.generated-main-slide.earth .generated-slide-copy > span,
+.generated-main-slide.innovation .generated-slide-copy > span,
+.generated-main-slide.challenge .generated-slide-copy > span,
+.generated-main-slide.future .generated-slide-copy > span,
+.generated-main-slide.grid .generated-slide-copy > span,
+.generated-main-slide.classroom .generated-slide-copy > span {
+  background: linear-gradient(90deg, #ff4f75, #10213d 44%, transparent);
+  box-shadow: none;
+}
+
+.generated-main-slide.solar .generated-detail-card,
+.generated-main-slide.wind .generated-detail-card,
+.generated-main-slide.earth .generated-detail-card,
+.generated-main-slide.innovation .generated-detail-card,
+.generated-main-slide.challenge .generated-detail-card,
+.generated-main-slide.future .generated-detail-card,
+.generated-main-slide.grid .generated-detail-card,
+.generated-main-slide.classroom .generated-detail-card {
+  border-color: rgba(16, 33, 61, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12px 24px rgba(16, 33, 61, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+.generated-main-slide.solar .generated-detail-card strong,
+.generated-main-slide.wind .generated-detail-card strong,
+.generated-main-slide.earth .generated-detail-card strong,
+.generated-main-slide.innovation .generated-detail-card strong,
+.generated-main-slide.challenge .generated-detail-card strong,
+.generated-main-slide.future .generated-detail-card strong,
+.generated-main-slide.grid .generated-detail-card strong,
+.generated-main-slide.classroom .generated-detail-card strong {
+  color: #ff4f75;
+}
+
+.generated-main-slide.solar .generated-detail-card span,
+.generated-main-slide.wind .generated-detail-card span,
+.generated-main-slide.earth .generated-detail-card span,
+.generated-main-slide.innovation .generated-detail-card span,
+.generated-main-slide.challenge .generated-detail-card span,
+.generated-main-slide.future .generated-detail-card span,
+.generated-main-slide.grid .generated-detail-card span,
+.generated-main-slide.classroom .generated-detail-card span {
+  color: rgba(16, 33, 61, 0.82);
+  font-weight: 600;
+}
+
 .generated-slide-copy {
   top: 10%;
   width: 48%;
