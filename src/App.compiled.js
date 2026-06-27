@@ -1495,16 +1495,47 @@ function HumanizerMessage(_ref24) {
     className: "humanizer-bubble glass"
   }, /*#__PURE__*/React.createElement("p", null, children), time && /*#__PURE__*/React.createElement("time", null, time)));
 }
-function InstructionComposer(_ref25) {
-  var label = _ref25.label,
-    _ref25$placeholder = _ref25.placeholder,
-    placeholder = _ref25$placeholder === void 0 ? "Type your instructions here..." : _ref25$placeholder,
-    _ref25$tool = _ref25.tool,
-    tool = _ref25$tool === void 0 ? "humanizer" : _ref25$tool,
-    onComplete = _ref25.onComplete,
-    onSubmitStart = _ref25.onSubmitStart,
-    onResponse = _ref25.onResponse,
-    getContext = _ref25.getContext;
+var CREATION_STAGES = [{
+  id: "research",
+  label: "Research",
+  text: "Scouring the web for accurate details, facts, and topic context."
+}, {
+  id: "outline",
+  label: "Outline",
+  text: "Organizing the research into a slide-by-slide structure."
+}, {
+  id: "details",
+  label: "Details",
+  text: "Adding art direction, layouts, theme, speaker notes, and polish."
+}];
+function CreationStageTracker(_ref25) {
+  var activeStage = _ref25.activeStage;
+  if (!activeStage || activeStage === "idle") return null;
+  var activeIndex = activeStage === "complete" ? CREATION_STAGES.length : CREATION_STAGES.findIndex(function (stage) {
+    return stage.id === activeStage;
+  });
+  return /*#__PURE__*/React.createElement("section", {
+    className: "creation-stage-tracker glass",
+    "aria-label": "Presentation creation progress"
+  }, CREATION_STAGES.map(function (stage, index) {
+    var complete = activeStage === "complete" || index < activeIndex;
+    var active = stage.id === activeStage;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "creation-stage ".concat(active ? "active" : "", " ").concat(complete ? "complete" : ""),
+      key: stage.id
+    }, /*#__PURE__*/React.createElement("span", null, index + 1), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, stage.label), /*#__PURE__*/React.createElement("p", null, stage.text)));
+  }));
+}
+function InstructionComposer(_ref26) {
+  var label = _ref26.label,
+    _ref26$placeholder = _ref26.placeholder,
+    placeholder = _ref26$placeholder === void 0 ? "Type your instructions here..." : _ref26$placeholder,
+    _ref26$tool = _ref26.tool,
+    tool = _ref26$tool === void 0 ? "humanizer" : _ref26$tool,
+    onComplete = _ref26.onComplete,
+    onSubmitStart = _ref26.onSubmitStart,
+    onResponse = _ref26.onResponse,
+    getContext = _ref26.getContext;
   var _React$useState11 = React.useState(""),
     _React$useState12 = _slicedToArray(_React$useState11, 2),
     instructions = _React$useState12[0],
@@ -1523,7 +1554,7 @@ function InstructionComposer(_ref25) {
     }, 40);
   };
   var submitInstructions = /*#__PURE__*/function () {
-    var _ref26 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var _ref27 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
       var trimmed, result, completion, errorMessage, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
@@ -1563,7 +1594,7 @@ function InstructionComposer(_ref25) {
       }, _callee, null, [[2, 4]]);
     }));
     return function submitInstructions() {
-      return _ref26.apply(this, arguments);
+      return _ref27.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/React.createElement("div", {
@@ -1589,17 +1620,22 @@ function InstructionComposer(_ref25) {
     className: "composer-meta"
   }, /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), status === "loading" && /*#__PURE__*/React.createElement("small", null, "Thinking...")));
 }
-function AISpecifications(_ref27) {
-  var _ref27$mode = _ref27.mode,
-    mode = _ref27$mode === void 0 ? "humanizer" : _ref27$mode,
-    onPresentationGenerated = _ref27.onPresentationGenerated;
+function AISpecifications(_ref28) {
+  var _ref28$mode = _ref28.mode,
+    mode = _ref28$mode === void 0 ? "humanizer" : _ref28$mode,
+    onPresentationGenerated = _ref28.onPresentationGenerated;
   var isCreate = mode === "create";
   var _React$useState15 = React.useState([]),
     _React$useState16 = _slicedToArray(_React$useState15, 2),
     messages = _React$useState16[0],
     setMessages = _React$useState16[1];
+  var _React$useState17 = React.useState("idle"),
+    _React$useState18 = _slicedToArray(_React$useState17, 2),
+    creationStage = _React$useState18[0],
+    setCreationStage = _React$useState18[1];
   var pendingMessageId = React.useRef(null);
   var chatEndRef = React.useRef(null);
+  var stageTimers = React.useRef([]);
   var getMessageTime = function getMessageTime() {
     return new Intl.DateTimeFormat("en-US", {
       hour: "numeric",
@@ -1610,6 +1646,18 @@ function AISpecifications(_ref27) {
     var timestamp = Date.now();
     var aiMessageId = "ai-".concat(timestamp);
     pendingMessageId.current = aiMessageId;
+    stageTimers.current.forEach(function (timer) {
+      return window.clearTimeout(timer);
+    });
+    stageTimers.current = [];
+    if (isCreate) {
+      setCreationStage("research");
+      stageTimers.current = [window.setTimeout(function () {
+        return setCreationStage("outline");
+      }, 1800), window.setTimeout(function () {
+        return setCreationStage("details");
+      }, 3600)];
+    }
     setMessages(function (current) {
       return [].concat(_toConsumableArray(current), [{
         id: "user-".concat(timestamp),
@@ -1619,7 +1667,7 @@ function AISpecifications(_ref27) {
       }, {
         id: aiMessageId,
         role: "ai",
-        text: "Working on it...",
+        text: isCreate ? "I’m researching the topic, building the outline, and polishing the slide details." : "Working on it...",
         time: getMessageTime(),
         status: "loading"
       }]);
@@ -1652,9 +1700,21 @@ function AISpecifications(_ref27) {
       });
     });
     pendingMessageId.current = null;
+    stageTimers.current.forEach(function (timer) {
+      return window.clearTimeout(timer);
+    });
+    stageTimers.current = [];
+    if (isCreate) {
+      setCreationStage(status === "error" ? "idle" : "complete");
+    }
   };
   var clearChat = function clearChat() {
     pendingMessageId.current = null;
+    stageTimers.current.forEach(function (timer) {
+      return window.clearTimeout(timer);
+    });
+    stageTimers.current = [];
+    setCreationStage("idle");
     setMessages([]);
   };
   React.useEffect(function () {
@@ -1663,6 +1723,13 @@ function AISpecifications(_ref27) {
       block: "end"
     });
   }, [messages]);
+  React.useEffect(function () {
+    return function () {
+      stageTimers.current.forEach(function (timer) {
+        return window.clearTimeout(timer);
+      });
+    };
+  }, []);
   return /*#__PURE__*/React.createElement("aside", {
     className: "ai-spec-panel glass"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1680,7 +1747,9 @@ function AISpecifications(_ref27) {
     className: "humanizer-chat"
   }, /*#__PURE__*/React.createElement(HumanizerMessage, {
     ai: true
-  }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."), messages.map(function (message) {
+  }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."), isCreate && /*#__PURE__*/React.createElement(CreationStageTracker, {
+    activeStage: creationStage
+  }), messages.map(function (message) {
     return /*#__PURE__*/React.createElement(HumanizerMessage, {
       key: message.id,
       ai: message.role === "ai",
@@ -1710,17 +1779,17 @@ function AISpecifications(_ref27) {
     } : undefined
   }));
 }
-function HumanizerWorkspace(_ref28) {
-  var onBack = _ref28.onBack,
-    _ref28$mode = _ref28.mode,
-    mode = _ref28$mode === void 0 ? "humanizer" : _ref28$mode,
-    title = _ref28.title,
-    subtitle = _ref28.subtitle,
-    settingsLabel = _ref28.settingsLabel;
-  var _React$useState17 = React.useState(null),
-    _React$useState18 = _slicedToArray(_React$useState17, 2),
-    generatedDeck = _React$useState18[0],
-    setGeneratedDeck = _React$useState18[1];
+function HumanizerWorkspace(_ref29) {
+  var onBack = _ref29.onBack,
+    _ref29$mode = _ref29.mode,
+    mode = _ref29$mode === void 0 ? "humanizer" : _ref29$mode,
+    title = _ref29.title,
+    subtitle = _ref29.subtitle,
+    settingsLabel = _ref29.settingsLabel;
+  var _React$useState19 = React.useState(null),
+    _React$useState20 = _slicedToArray(_React$useState19, 2),
+    generatedDeck = _React$useState20[0],
+    setGeneratedDeck = _React$useState20[1];
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1752,10 +1821,10 @@ function Waveform() {
     });
   }));
 }
-function RecordingControl(_ref29) {
-  var icon = _ref29.icon,
-    label = _ref29.label,
-    danger = _ref29.danger;
+function RecordingControl(_ref30) {
+  var icon = _ref30.icon,
+    label = _ref30.label,
+    danger = _ref30.danger;
   return /*#__PURE__*/React.createElement("button", {
     className: "recording-control ".concat(danger ? "danger" : ""),
     type: "button",
@@ -1766,10 +1835,10 @@ function RecordingControl(_ref29) {
     strokeWidth: 1.7
   }), label === "Bookmark" && /*#__PURE__*/React.createElement("span", null, label));
 }
-function TranscriptColumn(_ref30) {
-  var language = _ref30.language,
-    _ref30$rows = _ref30.rows,
-    rows = _ref30$rows === void 0 ? [] : _ref30$rows;
+function TranscriptColumn(_ref31) {
+  var language = _ref31.language,
+    _ref31$rows = _ref31.rows,
+    rows = _ref31$rows === void 0 ? [] : _ref31$rows;
   return /*#__PURE__*/React.createElement("section", {
     className: "transcript-column glass"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1838,8 +1907,8 @@ function RecordingPanel() {
     language: "Spanish"
   })));
 }
-function LiveNotesAction(_ref31) {
-  var children = _ref31.children;
+function LiveNotesAction(_ref32) {
+  var children = _ref32.children;
   return /*#__PURE__*/React.createElement("button", {
     className: "live-action-card",
     type: "button"
@@ -1853,8 +1922,8 @@ function LiveNotesAction(_ref31) {
     strokeWidth: 1.6
   }));
 }
-function LiveNotesBotMessage(_ref32) {
-  var children = _ref32.children;
+function LiveNotesBotMessage(_ref33) {
+  var children = _ref33.children;
   return /*#__PURE__*/React.createElement("article", {
     className: "live-notes-bot-message"
   }, /*#__PURE__*/React.createElement("span", {
@@ -1867,10 +1936,10 @@ function LiveNotesBotMessage(_ref32) {
   }, /*#__PURE__*/React.createElement("p", null, children)));
 }
 function LiveNotesSpecifications() {
-  var _React$useState19 = React.useState([]),
-    _React$useState20 = _slicedToArray(_React$useState19, 2),
-    messages = _React$useState20[0],
-    setMessages = _React$useState20[1];
+  var _React$useState21 = React.useState([]),
+    _React$useState22 = _slicedToArray(_React$useState21, 2),
+    messages = _React$useState22[0],
+    setMessages = _React$useState22[1];
   var pendingMessageId = React.useRef(null);
   var chatEndRef = React.useRef(null);
   var getMessageTime = function getMessageTime() {
@@ -1969,8 +2038,8 @@ function LiveNotesSpecifications() {
     }
   })));
 }
-function LiveNotesWorkspace(_ref33) {
-  var onBack = _ref33.onBack;
+function LiveNotesWorkspace(_ref34) {
+  var onBack = _ref34.onBack;
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace live-notes-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1984,12 +2053,12 @@ function LiveNotesWorkspace(_ref33) {
     className: "humanizer-content live-notes-content"
   }, /*#__PURE__*/React.createElement(RecordingPanel, null), /*#__PURE__*/React.createElement(LiveNotesSpecifications, null)), /*#__PURE__*/React.createElement(BottomUtilityBar, null));
 }
-function LiveNotesScreen(_ref34) {
-  var onBack = _ref34.onBack,
-    onCreatePresentation = _ref34.onCreatePresentation,
-    onOpenHumanizer = _ref34.onOpenHumanizer,
-    onOpenLiveNotes = _ref34.onOpenLiveNotes,
-    onOpenAnalyzer = _ref34.onOpenAnalyzer;
+function LiveNotesScreen(_ref35) {
+  var onBack = _ref35.onBack,
+    onCreatePresentation = _ref35.onCreatePresentation,
+    onOpenHumanizer = _ref35.onOpenHumanizer,
+    onOpenLiveNotes = _ref35.onOpenLiveNotes,
+    onOpenAnalyzer = _ref35.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2009,10 +2078,10 @@ function LiveNotesScreen(_ref34) {
   }));
 }
 function AnalyzerSlideDeck() {
-  var _React$useState21 = React.useState(0),
-    _React$useState22 = _slicedToArray(_React$useState21, 2),
-    activeSlide = _React$useState22[0],
-    setActiveSlide = _React$useState22[1];
+  var _React$useState23 = React.useState(0),
+    _React$useState24 = _slicedToArray(_React$useState23, 2),
+    activeSlide = _React$useState24[0],
+    setActiveSlide = _React$useState24[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   var thumbs = PRESENTATION_SLIDES.slice(0, 6);
   return /*#__PURE__*/React.createElement("section", {
@@ -2078,11 +2147,11 @@ function AnalyzerSlideDeck() {
     className: "analyzer-slide-count"
   }, "Slide ", activeSlide + 1, " of ", PRESENTATION_SLIDES.length));
 }
-function AnalyzerScoreCard(_ref35) {
-  var icon = _ref35.icon,
-    label = _ref35.label,
-    score = _ref35.score,
-    tone = _ref35.tone;
+function AnalyzerScoreCard(_ref36) {
+  var icon = _ref36.icon,
+    label = _ref36.label,
+    score = _ref36.score,
+    tone = _ref36.tone;
   return /*#__PURE__*/React.createElement("article", {
     className: "analyzer-score-card glass ".concat(tone)
   }, /*#__PURE__*/React.createElement("header", null, /*#__PURE__*/React.createElement(Icon, {
@@ -2137,17 +2206,17 @@ function AnalyzerMainPanel() {
     }, score));
   })));
 }
-function AnalyzerActionBubble(_ref36) {
-  var children = _ref36.children;
+function AnalyzerActionBubble(_ref37) {
+  var children = _ref37.children;
   return /*#__PURE__*/React.createElement("div", {
     className: "analyzer-user-bubble glass"
   }, children);
 }
 function AnalyzerSpecifications() {
-  var _React$useState23 = React.useState([]),
-    _React$useState24 = _slicedToArray(_React$useState23, 2),
-    messages = _React$useState24[0],
-    setMessages = _React$useState24[1];
+  var _React$useState25 = React.useState([]),
+    _React$useState26 = _slicedToArray(_React$useState25, 2),
+    messages = _React$useState26[0],
+    setMessages = _React$useState26[1];
   var pendingMessageId = React.useRef(null);
   var chatEndRef = React.useRef(null);
   var getMessageTime = function getMessageTime() {
@@ -2256,8 +2325,8 @@ function AnalyzerSpecifications() {
     }
   }));
 }
-function AnalyzerWorkspace(_ref37) {
-  var onBack = _ref37.onBack;
+function AnalyzerWorkspace(_ref38) {
+  var onBack = _ref38.onBack;
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace analyzer-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -2271,12 +2340,12 @@ function AnalyzerWorkspace(_ref37) {
     className: "humanizer-content analyzer-content"
   }, /*#__PURE__*/React.createElement(AnalyzerMainPanel, null), /*#__PURE__*/React.createElement(AnalyzerSpecifications, null)), /*#__PURE__*/React.createElement(BottomUtilityBar, null));
 }
-function AnalyzerScreen(_ref38) {
-  var onBack = _ref38.onBack,
-    onCreatePresentation = _ref38.onCreatePresentation,
-    onOpenHumanizer = _ref38.onOpenHumanizer,
-    onOpenLiveNotes = _ref38.onOpenLiveNotes,
-    onOpenAnalyzer = _ref38.onOpenAnalyzer;
+function AnalyzerScreen(_ref39) {
+  var onBack = _ref39.onBack,
+    onCreatePresentation = _ref39.onCreatePresentation,
+    onOpenHumanizer = _ref39.onOpenHumanizer,
+    onOpenLiveNotes = _ref39.onOpenLiveNotes,
+    onOpenAnalyzer = _ref39.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2295,12 +2364,12 @@ function AnalyzerScreen(_ref38) {
     onBack: onBack
   }));
 }
-function PresentationViewerScreen(_ref39) {
-  var onBack = _ref39.onBack;
-  var _React$useState25 = React.useState(0),
-    _React$useState26 = _slicedToArray(_React$useState25, 2),
-    activeSlide = _React$useState26[0],
-    setActiveSlide = _React$useState26[1];
+function PresentationViewerScreen(_ref40) {
+  var onBack = _ref40.onBack;
+  var _React$useState27 = React.useState(0),
+    _React$useState28 = _slicedToArray(_React$useState27, 2),
+    activeSlide = _React$useState28[0],
+    setActiveSlide = _React$useState28[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   React.useEffect(function () {
     var handleKeyDown = function handleKeyDown(event) {
@@ -2372,12 +2441,12 @@ function PresentationViewerScreen(_ref39) {
     className: "viewer-slide-status"
   }, "Slide ", activeSlide + 1, " of ", PRESENTATION_SLIDES.length));
 }
-function HumanizerScreen(_ref40) {
-  var onBack = _ref40.onBack,
-    onCreatePresentation = _ref40.onCreatePresentation,
-    onOpenHumanizer = _ref40.onOpenHumanizer,
-    onOpenLiveNotes = _ref40.onOpenLiveNotes,
-    onOpenAnalyzer = _ref40.onOpenAnalyzer;
+function HumanizerScreen(_ref41) {
+  var onBack = _ref41.onBack,
+    onCreatePresentation = _ref41.onCreatePresentation,
+    onOpenHumanizer = _ref41.onOpenHumanizer,
+    onOpenLiveNotes = _ref41.onOpenLiveNotes,
+    onOpenAnalyzer = _ref41.onOpenAnalyzer;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2396,8 +2465,8 @@ function HumanizerScreen(_ref40) {
     onBack: onBack
   }));
 }
-function SettingsSidebar(_ref41) {
-  var onBack = _ref41.onBack;
+function SettingsSidebar(_ref42) {
+  var onBack = _ref42.onBack;
   var recent = [];
   var tools = [["Presentation Creator", Presentation, "cyan"], ["Humanizer", Sparkles, "purple"], ["Live Notes", Mic, "cyan"], ["Presentation Analyzer", ChartNoAxesCombined, "purple"], ["History", History, "gold"]];
   return /*#__PURE__*/React.createElement("aside", {
@@ -2414,12 +2483,12 @@ function SettingsSidebar(_ref41) {
     className: "settings-sidebar-section"
   }, /*#__PURE__*/React.createElement("h2", null, "Recent Presentations"), /*#__PURE__*/React.createElement("div", {
     className: "settings-recent-list"
-  }, recent.length > 0 ? recent.map(function (_ref42, index) {
-    var _ref43 = _slicedToArray(_ref42, 4),
-      title = _ref43[0],
-      edited = _ref43[1],
-      icon = _ref43[2],
-      tone = _ref43[3];
+  }, recent.length > 0 ? recent.map(function (_ref43, index) {
+    var _ref44 = _slicedToArray(_ref43, 4),
+      title = _ref44[0],
+      edited = _ref44[1],
+      icon = _ref44[2],
+      tone = _ref44[3];
     return /*#__PURE__*/React.createElement("button", {
       className: index === 0 ? "selected" : "",
       type: "button",
@@ -2444,11 +2513,11 @@ function SettingsSidebar(_ref41) {
     className: "settings-sidebar-section tools"
   }, /*#__PURE__*/React.createElement("h2", null, "Tools"), /*#__PURE__*/React.createElement("div", {
     className: "settings-tool-list"
-  }, tools.map(function (_ref44) {
-    var _ref45 = _slicedToArray(_ref44, 3),
-      label = _ref45[0],
-      icon = _ref45[1],
-      tone = _ref45[2];
+  }, tools.map(function (_ref45) {
+    var _ref46 = _slicedToArray(_ref45, 3),
+      label = _ref46[0],
+      icon = _ref46[1],
+      tone = _ref46[2];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2468,10 +2537,10 @@ function SettingsSidebar(_ref41) {
     strokeWidth: 1.6
   })));
 }
-function AccountSettingsWorkspace(_ref46) {
-  var onBack = _ref46.onBack,
-    _ref46$mode = _ref46.mode,
-    mode = _ref46$mode === void 0 ? "settings" : _ref46$mode;
+function AccountSettingsWorkspace(_ref47) {
+  var onBack = _ref47.onBack,
+    _ref47$mode = _ref47.mode,
+    mode = _ref47$mode === void 0 ? "settings" : _ref47$mode;
   var accountRows = [["Personal Information", "Update your name, email, and details", UserRound, "blue"], ["Security", "Password, 2FA, and login activity", Settings, "cyan"], ["Notifications", "Manage email and app notifications", Bell, "purple"], ["Privacy", "Control your data and privacy settings", UserCog, "purple"], ["Linked Accounts", "Connect Google, Microsoft, and more", BookOpen, "purple"], ["Appearance", "Choose theme and display options", Monitor, "purple"], ["Language", "Select your preferred language", CircleHelp, "purple"]];
   var recentLogins = [["MacBook Pro 14” Dover, NH", "This device", "Now"], ["iPhone 15 Pro – Dover, NH", "", "May 17, 2025"], ["iPad Air – Boston, MA", "", "May 12, 2025"]];
   return /*#__PURE__*/React.createElement("main", {
@@ -2540,13 +2609,13 @@ function AccountSettingsWorkspace(_ref46) {
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "billing-stats"
-  }, [["Storage Used", "12.4 GB / 100 GB", "20%", CreditCard, "purple"], ["AI Credits", "8,450 / 10,000", "78%", Sparkles, "cyan"], ["Usage This Month", "78%", "78%", ChartNoAxesCombined, "purple"]].map(function (_ref47) {
-    var _ref48 = _slicedToArray(_ref47, 5),
-      label = _ref48[0],
-      value = _ref48[1],
-      percent = _ref48[2],
-      icon = _ref48[3],
-      tone = _ref48[4];
+  }, [["Storage Used", "12.4 GB / 100 GB", "20%", CreditCard, "purple"], ["AI Credits", "8,450 / 10,000", "78%", Sparkles, "cyan"], ["Usage This Month", "78%", "78%", ChartNoAxesCombined, "purple"]].map(function (_ref48) {
+    var _ref49 = _slicedToArray(_ref48, 5),
+      label = _ref49[0],
+      value = _ref49[1],
+      percent = _ref49[2],
+      icon = _ref49[3],
+      tone = _ref49[4];
     return /*#__PURE__*/React.createElement("div", {
       className: "billing-stat",
       key: label
@@ -2569,12 +2638,12 @@ function AccountSettingsWorkspace(_ref46) {
     className: "settings-panel settings-account-panel glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Account Settings"), /*#__PURE__*/React.createElement("div", {
     className: "settings-row-list"
-  }, accountRows.map(function (_ref49) {
-    var _ref50 = _slicedToArray(_ref49, 4),
-      title = _ref50[0],
-      copy = _ref50[1],
-      icon = _ref50[2],
-      tone = _ref50[3];
+  }, accountRows.map(function (_ref50) {
+    var _ref51 = _slicedToArray(_ref50, 4),
+      title = _ref51[0],
+      copy = _ref51[1],
+      icon = _ref51[2],
+      tone = _ref51[3];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: title
@@ -2599,11 +2668,11 @@ function AccountSettingsWorkspace(_ref46) {
     strokeWidth: 1.6
   })), /*#__PURE__*/React.createElement("div", {
     className: "settings-preference-list"
-  }, [["AI Model", BACKEND_MODEL_LABEL, Sparkles], ["Response Style", "Balanced", NotebookText], ["Default Tone", "Academic", Mic]].map(function (_ref51) {
-    var _ref52 = _slicedToArray(_ref51, 3),
-      label = _ref52[0],
-      value = _ref52[1],
-      icon = _ref52[2];
+  }, [["AI Model", BACKEND_MODEL_LABEL, Sparkles], ["Response Style", "Balanced", NotebookText], ["Default Tone", "Academic", Mic]].map(function (_ref52) {
+    var _ref53 = _slicedToArray(_ref52, 3),
+      label = _ref53[0],
+      value = _ref53[1],
+      icon = _ref53[2];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2630,11 +2699,11 @@ function AccountSettingsWorkspace(_ref46) {
     className: "settings-panel glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Recent Login Activity"), /*#__PURE__*/React.createElement("div", {
     className: "login-list"
-  }, recentLogins.map(function (_ref53) {
-    var _ref54 = _slicedToArray(_ref53, 3),
-      device = _ref54[0],
-      badge = _ref54[1],
-      date = _ref54[2];
+  }, recentLogins.map(function (_ref54) {
+    var _ref55 = _slicedToArray(_ref54, 3),
+      device = _ref55[0],
+      badge = _ref55[1],
+      date = _ref55[2];
     return /*#__PURE__*/React.createElement("div", {
       className: "login-row",
       key: device
@@ -2654,10 +2723,10 @@ function AccountSettingsWorkspace(_ref46) {
     className: "settings-panel settings-quick-card glass"
   }, /*#__PURE__*/React.createElement("h3", null, "Quick Actions"), /*#__PURE__*/React.createElement("div", {
     className: "settings-quick-list"
-  }, [["Export My Data", FileText], ["Download My Presentations", Upload], ["Manage Devices", Monitor]].map(function (_ref55) {
-    var _ref56 = _slicedToArray(_ref55, 2),
-      label = _ref56[0],
-      icon = _ref56[1];
+  }, [["Export My Data", FileText], ["Download My Presentations", Upload], ["Manage Devices", Monitor]].map(function (_ref56) {
+    var _ref57 = _slicedToArray(_ref56, 2),
+      label = _ref57[0],
+      icon = _ref57[1];
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
       key: label
@@ -2715,9 +2784,9 @@ function AccountSettingsWorkspace(_ref46) {
     strokeWidth: 1.55
   }), "Settings"))));
 }
-function AccountSettingsScreen(_ref57) {
-  var onBack = _ref57.onBack,
-    mode = _ref57.mode;
+function AccountSettingsScreen(_ref58) {
+  var onBack = _ref58.onBack,
+    mode = _ref58.mode;
   return /*#__PURE__*/React.createElement("div", {
     className: "chat-dashboard humanizer-dashboard"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2734,13 +2803,13 @@ function AccountSettingsScreen(_ref57) {
   }));
 }
 function App() {
-  var _React$useState27 = React.useState(function () {
+  var _React$useState29 = React.useState(function () {
       var params = new URLSearchParams(window.location.search);
       return params.get("screen") || "dashboard";
     }),
-    _React$useState28 = _slicedToArray(_React$useState27, 2),
-    screen = _React$useState28[0],
-    setScreen = _React$useState28[1];
+    _React$useState30 = _slicedToArray(_React$useState29, 2),
+    screen = _React$useState30[0],
+    setScreen = _React$useState30[1];
   React.useEffect(function () {
     var updateScale = function updateScale() {
       var isPhone = window.innerWidth <= 760;

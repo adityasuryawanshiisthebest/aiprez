@@ -3,6 +3,10 @@ const DEFAULT_MODEL = process.env.AIPREZ_MODEL || "gpt-5.4-mini";
 const TOOL_PROMPTS = {
   "create-presentation": `You are AIPREZ, an AI academic presentation assistant for students.
 Create a polished, classroom-ready presentation plan from the student's request.
+Follow this workflow:
+1. RESEARCH: use web search to gather relevant, accurate, current information and important details about the topic.
+2. OUTLINE: organize the research into a clear slide-by-slide presentation structure.
+3. DETAILS: add theme, art direction, different slide layout ideas, speaking notes, and polished academic detail.
 Return detailed, useful content with:
 - title
 - slide outline with 4-5 specific, student-friendly bullets per slide
@@ -79,25 +83,19 @@ export default async function handler(request, response) {
 
   const systemPrompt = TOOL_PROMPTS[tool] || TOOL_PROMPTS["create-presentation"];
   const chatHistory = formatChatHistory(context.chatHistory);
-  const openAIResponse = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: process.env.AIPREZ_MODEL || DEFAULT_MODEL,
-      input: [
-        {
-          role: "system",
-          content: [{ type: "input_text", text: systemPrompt }],
-        },
-        {
-          role: "user",
-          content: [
-            {
-              type: "input_text",
-              text: `Tool: ${tool}
+  const requestBody = {
+    model: process.env.AIPREZ_MODEL || DEFAULT_MODEL,
+    input: [
+      {
+        role: "system",
+        content: [{ type: "input_text", text: systemPrompt }],
+      },
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text: `Tool: ${tool}
 Use the previous conversation as memory. If the student asks for a change, follow-up, or continuation, apply it to the latest relevant presentation/content from the chat history.
 
 Previous conversation:
@@ -108,12 +106,24 @@ ${JSON.stringify({ ...context, chatHistory: undefined })}
 
 Latest student request:
 ${trimmedInput}`,
-            },
-          ],
-        },
-      ],
-      max_output_tokens: 1400,
-    }),
+          },
+        ],
+      },
+    ],
+    max_output_tokens: 1400,
+  };
+
+  if (tool === "create-presentation") {
+    requestBody.tools = [{ type: "web_search" }];
+  }
+
+  const openAIResponse = await fetch("https://api.openai.com/v1/responses", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
   });
 
   const payload = await openAIResponse.json();
