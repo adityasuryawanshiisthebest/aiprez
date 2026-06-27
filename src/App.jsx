@@ -1171,6 +1171,28 @@ function GeneratedSlideVisual({ tone }) {
       <span className="visual-orbit"></span>
       <span className="visual-orbit second"></span>
       <span className="visual-core"></span>
+      <span className="art-sun"></span>
+      <span className="art-mountain one"></span>
+      <span className="art-mountain two"></span>
+      <span className="art-solar-panel one"></span>
+      <span className="art-solar-panel two"></span>
+      <span className="art-turbine one"><i></i></span>
+      <span className="art-turbine two"><i></i></span>
+      <span className="art-globe"><i></i></span>
+      <span className="art-leaf"></span>
+      <span className="art-city">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+      <span className="art-rocket"><i></i></span>
+      <span className="art-circuit">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
       <span className="visual-panel one"></span>
       <span className="visual-panel two"></span>
       <span className="visual-panel three"></span>

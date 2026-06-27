@@ -1349,6 +1349,30 @@ function GeneratedSlideVisual(_ref22) {
   }), /*#__PURE__*/React.createElement("span", {
     className: "visual-core"
   }), /*#__PURE__*/React.createElement("span", {
+    className: "art-sun"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "art-mountain one"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "art-mountain two"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "art-solar-panel one"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "art-solar-panel two"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "art-turbine one"
+  }, /*#__PURE__*/React.createElement("i", null)), /*#__PURE__*/React.createElement("span", {
+    className: "art-turbine two"
+  }, /*#__PURE__*/React.createElement("i", null)), /*#__PURE__*/React.createElement("span", {
+    className: "art-globe"
+  }, /*#__PURE__*/React.createElement("i", null)), /*#__PURE__*/React.createElement("span", {
+    className: "art-leaf"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "art-city"
+  }, /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null)), /*#__PURE__*/React.createElement("span", {
+    className: "art-rocket"
+  }, /*#__PURE__*/React.createElement("i", null)), /*#__PURE__*/React.createElement("span", {
+    className: "art-circuit"
+  }, /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("i", null)), /*#__PURE__*/React.createElement("span", {
     className: "visual-panel one"
   }), /*#__PURE__*/React.createElement("span", {
     className: "visual-panel two"
