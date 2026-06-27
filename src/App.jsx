@@ -1289,50 +1289,6 @@ function HumanizerMessage({ children, ai, time, aiIcon = Sparkles, status }) {
   );
 }
 
-const CREATION_STAGES = [
-  {
-    id: "research",
-    label: "Research",
-    text: "Scouring the web for accurate details, facts, and topic context.",
-  },
-  {
-    id: "outline",
-    label: "Outline",
-    text: "Organizing the research into a slide-by-slide structure.",
-  },
-  {
-    id: "details",
-    label: "Details",
-    text: "Adding art direction, layouts, theme, speaker notes, and polish.",
-  },
-];
-
-function CreationStageTracker({ activeStage }) {
-  if (!activeStage || activeStage === "idle") return null;
-  const activeIndex =
-    activeStage === "complete"
-      ? CREATION_STAGES.length
-      : CREATION_STAGES.findIndex((stage) => stage.id === activeStage);
-
-  return (
-    <section className="creation-stage-tracker glass" aria-label="Presentation creation progress">
-      {CREATION_STAGES.map((stage, index) => {
-        const complete = activeStage === "complete" || index < activeIndex;
-        const active = stage.id === activeStage;
-        return (
-          <div className={`creation-stage ${active ? "active" : ""} ${complete ? "complete" : ""}`} key={stage.id}>
-            <span>{index + 1}</span>
-            <div>
-              <strong>{stage.label}</strong>
-              <p>{stage.text}</p>
-            </div>
-          </div>
-        );
-      })}
-    </section>
-  );
-}
-
 function InstructionComposer({
   label,
   placeholder = "Type your instructions here...",
@@ -1405,10 +1361,8 @@ function InstructionComposer({
 function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
   const isCreate = mode === "create";
   const [messages, setMessages] = React.useState([]);
-  const [creationStage, setCreationStage] = React.useState("idle");
   const pendingMessageId = React.useRef(null);
   const chatEndRef = React.useRef(null);
-  const stageTimers = React.useRef([]);
 
   const getMessageTime = () =>
     new Intl.DateTimeFormat("en-US", {
@@ -1420,22 +1374,13 @@ function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
     const timestamp = Date.now();
     const aiMessageId = `ai-${timestamp}`;
     pendingMessageId.current = aiMessageId;
-    stageTimers.current.forEach((timer) => window.clearTimeout(timer));
-    stageTimers.current = [];
-    if (isCreate) {
-      setCreationStage("research");
-      stageTimers.current = [
-        window.setTimeout(() => setCreationStage("outline"), 1800),
-        window.setTimeout(() => setCreationStage("details"), 3600),
-      ];
-    }
     setMessages((current) => [
       ...current,
       { id: `user-${timestamp}`, role: "user", text, time: getMessageTime() },
       {
         id: aiMessageId,
         role: "ai",
-        text: isCreate ? "I’m researching the topic, building the outline, and polishing the slide details." : "Working on it...",
+        text: isCreate ? "I’m creating your presentation now." : "Working on it...",
         time: getMessageTime(),
         status: "loading",
       },
@@ -1467,28 +1412,16 @@ function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
       );
     });
     pendingMessageId.current = null;
-    stageTimers.current.forEach((timer) => window.clearTimeout(timer));
-    stageTimers.current = [];
-    if (isCreate) {
-      setCreationStage(status === "error" ? "idle" : "complete");
-    }
   };
 
   const clearChat = () => {
     pendingMessageId.current = null;
-    stageTimers.current.forEach((timer) => window.clearTimeout(timer));
-    stageTimers.current = [];
-    setCreationStage("idle");
     setMessages([]);
   };
 
   React.useEffect(() => {
     chatEndRef.current?.scrollIntoView({ block: "end" });
   }, [messages]);
-
-  React.useEffect(() => () => {
-    stageTimers.current.forEach((timer) => window.clearTimeout(timer));
-  }, []);
 
   return (
     <aside className="ai-spec-panel glass">
@@ -1505,7 +1438,6 @@ function AISpecifications({ mode = "humanizer", onPresentationGenerated }) {
             ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation."
             : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."}
         </HumanizerMessage>
-        {isCreate && <CreationStageTracker activeStage={creationStage} />}
         {messages.map((message) => (
           <HumanizerMessage
             key={message.id}
