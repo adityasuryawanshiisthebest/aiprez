@@ -150,7 +150,7 @@ Theme rules:
 - Each slide needs enough real information for a student to present from it: use 5-7 detailed, specific bullets per slide unless it is a pure title/divider slide.
 - Bullets should include facts, examples, dates, names, causes, effects, definitions, evidence, or comparisons when relevant.
 - Speaker notes should add extra explanation beyond the bullets, not repeat them.
-- Picture prompts must describe clean artwork or photo-style visuals only. Do not ask the image model to include sentences, labels, paragraphs, or readable text inside the generated image.
+- Picture prompts must describe clean artwork or photo-style visuals only. Do not ask the image model to include sentences, labels, paragraphs, typography, headlines, title cards, posters, signs, banners, or readable text inside the generated image.
 - If the student requests a style, subject, age level, rubric, or color direction, obey it.
 Return ONLY valid JSON with this shape:
 {
@@ -293,17 +293,28 @@ function buildDeckMarkdown(deck) {
   return lines.join("\n");
 }
 
+function sanitizeImageDescription(text) {
+  return String(text || "")
+    .replace(/["“”][^"“”]{1,80}["“”]/g, " ")
+    .replace(/\b(?:title|headline|heading|subtitle|caption|label|text|word|words|letter|letters|typography|type|font|poster|flyer|banner|sign|placard|book cover|title card|infographic|worksheet|slide title)\b/gi, "visual detail")
+    .replace(/\b(?:write|written|says|saying|reads|reading|labeled|labelled|spells|spelling)\b/gi, "shows")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function imagePromptForSlide(deck, slide) {
   const palette = Array.isArray(slide.palette) && slide.palette.length ? slide.palette.join(", ") : "rich academic color palette";
+  const visualRequest = sanitizeImageDescription(slide.picturePrompt);
+  const composition = sanitizeImageDescription(slide.visualDirection);
   return `Create polished 16:9 background artwork for a student presentation.
-Topic deck: ${deck.title}
-This image is ONLY the visual background/illustration for one slide. The app will add all titles, subtitles, bullet points, labels, and captions separately.
-Visual request: ${slide.picturePrompt}
-Composition: ${slide.visualDirection}
+This image is ONLY a text-free visual background/illustration. The app will add all editable text separately outside this image.
+Visual subject and scene: ${visualRequest}
+Composition guidance: ${composition}
 Use this palette influence: ${palette}.
 Make it vibrant, artistic, topic-specific, and classroom-ready, like premium editorial illustration.
 Important: create only the visual scene, not a completed slide, poster, book cover, infographic, worksheet, or title card.
-Absolutely no readable text: no words, sentences, titles, labels, numbers, letters, captions, signs, watermarks, logos, or UI chrome anywhere in the image.
+Absolutely no readable text or fake text: no words, sentences, titles, labels, numbers, letters, glyphs, captions, signs, watermarks, logos, alphabet shapes, or UI chrome anywhere in the image.
+If any object would normally contain text, replace that text with plain abstract texture or remove the object.
 Fill the entire canvas with useful artwork from edge to edge. Avoid letterboxing, poster borders, empty bands, large blank top/bottom margins, or framed layouts.
 Keep the main subject safely inside the right 60% of the frame with comfortable margins. Leave the left 40% as clean negative space or soft texture for editable app text.`;
 }
