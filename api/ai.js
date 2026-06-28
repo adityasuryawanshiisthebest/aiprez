@@ -154,6 +154,7 @@ Theme rules:
 - Speaker notes should add extra explanation beyond the bullets, not repeat them.
 - Picture prompts must describe clean artwork or photo-style visuals only. Do not ask the image model to include sentences, labels, paragraphs, typography, headlines, title cards, posters, signs, banners, or readable text inside the generated image.
 - The checking stage must ensure title length, subtitle length, previewBullet length, and image prompts are presentation-safe before returning JSON.
+- Never create more than 15 slides. If the student asks for more than 15 slides, cap the deck at exactly 15 slides and note this in checkingReport.fixesApplied.
 - If the student requests a style, subject, age level, rubric, or color direction, obey it.
 Return ONLY valid JSON with this shape:
 {
@@ -182,7 +183,7 @@ Return ONLY valid JSON with this shape:
     }
   ]
 }
-Create the number of slides requested by the student. If no number is requested, create 8 slides.`,
+Create the number of slides requested by the student, up to a hard maximum of 15 slides. If no number is requested, create 8 slides.`,
   humanizer: `You are AIPREZ Humanizer.
 Rewrite or improve the student's presentation content so it sounds natural, student-written, clear, and classroom appropriate.
 Do not make it evasive or deceptive; focus on clarity, originality, and natural tone.
@@ -247,6 +248,26 @@ function validatePresentationTopic(input) {
   return { ok: true };
 }
 
+function getRequestedSlideCount(input) {
+  const normalized = String(input || "").toLowerCase();
+  const numericMatch = normalized.match(/\b(\d{1,2})\s*(?:-| )?\s*(?:slide|slides|page|pages)\b/);
+  if (numericMatch) return Number(numericMatch[1]);
+  const wordNumbers = {
+    sixteen: 16,
+    seventeen: 17,
+    eighteen: 18,
+    nineteen: 19,
+    twenty: 20,
+    thirty: 30,
+    forty: 40,
+    fifty: 50,
+  };
+  for (const [word, value] of Object.entries(wordNumbers)) {
+    if (new RegExp(`\\b${word}\\s+(?:slide|slides|page|pages)\\b`).test(normalized)) return value;
+  }
+  return null;
+}
+
 function stripJsonFence(text) {
   return String(text || "")
     .trim()
@@ -274,7 +295,8 @@ function parseDeckJson(text) {
 function sanitizeDeck(deck) {
   if (!deck || !Array.isArray(deck.slides)) return null;
   const checkingFixes = new Set(Array.isArray(deck.checkingReport?.fixesApplied) ? deck.checkingReport.fixesApplied : []);
-  const slides = deck.slides.slice(0, 14).map((slide, index) => {
+  if (deck.slides.length > 15) checkingFixes.add("capped deck at 15 slides");
+  const slides = deck.slides.slice(0, 15).map((slide, index) => {
     const fallbackTemplate = PRESENTATION_TEMPLATE_LIBRARY[index % PRESENTATION_TEMPLATE_LIBRARY.length];
     const requestedTemplateId = String(slide.templateId || fallbackTemplate.id).trim();
     const template = TEMPLATE_BY_ID.get(requestedTemplateId) || fallbackTemplate;
@@ -455,6 +477,11 @@ export default async function handler(request, response) {
     const topicGate = validatePresentationTopic(trimmedInput);
     if (!topicGate.ok) {
       response.status(400).json({ error: topicGate.error });
+      return;
+    }
+    const requestedSlideCount = getRequestedSlideCount(trimmedInput);
+    if (requestedSlideCount && requestedSlideCount > 15) {
+      response.status(400).json({ error: "AIPREZ can create up to 15 slides per presentation. Please ask for 15 slides or fewer." });
       return;
     }
   }

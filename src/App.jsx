@@ -169,6 +169,12 @@ function validateCreatePresentationPrompt(input) {
     return "Add a specific topic first, like “photosynthesis” or “causes of the American Revolution.”";
   }
 
+  const numericSlideMatch = normalized.match(/\b(\d{1,2})\s*(?:-| )?\s*(?:slide|slides|page|pages)\b/);
+  const requestedSlideCount = numericSlideMatch ? Number(numericSlideMatch[1]) : null;
+  if (requestedSlideCount && requestedSlideCount > 15) {
+    return "AIPREZ can create up to 15 slides per presentation. Ask for 15 slides or fewer.";
+  }
+
   return "";
 }
 
