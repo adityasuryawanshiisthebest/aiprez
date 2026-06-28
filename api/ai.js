@@ -304,7 +304,8 @@ Use this palette influence: ${palette}.
 Make it vibrant, artistic, topic-specific, and classroom-ready, like premium editorial illustration.
 Important: create only the visual scene, not a completed slide, poster, book cover, infographic, worksheet, or title card.
 Absolutely no readable text: no words, sentences, titles, labels, numbers, letters, captions, signs, watermarks, logos, or UI chrome anywhere in the image.
-Keep the main subject safely inside the right 58% of the frame with comfortable margins. Leave the left 42% as clean negative space or soft texture for editable app text.`;
+Fill the entire canvas with useful artwork from edge to edge. Avoid letterboxing, poster borders, empty bands, large blank top/bottom margins, or framed layouts.
+Keep the main subject safely inside the right 60% of the frame with comfortable margins. Leave the left 40% as clean negative space or soft texture for editable app text.`;
 }
 
 async function generateSlideImages(deck) {
