@@ -2643,11 +2643,39 @@ button {
     linear-gradient(135deg, rgba(5, 17, 44, 0.99), rgba(7, 17, 47, 0.96) 48%, rgba(18, 8, 50, 0.99));
 }
 
+.generated-main-slide.has-image {
+  background:
+    radial-gradient(circle at 72% 22%, color-mix(in srgb, var(--slide-accent-b), transparent 70%), transparent 24%),
+    linear-gradient(90deg, #f5ead3 0 45%, #d7c5a4 45% 52%, #17111b 52% 100%);
+}
+
 .generated-main-slide::before,
 .generated-main-slide::after {
   content: "";
   position: absolute;
   pointer-events: none;
+}
+
+.generated-main-slide.has-image::before {
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 247, 229, 0.98) 0 39%, rgba(255, 247, 229, 0.76) 45%, rgba(255, 247, 229, 0.04) 58%, rgba(0, 0, 0, 0.18) 100%),
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.58), transparent 20%);
+  mask-image: none;
+}
+
+.generated-main-slide.has-image::after {
+  z-index: 1;
+  left: 7%;
+  right: auto;
+  top: 59%;
+  width: 30%;
+  height: 2px;
+  border-radius: 0;
+  background: linear-gradient(90deg, var(--slide-accent-a), transparent 46%, var(--slide-accent-a));
+  opacity: 0.9;
+  filter: none;
 }
 
 .generated-main-slide::before {
@@ -2969,6 +2997,12 @@ button {
   color: #f5f8ff;
 }
 
+.generated-main-slide.has-image .generated-slide-copy {
+  top: 15%;
+  width: 43%;
+  color: #11182b;
+}
+
 .generated-slide-copy small {
   display: inline-flex;
   margin-bottom: 9px;
@@ -2985,6 +3019,14 @@ button {
   font-family: Inter, sans-serif;
   font-size: clamp(1.45rem, 2vw, 2.35rem);
   letter-spacing: 0;
+}
+
+.generated-main-slide.has-image .generated-slide-copy h4 {
+  color: #121728;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.05rem, 3.2vw, 3.7rem);
+  line-height: 1.05;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .generated-slide-copy > span {
@@ -3008,6 +3050,24 @@ button {
   -webkit-box-orient: vertical;
 }
 
+.generated-main-slide.has-image .generated-slide-copy p {
+  max-width: 88%;
+  color: rgba(17, 24, 43, 0.82);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.92rem, 1.1vw, 1.18rem);
+  font-weight: 600;
+}
+
+.generated-main-slide.has-image .generated-slide-copy small {
+  color: #fff;
+  background: linear-gradient(90deg, var(--slide-accent-a), var(--slide-accent-c));
+}
+
+.generated-main-slide.has-image .generated-slide-copy > span {
+  background: linear-gradient(90deg, var(--slide-accent-a), var(--slide-accent-b), transparent);
+  box-shadow: none;
+}
+
 .generated-detail-grid {
   position: absolute;
   left: 7%;
@@ -3019,6 +3079,29 @@ button {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 7px;
   margin-top: 0;
+}
+
+.generated-main-slide.has-image .generated-detail-grid {
+  left: 7%;
+  right: 7%;
+  bottom: 10px;
+  z-index: 5;
+}
+
+.generated-main-slide.has-image .generated-detail-card {
+  min-height: 58px;
+  border-color: rgba(17, 24, 43, 0.12);
+  background: rgba(255, 249, 238, 0.82);
+  box-shadow: 0 12px 28px rgba(17, 24, 43, 0.16);
+}
+
+.generated-main-slide.has-image .generated-detail-card strong {
+  color: var(--slide-accent-a);
+}
+
+.generated-main-slide.has-image .generated-detail-card span {
+  color: rgba(17, 24, 43, 0.82);
+  font-weight: 650;
 }
 
 .generated-detail-card {
@@ -3132,6 +3215,26 @@ button {
   width: min(42%, 330px);
   aspect-ratio: 1;
   filter: saturate(1.35) contrast(1.06);
+}
+
+.generated-slide-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+}
+
+.generated-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  filter: saturate(1.12) contrast(1.04);
+  transform: scale(1.01);
+}
+
+.generated-main-slide.has-image .generated-visual-note {
+  display: none;
 }
 
 .visual-orbit,
@@ -3796,6 +3899,28 @@ button {
   background: linear-gradient(120deg, rgba(252, 238, 213, 0.95), rgba(68, 42, 29, 0.72));
 }
 
+.slide-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.86;
+}
+
+.slide-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 247, 229, 0.88), rgba(255, 247, 229, 0.18) 48%, rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+}
+
+.slide-thumb div {
+  position: relative;
+  z-index: 1;
+}
+
 .slide-thumb.active {
   border-color: rgba(180, 44, 255, 0.9);
   box-shadow: 0 0 18px rgba(180, 44, 255, 0.32);
@@ -3811,6 +3936,7 @@ button {
 
 .slide-thumb span {
   position: absolute;
+  z-index: 2;
   left: 9px;
   bottom: 8px;
   display: grid;
