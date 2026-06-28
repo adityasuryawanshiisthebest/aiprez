@@ -1,5 +1,134 @@
 const DEFAULT_MODEL = process.env.AIPREZ_MODEL || "gpt-5.4-mini";
 
+const PRESENTATION_TEMPLATE_LIBRARY = [
+  {
+    id: "T01-cinematic-cover",
+    layout: "cover",
+    structure: "large title block on the left, full-bleed topic artwork on the right, thin accent rule, short subtitle",
+    bestFor: "opening title slides and big topic introductions",
+  },
+  {
+    id: "T02-editorial-split",
+    layout: "imageSplit",
+    structure: "50/50 editorial split with one strong image, title, 3 compact evidence cards, and a caption strip",
+    bestFor: "explaining one major idea with a visual example",
+  },
+  {
+    id: "T03-timeline-ribbon",
+    layout: "timeline",
+    structure: "horizontal timeline ribbon with dated checkpoints, small icons, and a background scene",
+    bestFor: "events, history, process, biographies, and cause/effect sequences",
+  },
+  {
+    id: "T04-map-and-callouts",
+    layout: "map",
+    structure: "map or diagram background with 3-5 labeled callout cards and a legend",
+    bestFor: "geography, wars, trade, migrations, ecosystems, and locations",
+  },
+  {
+    id: "T05-before-after",
+    layout: "comparison",
+    structure: "two bold columns with contrasting image treatments, labels, and comparison bullets",
+    bestFor: "then vs now, problem vs solution, causes vs effects",
+  },
+  {
+    id: "T06-data-dashboard",
+    layout: "dataStory",
+    structure: "one large chart or number, two mini metrics, and a concise interpretation panel",
+    bestFor: "statistics, science data, surveys, economics, and trends",
+  },
+  {
+    id: "T07-quote-portrait",
+    layout: "quote",
+    structure: "large quote or key idea with portrait/artifact artwork and a brief context note",
+    bestFor: "primary sources, famous figures, speeches, and key arguments",
+  },
+  {
+    id: "T08-gallery-grid",
+    layout: "gallery",
+    structure: "three-image gallery grid with short labels and one synthesis sentence",
+    bestFor: "examples, artifacts, species, inventions, artworks, and evidence collections",
+  },
+  {
+    id: "T09-section-divider",
+    layout: "divider",
+    structure: "dramatic full-image divider with section number, short title, and minimal copy",
+    bestFor: "transition slides between parts of a deck",
+  },
+  {
+    id: "T10-process-steps",
+    layout: "process",
+    structure: "numbered vertical or diagonal step cards over a clean illustration",
+    bestFor: "methods, experiments, procedures, and how something works",
+  },
+  {
+    id: "T11-cause-effect-web",
+    layout: "conceptMap",
+    structure: "central idea with branching cause/effect nodes, icons, and color-coded groups",
+    bestFor: "complex relationships and systems thinking",
+  },
+  {
+    id: "T12-problem-solution",
+    layout: "comparison",
+    structure: "dark problem panel facing bright solution panel, with a bridge arrow between them",
+    bestFor: "argumentative presentations and innovation topics",
+  },
+  {
+    id: "T13-lab-notebook",
+    layout: "evidence",
+    structure: "notebook-style evidence cards, diagram sketch, and highlighted vocabulary terms",
+    bestFor: "science, math, research, and classroom explanations",
+  },
+  {
+    id: "T14-newspaper-brief",
+    layout: "editorial",
+    structure: "headline, subhead, archival image block, side facts, and pull quote",
+    bestFor: "history, current events, literature, and social studies",
+  },
+  {
+    id: "T15-museum-card",
+    layout: "artifact",
+    structure: "large artifact/photo display with museum-label facts and contextual annotations",
+    bestFor: "objects, documents, artworks, fossils, and inventions",
+  },
+  {
+    id: "T16-comic-storyboard",
+    layout: "storyboard",
+    structure: "three illustrated panels that show action over time with short captions",
+    bestFor: "narratives, historical events, cycles, and cause progression",
+  },
+  {
+    id: "T17-classroom-summary",
+    layout: "summary",
+    structure: "clean recap with 4 key takeaways, icons, and one final memorable image",
+    bestFor: "conclusion and review slides",
+  },
+  {
+    id: "T18-myth-vs-fact",
+    layout: "comparison",
+    structure: "myth/fact cards with strong color contrast and supporting evidence",
+    bestFor: "misconceptions, debates, and clarification slides",
+  },
+  {
+    id: "T19-layered-diagram",
+    layout: "diagram",
+    structure: "stacked layers or labeled parts around a central diagram/image",
+    bestFor: "biology, earth science, government systems, and technical explanations",
+  },
+  {
+    id: "T20-final-impact",
+    layout: "impact",
+    structure: "large final image, bold impact statement, and 3 lasting consequences",
+    bestFor: "closing slides and why-the-topic-matters conclusions",
+  },
+];
+
+const TEMPLATE_LIBRARY_PROMPT = PRESENTATION_TEMPLATE_LIBRARY
+  .map((template) => `${template.id}: ${template.layout}; ${template.structure}; best for ${template.bestFor}.`)
+  .join("\n");
+
+const TEMPLATE_BY_ID = new Map(PRESENTATION_TEMPLATE_LIBRARY.map((template) => [template.id, template]));
+
 const TOOL_PROMPTS = {
   "create-presentation": `You are AIPREZ, an AI academic presentation assistant for students.
 Create a polished, classroom-ready presentation deck from the student's request.
@@ -10,14 +139,26 @@ Follow this workflow:
 The student expects presentation previews that look like real polished decks, not plain outlines.
 Use topic-specific imagery ideas on every slide: historical scenes, maps, diagrams, artifacts, people, scientific illustrations, charts, or classroom-ready visual metaphors.
 Make every slide visually different. Avoid generic futuristic ambience unless the topic itself calls for it.
+Use this 20-template layout library. Pick templates that fit the slide's purpose and rotate through different templates instead of repeating the same layout:
+${TEMPLATE_LIBRARY_PROMPT}
+
+Theme rules:
+- Choose one unique visual theme for the entire presentation based on the student's topic and tone.
+- The deck theme must include a distinctive palette, for example black/blue, white/green, orange/yellow, cream/red/navy, teal/coral, purple/gold, etc.
+- Each slide should share the same overall theme but use a different template layout when possible.
+- Text must be specific to the student's prompt. Do not use generic filler.
+- If the student requests a style, subject, age level, rubric, or color direction, obey it.
 Return ONLY valid JSON with this shape:
 {
   "title": "Deck title",
   "subtitle": "Short deck subtitle",
   "visualTheme": "A concise art direction for the whole deck",
+  "themeName": "Unique deck theme name",
+  "themePalette": ["#hex", "#hex", "#hex", "#hex", "#hex"],
   "slides": [
     {
       "number": 1,
+      "templateId": "One id from the 20-template library, such as T01-cinematic-cover",
       "title": "Slide title",
       "subtitle": "Short subtitle",
       "bullets": ["specific bullet", "specific bullet", "specific bullet", "specific bullet"],
@@ -96,24 +237,36 @@ function parseDeckJson(text) {
 
 function sanitizeDeck(deck) {
   if (!deck || !Array.isArray(deck.slides)) return null;
-  const slides = deck.slides.slice(0, 14).map((slide, index) => ({
-    number: Number(slide.number) || index + 1,
-    title: String(slide.title || `Slide ${index + 1}`).trim(),
-    subtitle: String(slide.subtitle || "").trim(),
-    bullets: Array.isArray(slide.bullets)
-      ? slide.bullets.slice(0, 5).map((bullet) => String(bullet || "").trim()).filter(Boolean)
-      : [],
-    speakerNotes: String(slide.speakerNotes || "").trim(),
-    layout: String(slide.layout || "imageSplit").trim(),
-    palette: Array.isArray(slide.palette) ? slide.palette.slice(0, 5) : [],
-    picturePrompt: String(slide.picturePrompt || "").trim(),
-    visualDirection: String(slide.visualDirection || "").trim(),
-  }));
+  const slides = deck.slides.slice(0, 14).map((slide, index) => {
+    const fallbackTemplate = PRESENTATION_TEMPLATE_LIBRARY[index % PRESENTATION_TEMPLATE_LIBRARY.length];
+    const requestedTemplateId = String(slide.templateId || fallbackTemplate.id).trim();
+    const template = TEMPLATE_BY_ID.get(requestedTemplateId) || fallbackTemplate;
+    return {
+      number: Number(slide.number) || index + 1,
+      templateId: template.id,
+      title: String(slide.title || `Slide ${index + 1}`).trim(),
+      subtitle: String(slide.subtitle || "").trim(),
+      bullets: Array.isArray(slide.bullets)
+        ? slide.bullets.slice(0, 5).map((bullet) => String(bullet || "").trim()).filter(Boolean)
+        : [],
+      speakerNotes: String(slide.speakerNotes || "").trim(),
+      layout: template.layout,
+      palette: Array.isArray(slide.palette) && slide.palette.length
+        ? slide.palette.slice(0, 5)
+        : Array.isArray(deck.themePalette)
+          ? deck.themePalette.slice(0, 5)
+          : [],
+      picturePrompt: String(slide.picturePrompt || "").trim(),
+      visualDirection: String(slide.visualDirection || "").trim(),
+    };
+  });
 
   return {
     title: String(deck.title || "Generated Presentation").trim(),
     subtitle: String(deck.subtitle || "").trim(),
     visualTheme: String(deck.visualTheme || "").trim(),
+    themeName: String(deck.themeName || "").trim(),
+    themePalette: Array.isArray(deck.themePalette) ? deck.themePalette.slice(0, 5) : [],
     slides,
   };
 }
@@ -122,9 +275,11 @@ function buildDeckMarkdown(deck) {
   if (!deck) return "";
   const lines = [`# ${deck.title}`];
   if (deck.subtitle) lines.push(deck.subtitle);
+  if (deck.themeName) lines.push(`Theme: ${deck.themeName}`);
   if (deck.visualTheme) lines.push(`Visual theme: ${deck.visualTheme}`);
   for (const slide of deck.slides || []) {
     lines.push("", `### Slide ${slide.number} — ${slide.title}`);
+    if (slide.templateId) lines.push(`Template: ${slide.templateId}`);
     if (slide.subtitle) lines.push(`- ${slide.subtitle}`);
     for (const bullet of slide.bullets || []) lines.push(`- ${bullet}`);
     if (slide.picturePrompt) lines.push(`**Picture:** ${slide.picturePrompt}`);
