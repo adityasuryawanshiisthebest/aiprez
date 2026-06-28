@@ -129,6 +129,9 @@ function getAiprezApiUrl() {
   if (configuredBase) {
     return `${configuredBase.replace(/\/$/, "")}/api/ai`;
   }
+  if (window.location.protocol === "file:") {
+    return "http://localhost:4173/api/ai";
+  }
   return "/api/ai";
 }
 

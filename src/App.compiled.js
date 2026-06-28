@@ -142,6 +142,9 @@ function getAiprezApiUrl() {
   if (configuredBase) {
     return "".concat(configuredBase.replace(/\/$/, ""), "/api/ai");
   }
+  if (window.location.protocol === "file:") {
+    return "http://localhost:4173/api/ai";
+  }
   return "/api/ai";
 }
 function callAiprezAI(_x, _x2) {
