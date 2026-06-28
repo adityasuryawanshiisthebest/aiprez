@@ -3112,8 +3112,8 @@ button {
 }
 
 .generated-detail-card {
-  min-height: 64px;
-  padding: 7px 9px;
+  min-height: 72px;
+  padding: 8px 10px;
   overflow: hidden;
   border: 1px solid rgba(0, 216, 255, 0.16);
   border-radius: 10px;
@@ -3126,7 +3126,7 @@ button {
 .generated-detail-card strong {
   display: block;
   float: none;
-  margin: 0 0 5px;
+  margin: 0 0 6px;
   color: #00e2ff;
   font-size: 0.66rem;
   letter-spacing: 0.08em;
@@ -3135,9 +3135,10 @@ button {
 .generated-detail-card span {
   display: -webkit-box;
   overflow: hidden;
+  overflow-wrap: anywhere;
   color: rgba(232, 242, 255, 0.84);
-  font-size: clamp(0.58rem, 0.66vw, 0.7rem);
-  line-height: 1.25;
+  font-size: clamp(0.56rem, 0.62vw, 0.66rem);
+  line-height: 1.2;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }

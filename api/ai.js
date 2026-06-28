@@ -136,6 +136,7 @@ Follow this workflow:
 1. RESEARCH: use web search to gather relevant, accurate, current information and important details about the topic.
 2. OUTLINE: organize the research into a clear slide-by-slide presentation structure.
 3. DETAILS: design vivid, varied slide layouts with topic-specific art, photos, maps, diagrams, color, and speaker notes.
+4. CHECKING: review the finished presentation before returning it. Check for slide text that would be too long, clipped, overlapped, generic, inaccurate, duplicated, visually mismatched, or likely to create readable text inside generated images. Fix those issues before returning JSON.
 The student expects presentation previews that look like real polished decks, not plain outlines.
 Use topic-specific imagery ideas on every slide: historical scenes, maps, diagrams, artifacts, people, scientific illustrations, charts, or classroom-ready visual metaphors.
 Make every slide visually different. Avoid generic futuristic ambience unless the topic itself calls for it.
@@ -149,8 +150,10 @@ Theme rules:
 - Text must be specific to the student's prompt. Do not use generic filler.
 - Each slide needs enough real information for a student to present from it: use 5-7 detailed, specific bullets per slide unless it is a pure title/divider slide.
 - Bullets should include facts, examples, dates, names, causes, effects, definitions, evidence, or comparisons when relevant.
+- Also create 4-5 short previewBullets per slide for the visible slide cards. Each previewBullet must be 7-11 words and under 72 characters so it fits without clipping.
 - Speaker notes should add extra explanation beyond the bullets, not repeat them.
 - Picture prompts must describe clean artwork or photo-style visuals only. Do not ask the image model to include sentences, labels, paragraphs, typography, headlines, title cards, posters, signs, banners, or readable text inside the generated image.
+- The checking stage must ensure title length, subtitle length, previewBullet length, and image prompts are presentation-safe before returning JSON.
 - If the student requests a style, subject, age level, rubric, or color direction, obey it.
 Return ONLY valid JSON with this shape:
 {
@@ -159,6 +162,10 @@ Return ONLY valid JSON with this shape:
   "visualTheme": "A concise art direction for the whole deck",
   "themeName": "Unique deck theme name",
   "themePalette": ["#hex", "#hex", "#hex", "#hex", "#hex"],
+  "checkingReport": {
+    "status": "passed",
+    "fixesApplied": ["shortened preview bullets", "removed image text instructions"]
+  },
   "slides": [
     {
       "number": 1,
@@ -166,6 +173,7 @@ Return ONLY valid JSON with this shape:
       "title": "Slide title",
       "subtitle": "Short subtitle",
       "bullets": ["specific detailed bullet", "specific detailed bullet", "specific detailed bullet", "specific detailed bullet", "specific detailed bullet", "specific detailed bullet"],
+      "previewBullets": ["short visible card point", "short visible card point", "short visible card point", "short visible card point"],
       "speakerNotes": "Student-friendly speaker notes, 3-5 sentences with extra context.",
       "layout": "cover | imageSplit | timeline | map | comparison | dataStory | quote | gallery",
       "palette": ["#hex", "#hex", "#hex", "#hex"],
@@ -241,18 +249,31 @@ function parseDeckJson(text) {
 
 function sanitizeDeck(deck) {
   if (!deck || !Array.isArray(deck.slides)) return null;
+  const checkingFixes = new Set(Array.isArray(deck.checkingReport?.fixesApplied) ? deck.checkingReport.fixesApplied : []);
   const slides = deck.slides.slice(0, 14).map((slide, index) => {
     const fallbackTemplate = PRESENTATION_TEMPLATE_LIBRARY[index % PRESENTATION_TEMPLATE_LIBRARY.length];
     const requestedTemplateId = String(slide.templateId || fallbackTemplate.id).trim();
     const template = TEMPLATE_BY_ID.get(requestedTemplateId) || fallbackTemplate;
+    const bullets = Array.isArray(slide.bullets)
+      ? slide.bullets.slice(0, 7).map((bullet) => String(bullet || "").trim()).filter(Boolean)
+      : [];
+    const previewBulletsSource = Array.isArray(slide.previewBullets) && slide.previewBullets.length
+      ? slide.previewBullets
+      : bullets;
+    const previewBullets = previewBulletsSource
+      .slice(0, 5)
+      .map((bullet) => makePreviewSafeText(bullet, 72))
+      .filter(Boolean);
+    if (previewBullets.some((bullet, bulletIndex) => bullet !== String(previewBulletsSource[bulletIndex] || "").trim())) {
+      checkingFixes.add("shortened preview bullets");
+    }
     return {
       number: Number(slide.number) || index + 1,
       templateId: template.id,
-      title: String(slide.title || `Slide ${index + 1}`).trim(),
-      subtitle: String(slide.subtitle || "").trim(),
-      bullets: Array.isArray(slide.bullets)
-        ? slide.bullets.slice(0, 7).map((bullet) => String(bullet || "").trim()).filter(Boolean)
-        : [],
+      title: makePreviewSafeText(slide.title || `Slide ${index + 1}`, 52),
+      subtitle: makePreviewSafeText(slide.subtitle || "", 92),
+      bullets,
+      previewBullets,
       speakerNotes: String(slide.speakerNotes || "").trim(),
       layout: template.layout,
       palette: Array.isArray(slide.palette) && slide.palette.length
@@ -271,6 +292,10 @@ function sanitizeDeck(deck) {
     visualTheme: String(deck.visualTheme || "").trim(),
     themeName: String(deck.themeName || "").trim(),
     themePalette: Array.isArray(deck.themePalette) ? deck.themePalette.slice(0, 5) : [],
+    checkingReport: {
+      status: "passed",
+      fixesApplied: [...checkingFixes],
+    },
     slides,
   };
 }
@@ -286,6 +311,7 @@ function buildDeckMarkdown(deck) {
     if (slide.templateId) lines.push(`Template: ${slide.templateId}`);
     if (slide.subtitle) lines.push(`- ${slide.subtitle}`);
     for (const bullet of slide.bullets || []) lines.push(`- ${bullet}`);
+    if (slide.previewBullets?.length) lines.push(`Preview cards: ${slide.previewBullets.join(" | ")}`);
     if (slide.picturePrompt) lines.push(`**Picture:** ${slide.picturePrompt}`);
     if (slide.visualDirection) lines.push(`**Visual direction:** ${slide.visualDirection}`);
     if (slide.speakerNotes) lines.push(`**Speaker notes suggestion:** ${slide.speakerNotes}`);
@@ -300,6 +326,23 @@ function sanitizeImageDescription(text) {
     .replace(/\b(?:write|written|says|saying|reads|reading|labeled|labelled|spells|spelling)\b/gi, "shows")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function makePreviewSafeText(text, maxLength = 72) {
+  const clean = String(text || "")
+    .replace(/\s+/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .trim();
+  if (clean.length <= maxLength) return clean;
+  const words = clean.split(" ");
+  const fitted = [];
+  for (const word of words) {
+    const next = [...fitted, word].join(" ");
+    if (next.length > maxLength) break;
+    fitted.push(word);
+  }
+  const result = fitted.join(" ").replace(/[,:;.-]+$/g, "").trim();
+  return result || clean.slice(0, maxLength).trim();
 }
 
 function imagePromptForSlide(deck, slide) {
@@ -322,7 +365,7 @@ Keep the main subject safely inside the right 60% of the frame with comfortable 
 async function generateSlideImages(deck) {
   if (process.env.AIPREZ_GENERATE_IMAGES === "0") return deck;
   const imageModel = process.env.AIPREZ_IMAGE_MODEL || "gpt-image-1";
-  const slidesToRender = (deck.slides || []).slice(0, Number(process.env.AIPREZ_IMAGE_SLIDE_LIMIT || 6));
+  const slidesToRender = (deck.slides || []).slice(0, Number(process.env.AIPREZ_IMAGE_SLIDE_LIMIT || 10));
 
   await Promise.all(
     slidesToRender.map(async (slide) => {
