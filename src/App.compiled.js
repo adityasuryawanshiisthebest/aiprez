@@ -203,8 +203,19 @@ function validateCreatePresentationPrompt(input) {
   }
   var numericSlideMatch = normalized.match(/\b(\d{1,2})\s*(?:-| )?\s*(?:slide|slides|page|pages)\b/);
   var requestedSlideCount = numericSlideMatch ? Number(numericSlideMatch[1]) : null;
+  if (!requestedSlideCount) {
+    return "Include how many slides you want, from 1 to 15.";
+  }
   if (requestedSlideCount && requestedSlideCount > 15) {
     return "AIPREZ can create up to 15 slides per presentation. Ask for 15 slides or fewer.";
+  }
+  var hasLayout = /\b(?:landscape|portrait|wide|widescreen|horizontal|vertical|16:9|4:3|layout|mode)\b/.test(normalized);
+  if (!hasLayout) {
+    return "Include the layout design, like landscape, portrait, or widescreen.";
+  }
+  var hasTheme = /\b(?:theme|style|palette|color|colors|colour|colours|vibe|design)\b/.test(normalized);
+  if (!hasTheme) {
+    return "Include a visual theme, like black and blue, white and green, or orange and yellow.";
   }
   return "";
 }
@@ -1809,7 +1820,7 @@ function AISpecifications(_ref27) {
     className: "humanizer-chat"
   }, /*#__PURE__*/React.createElement(HumanizerMessage, {
     ai: true
-  }, isCreate ? "Hi Ava! I'm your AI presentation assistant. Tell me what you'd like to create or change in this presentation." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."), messages.map(function (message) {
+  }, isCreate ? "Hi Ava! I can create your presentation once you include: 1. topic, 2. number of slides (1-15), 3. layout design like landscape or portrait, and 4. visual theme like black and blue or white and green." : "Hi Ava! I'm your AI presentation assistant. Tell me how you'd like me to humanize your presentation."), messages.map(function (message) {
     return /*#__PURE__*/React.createElement(HumanizerMessage, {
       key: message.id,
       ai: message.role === "ai",

@@ -268,6 +268,30 @@ function getRequestedSlideCount(input) {
   return null;
 }
 
+function validatePresentationRequirements(input) {
+  const normalized = String(input || "")
+    .toLowerCase()
+    .replace(/['"]/g, "")
+    .replace(/\s+/g, " ");
+  const requestedSlideCount = getRequestedSlideCount(normalized);
+  if (!requestedSlideCount) {
+    return { ok: false, error: "Please include how many slides you want, from 1 to 15." };
+  }
+  if (requestedSlideCount > 15) {
+    return { ok: false, error: "AIPREZ can create up to 15 slides per presentation. Please ask for 15 slides or fewer." };
+  }
+
+  if (!/\b(?:landscape|portrait|wide|widescreen|horizontal|vertical|16:9|4:3|layout|mode)\b/.test(normalized)) {
+    return { ok: false, error: "Please include the layout design, like landscape, portrait, or widescreen." };
+  }
+
+  if (!/\b(?:theme|style|palette|color|colors|colour|colours|vibe|design)\b/.test(normalized)) {
+    return { ok: false, error: "Please include a visual theme, like black and blue, white and green, or orange and yellow." };
+  }
+
+  return { ok: true };
+}
+
 function stripJsonFence(text) {
   return String(text || "")
     .trim()
@@ -479,9 +503,9 @@ export default async function handler(request, response) {
       response.status(400).json({ error: topicGate.error });
       return;
     }
-    const requestedSlideCount = getRequestedSlideCount(trimmedInput);
-    if (requestedSlideCount && requestedSlideCount > 15) {
-      response.status(400).json({ error: "AIPREZ can create up to 15 slides per presentation. Please ask for 15 slides or fewer." });
+    const requirementsGate = validatePresentationRequirements(trimmedInput);
+    if (!requirementsGate.ok) {
+      response.status(400).json({ error: requirementsGate.error });
       return;
     }
   }
