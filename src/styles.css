@@ -2645,8 +2645,8 @@ button {
 
 .generated-main-slide.has-image {
   background:
-    radial-gradient(circle at 72% 22%, color-mix(in srgb, var(--slide-accent-b), transparent 70%), transparent 24%),
-    linear-gradient(90deg, #f5ead3 0 45%, #d7c5a4 45% 52%, #17111b 52% 100%);
+    radial-gradient(circle at 20% 18%, color-mix(in srgb, var(--slide-accent-b), transparent 68%), transparent 24%),
+    linear-gradient(90deg, #f7edd9 0 42%, #efe1c5 42% 49%, #101525 49% 100%);
 }
 
 .generated-main-slide::before,
@@ -2660,8 +2660,8 @@ button {
   z-index: 1;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(255, 247, 229, 0.98) 0 39%, rgba(255, 247, 229, 0.76) 45%, rgba(255, 247, 229, 0.04) 58%, rgba(0, 0, 0, 0.18) 100%),
-    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.58), transparent 20%);
+    linear-gradient(90deg, rgba(255, 248, 233, 0.98) 0 39%, rgba(255, 248, 233, 0.72) 43%, rgba(255, 248, 233, 0) 49%),
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.48), transparent 20%);
   mask-image: none;
 }
 
@@ -2998,8 +2998,8 @@ button {
 }
 
 .generated-main-slide.has-image .generated-slide-copy {
-  top: 15%;
-  width: 43%;
+  top: 8%;
+  width: 37%;
   color: #11182b;
 }
 
@@ -3024,7 +3024,7 @@ button {
 .generated-main-slide.has-image .generated-slide-copy h4 {
   color: #121728;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.05rem, 3.2vw, 3.7rem);
+  font-size: clamp(1.55rem, 2.55vw, 2.9rem);
   line-height: 1.05;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
 }
@@ -3051,10 +3051,10 @@ button {
 }
 
 .generated-main-slide.has-image .generated-slide-copy p {
-  max-width: 88%;
+  max-width: 96%;
   color: rgba(17, 24, 43, 0.82);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(0.92rem, 1.1vw, 1.18rem);
+  font-size: clamp(0.8rem, 0.92vw, 1rem);
   font-weight: 600;
 }
 
@@ -3083,13 +3083,17 @@ button {
 
 .generated-main-slide.has-image .generated-detail-grid {
   left: 7%;
-  right: 7%;
-  bottom: 10px;
+  right: auto;
+  bottom: 61px;
+  width: 38%;
   z-index: 5;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
 }
 
 .generated-main-slide.has-image .generated-detail-card {
-  min-height: 58px;
+  min-height: 42px;
+  padding: 5px 7px;
   border-color: rgba(17, 24, 43, 0.12);
   background: rgba(255, 249, 238, 0.82);
   box-shadow: 0 12px 28px rgba(17, 24, 43, 0.16);
@@ -3102,6 +3106,9 @@ button {
 .generated-main-slide.has-image .generated-detail-card span {
   color: rgba(17, 24, 43, 0.82);
   font-weight: 650;
+  font-size: clamp(0.5rem, 0.56vw, 0.62rem);
+  line-height: 1.18;
+  -webkit-line-clamp: 3;
 }
 
 .generated-detail-card {
@@ -3220,17 +3227,59 @@ button {
 .generated-slide-image {
   position: absolute;
   z-index: 0;
-  inset: 0;
+  left: 42%;
+  right: 0;
+  top: 0;
+  bottom: 0;
   overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.08), transparent 28%),
+    linear-gradient(135deg, color-mix(in srgb, var(--slide-accent-c), #101525 72%), #101525);
 }
 
 .generated-slide-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center right;
+  object-fit: contain;
+  object-position: center;
   filter: saturate(1.12) contrast(1.04);
-  transform: scale(1.01);
+  transform: none;
+}
+
+.generated-notes-strip {
+  position: absolute;
+  z-index: 5;
+  left: 7%;
+  bottom: 10px;
+  width: 38%;
+  min-height: 36px;
+  display: grid;
+  gap: 3px;
+  padding: 6px 8px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--slide-accent-a), transparent 72%);
+  border-radius: 10px;
+  background: rgba(17, 24, 43, 0.86);
+  box-shadow: 0 10px 22px rgba(17, 24, 43, 0.24);
+}
+
+.generated-notes-strip strong {
+  color: var(--slide-accent-b);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.generated-notes-strip span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgba(255, 248, 233, 0.9);
+  font-size: clamp(0.52rem, 0.58vw, 0.64rem);
+  line-height: 1.2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .generated-main-slide.has-image .generated-visual-note {

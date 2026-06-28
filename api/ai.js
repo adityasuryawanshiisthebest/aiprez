@@ -147,6 +147,10 @@ Theme rules:
 - The deck theme must include a distinctive palette, for example black/blue, white/green, orange/yellow, cream/red/navy, teal/coral, purple/gold, etc.
 - Each slide should share the same overall theme but use a different template layout when possible.
 - Text must be specific to the student's prompt. Do not use generic filler.
+- Each slide needs enough real information for a student to present from it: use 5-7 detailed, specific bullets per slide unless it is a pure title/divider slide.
+- Bullets should include facts, examples, dates, names, causes, effects, definitions, evidence, or comparisons when relevant.
+- Speaker notes should add extra explanation beyond the bullets, not repeat them.
+- Picture prompts must describe clean artwork or photo-style visuals only. Do not ask the image model to include sentences, labels, paragraphs, or readable text inside the generated image.
 - If the student requests a style, subject, age level, rubric, or color direction, obey it.
 Return ONLY valid JSON with this shape:
 {
@@ -161,8 +165,8 @@ Return ONLY valid JSON with this shape:
       "templateId": "One id from the 20-template library, such as T01-cinematic-cover",
       "title": "Slide title",
       "subtitle": "Short subtitle",
-      "bullets": ["specific bullet", "specific bullet", "specific bullet", "specific bullet"],
-      "speakerNotes": "Student-friendly speaker notes, 2-4 sentences.",
+      "bullets": ["specific detailed bullet", "specific detailed bullet", "specific detailed bullet", "specific detailed bullet", "specific detailed bullet", "specific detailed bullet"],
+      "speakerNotes": "Student-friendly speaker notes, 3-5 sentences with extra context.",
       "layout": "cover | imageSplit | timeline | map | comparison | dataStory | quote | gallery",
       "palette": ["#hex", "#hex", "#hex", "#hex"],
       "picturePrompt": "Detailed prompt for a high-quality slide illustration/photo/diagram that is specific to this slide topic.",
@@ -247,7 +251,7 @@ function sanitizeDeck(deck) {
       title: String(slide.title || `Slide ${index + 1}`).trim(),
       subtitle: String(slide.subtitle || "").trim(),
       bullets: Array.isArray(slide.bullets)
-        ? slide.bullets.slice(0, 5).map((bullet) => String(bullet || "").trim()).filter(Boolean)
+        ? slide.bullets.slice(0, 7).map((bullet) => String(bullet || "").trim()).filter(Boolean)
         : [],
       speakerNotes: String(slide.speakerNotes || "").trim(),
       layout: template.layout,
@@ -291,15 +295,16 @@ function buildDeckMarkdown(deck) {
 
 function imagePromptForSlide(deck, slide) {
   const palette = Array.isArray(slide.palette) && slide.palette.length ? slide.palette.join(", ") : "rich academic color palette";
-  return `Create a polished 16:9 presentation slide artwork for students.
+  return `Create polished 16:9 background artwork for a student presentation.
 Topic deck: ${deck.title}
-Slide: ${slide.title}
-Subtitle: ${slide.subtitle}
+This image is ONLY the visual background/illustration for one slide. The app will add all titles, subtitles, bullet points, labels, and captions separately.
 Visual request: ${slide.picturePrompt}
 Composition: ${slide.visualDirection}
 Use this palette influence: ${palette}.
-Make it vibrant, artistic, topic-specific, and classroom-ready, like a premium PowerPoint cover image.
-Important: do not draw any words, titles, labels, numbers, watermarks, logos, or UI chrome in the image. Leave a clean negative-space area where the app can place real editable slide text.`;
+Make it vibrant, artistic, topic-specific, and classroom-ready, like premium editorial illustration.
+Important: create only the visual scene, not a completed slide, poster, book cover, infographic, worksheet, or title card.
+Absolutely no readable text: no words, sentences, titles, labels, numbers, letters, captions, signs, watermarks, logos, or UI chrome anywhere in the image.
+Keep the main subject safely inside the right 58% of the frame with comfortable margins. Leave the left 42% as clean negative space or soft texture for editable app text.`;
 }
 
 async function generateSlideImages(deck) {
