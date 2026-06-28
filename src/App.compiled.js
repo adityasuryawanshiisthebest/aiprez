@@ -189,6 +189,17 @@ function _callAiprezAI() {
   }));
   return _callAiprezAI.apply(this, arguments);
 }
+function validateCreatePresentationPrompt(input) {
+  var normalized = String(input || "").toLowerCase().replace(/['"]/g, "").replace(/[^a-z0-9\s-]/g, " ").replace(/\s+/g, " ").trim();
+  var topicCandidate = normalized.replace(/\b(?:please|can|you|could|would|make|create|generate|build|give|me|a|an|the|some|any|presentation|presentations|slide|slides|slideshow|deck|powerpoint|ppt|pptx|for|about|on|of|with|and|include|school|class|project|assignment|topic|topics)\b/g, " ").replace(/\b(?:random|anything|something|whatever|stuff|things|ideas|interesting|cool|good|nice|fun|general|basic)\b/g, " ").replace(/\s+/g, " ").trim();
+  var topicWords = topicCandidate.split(/\s+/).filter(function (word) {
+    return word.length >= 3;
+  });
+  if (topicWords.length === 0) {
+    return "Add a specific topic first, like “photosynthesis” or “causes of the American Revolution.”";
+  }
+  return "";
+}
 function formatChatHistoryForContext(messages) {
   return messages.filter(function (message) {
     return message.status !== "loading";
@@ -1607,6 +1618,10 @@ function InstructionComposer(_ref25) {
     _React$useState14 = _slicedToArray(_React$useState13, 2),
     status = _React$useState14[0],
     setStatus = _React$useState14[1];
+  var _React$useState15 = React.useState(""),
+    _React$useState16 = _slicedToArray(_React$useState15, 2),
+    validationError = _React$useState16[0],
+    setValidationError = _React$useState16[1];
   var maxCharacters = 1000;
   var keepViewportPinned = function keepViewportPinned() {
     requestAnimationFrame(function () {
@@ -1618,7 +1633,7 @@ function InstructionComposer(_ref25) {
   };
   var submitInstructions = /*#__PURE__*/function () {
     var _ref26 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var trimmed, result, completion, errorMessage, _t;
+      var trimmed, promptError, result, completion, errorMessage, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.p = _context.n) {
           case 0:
@@ -1629,32 +1644,42 @@ function InstructionComposer(_ref25) {
             }
             return _context.a(2);
           case 1:
+            promptError = tool === "create-presentation" ? validateCreatePresentationPrompt(trimmed) : "";
+            if (!promptError) {
+              _context.n = 2;
+              break;
+            }
+            setValidationError(promptError);
+            setStatus("error");
+            return _context.a(2);
+          case 2:
+            setValidationError("");
             setInstructions("");
             setStatus("loading");
             onSubmitStart === null || onSubmitStart === void 0 || onSubmitStart(trimmed);
-            _context.p = 2;
-            _context.n = 3;
+            _context.p = 3;
+            _context.n = 4;
             return callAiprezAI(tool, trimmed, _objectSpread({
               app: "AIPREZ",
               model: BACKEND_MODEL_ID
             }, (getContext === null || getContext === void 0 ? void 0 : getContext()) || {}));
-          case 3:
+          case 4:
             result = _context.v;
             completion = normalizeCompletionResult(onComplete === null || onComplete === void 0 ? void 0 : onComplete(result, trimmed), result.output || "AIPREZ AI finished, but no response text was returned.");
             onResponse === null || onResponse === void 0 || onResponse(completion.displayText, "complete", completion.memoryText);
             setStatus("complete");
-            _context.n = 5;
+            _context.n = 6;
             break;
-          case 4:
-            _context.p = 4;
+          case 5:
+            _context.p = 5;
             _t = _context.v;
             errorMessage = "".concat(_t.message, " Make sure the local AIPREZ backend is running at http://localhost:4173.");
             onResponse === null || onResponse === void 0 || onResponse(errorMessage, "error", errorMessage);
             setStatus("error");
-          case 5:
+          case 6:
             return _context.a(2);
         }
-      }, _callee, null, [[2, 4]]);
+      }, _callee, null, [[3, 5]]);
     }));
     return function submitInstructions() {
       return _ref26.apply(this, arguments);
@@ -1681,17 +1706,19 @@ function InstructionComposer(_ref25) {
     "aria-label": label
   }), /*#__PURE__*/React.createElement("div", {
     className: "composer-meta"
-  }, /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), status === "loading" && /*#__PURE__*/React.createElement("small", null, "Thinking...")));
+  }, /*#__PURE__*/React.createElement("span", null, instructions.length, " / ", maxCharacters), validationError && /*#__PURE__*/React.createElement("small", {
+    className: "composer-error"
+  }, validationError), status === "loading" && /*#__PURE__*/React.createElement("small", null, "Thinking...")));
 }
 function AISpecifications(_ref27) {
   var _ref27$mode = _ref27.mode,
     mode = _ref27$mode === void 0 ? "humanizer" : _ref27$mode,
     onPresentationGenerated = _ref27.onPresentationGenerated;
   var isCreate = mode === "create";
-  var _React$useState15 = React.useState([]),
-    _React$useState16 = _slicedToArray(_React$useState15, 2),
-    messages = _React$useState16[0],
-    setMessages = _React$useState16[1];
+  var _React$useState17 = React.useState([]),
+    _React$useState18 = _slicedToArray(_React$useState17, 2),
+    messages = _React$useState18[0],
+    setMessages = _React$useState18[1];
   var pendingMessageId = React.useRef(null);
   var chatEndRef = React.useRef(null);
   var getMessageTime = function getMessageTime() {
@@ -1811,10 +1838,10 @@ function HumanizerWorkspace(_ref28) {
     title = _ref28.title,
     subtitle = _ref28.subtitle,
     settingsLabel = _ref28.settingsLabel;
-  var _React$useState17 = React.useState(null),
-    _React$useState18 = _slicedToArray(_React$useState17, 2),
-    generatedDeck = _React$useState18[0],
-    setGeneratedDeck = _React$useState18[1];
+  var _React$useState19 = React.useState(null),
+    _React$useState20 = _slicedToArray(_React$useState19, 2),
+    generatedDeck = _React$useState20[0],
+    setGeneratedDeck = _React$useState20[1];
   return /*#__PURE__*/React.createElement("main", {
     className: "humanizer-workspace"
   }, /*#__PURE__*/React.createElement(HumanizerTopBar, {
@@ -1961,10 +1988,10 @@ function LiveNotesBotMessage(_ref32) {
   }, /*#__PURE__*/React.createElement("p", null, children)));
 }
 function LiveNotesSpecifications() {
-  var _React$useState19 = React.useState([]),
-    _React$useState20 = _slicedToArray(_React$useState19, 2),
-    messages = _React$useState20[0],
-    setMessages = _React$useState20[1];
+  var _React$useState21 = React.useState([]),
+    _React$useState22 = _slicedToArray(_React$useState21, 2),
+    messages = _React$useState22[0],
+    setMessages = _React$useState22[1];
   var pendingMessageId = React.useRef(null);
   var chatEndRef = React.useRef(null);
   var getMessageTime = function getMessageTime() {
@@ -2103,10 +2130,10 @@ function LiveNotesScreen(_ref34) {
   }));
 }
 function AnalyzerSlideDeck() {
-  var _React$useState21 = React.useState(0),
-    _React$useState22 = _slicedToArray(_React$useState21, 2),
-    activeSlide = _React$useState22[0],
-    setActiveSlide = _React$useState22[1];
+  var _React$useState23 = React.useState(0),
+    _React$useState24 = _slicedToArray(_React$useState23, 2),
+    activeSlide = _React$useState24[0],
+    setActiveSlide = _React$useState24[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   var thumbs = PRESENTATION_SLIDES.slice(0, 6);
   return /*#__PURE__*/React.createElement("section", {
@@ -2238,10 +2265,10 @@ function AnalyzerActionBubble(_ref36) {
   }, children);
 }
 function AnalyzerSpecifications() {
-  var _React$useState23 = React.useState([]),
-    _React$useState24 = _slicedToArray(_React$useState23, 2),
-    messages = _React$useState24[0],
-    setMessages = _React$useState24[1];
+  var _React$useState25 = React.useState([]),
+    _React$useState26 = _slicedToArray(_React$useState25, 2),
+    messages = _React$useState26[0],
+    setMessages = _React$useState26[1];
   var pendingMessageId = React.useRef(null);
   var chatEndRef = React.useRef(null);
   var getMessageTime = function getMessageTime() {
@@ -2391,10 +2418,10 @@ function AnalyzerScreen(_ref38) {
 }
 function PresentationViewerScreen(_ref39) {
   var onBack = _ref39.onBack;
-  var _React$useState25 = React.useState(0),
-    _React$useState26 = _slicedToArray(_React$useState25, 2),
-    activeSlide = _React$useState26[0],
-    setActiveSlide = _React$useState26[1];
+  var _React$useState27 = React.useState(0),
+    _React$useState28 = _slicedToArray(_React$useState27, 2),
+    activeSlide = _React$useState28[0],
+    setActiveSlide = _React$useState28[1];
   var slide = PRESENTATION_SLIDES[activeSlide];
   React.useEffect(function () {
     var handleKeyDown = function handleKeyDown(event) {
@@ -2828,13 +2855,13 @@ function AccountSettingsScreen(_ref57) {
   }));
 }
 function App() {
-  var _React$useState27 = React.useState(function () {
+  var _React$useState29 = React.useState(function () {
       var params = new URLSearchParams(window.location.search);
       return params.get("screen") || "dashboard";
     }),
-    _React$useState28 = _slicedToArray(_React$useState27, 2),
-    screen = _React$useState28[0],
-    setScreen = _React$useState28[1];
+    _React$useState30 = _slicedToArray(_React$useState29, 2),
+    screen = _React$useState30[0],
+    setScreen = _React$useState30[1];
   React.useEffect(function () {
     var updateScale = function updateScale() {
       var isPhone = window.innerWidth <= 760;

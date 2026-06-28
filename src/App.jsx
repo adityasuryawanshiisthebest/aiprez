@@ -148,6 +148,27 @@ async function callAiprezAI(tool, input, context = {}) {
   return payload;
 }
 
+function validateCreatePresentationPrompt(input) {
+  const normalized = String(input || "")
+    .toLowerCase()
+    .replace(/['"]/g, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const topicCandidate = normalized
+    .replace(/\b(?:please|can|you|could|would|make|create|generate|build|give|me|a|an|the|some|any|presentation|presentations|slide|slides|slideshow|deck|powerpoint|ppt|pptx|for|about|on|of|with|and|include|school|class|project|assignment|topic|topics)\b/g, " ")
+    .replace(/\b(?:random|anything|something|whatever|stuff|things|ideas|interesting|cool|good|nice|fun|general|basic)\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const topicWords = topicCandidate.split(/\s+/).filter((word) => word.length >= 3);
+
+  if (topicWords.length === 0) {
+    return "Add a specific topic first, like “photosynthesis” or “causes of the American Revolution.”";
+  }
+
+  return "";
+}
+
 function formatChatHistoryForContext(messages) {
   return messages
     .filter((message) => message.status !== "loading")
@@ -1398,6 +1419,7 @@ function InstructionComposer({
 }) {
   const [instructions, setInstructions] = React.useState("");
   const [status, setStatus] = React.useState("idle");
+  const [validationError, setValidationError] = React.useState("");
   const maxCharacters = 1000;
   const keepViewportPinned = () => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
@@ -1406,6 +1428,13 @@ function InstructionComposer({
   const submitInstructions = async () => {
     const trimmed = instructions.trim();
     if (!trimmed || status === "loading") return;
+    const promptError = tool === "create-presentation" ? validateCreatePresentationPrompt(trimmed) : "";
+    if (promptError) {
+      setValidationError(promptError);
+      setStatus("error");
+      return;
+    }
+    setValidationError("");
     setInstructions("");
     setStatus("loading");
     onSubmitStart?.(trimmed);
@@ -1450,6 +1479,7 @@ function InstructionComposer({
       />
       <div className="composer-meta">
         <span>{instructions.length} / {maxCharacters}</span>
+        {validationError && <small className="composer-error">{validationError}</small>}
         {status === "loading" && <small>Thinking...</small>}
       </div>
     </div>

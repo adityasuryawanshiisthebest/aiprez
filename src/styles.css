@@ -4292,6 +4292,11 @@ button {
   color: rgba(0, 226, 255, 0.74);
 }
 
+.composer-meta .composer-error {
+  color: #ffb35f;
+  text-align: right;
+}
+
 .humanizer-composer .ai-result {
   max-height: 132px;
   overflow: auto;

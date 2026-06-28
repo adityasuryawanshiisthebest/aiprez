@@ -223,6 +223,30 @@ function formatChatHistory(history) {
     .join("\n\n");
 }
 
+function validatePresentationTopic(input) {
+  const normalized = String(input || "")
+    .toLowerCase()
+    .replace(/['"]/g, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const topicCandidate = normalized
+    .replace(/\b(?:please|can|you|could|would|make|create|generate|build|give|me|a|an|the|some|any|presentation|presentations|slide|slides|slideshow|deck|powerpoint|ppt|pptx|for|about|on|of|with|and|include|school|class|project|assignment|topic|topics)\b/g, " ")
+    .replace(/\b(?:random|anything|something|whatever|stuff|things|ideas|interesting|cool|good|nice|fun|general|basic)\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const topicWords = topicCandidate.split(/\s+/).filter((word) => word.length >= 3);
+
+  if (topicWords.length === 0) {
+    return {
+      ok: false,
+      error: "Please include a real presentation topic, like “photosynthesis” or “causes of the American Revolution.”",
+    };
+  }
+
+  return { ok: true };
+}
+
 function stripJsonFence(text) {
   return String(text || "")
     .trim()
@@ -425,6 +449,14 @@ export default async function handler(request, response) {
   if (!trimmedInput) {
     response.status(400).json({ error: "Input is required." });
     return;
+  }
+
+  if (tool === "create-presentation") {
+    const topicGate = validatePresentationTopic(trimmedInput);
+    if (!topicGate.ok) {
+      response.status(400).json({ error: topicGate.error });
+      return;
+    }
   }
 
   const systemPrompt = TOOL_PROMPTS[tool] || TOOL_PROMPTS["create-presentation"];
